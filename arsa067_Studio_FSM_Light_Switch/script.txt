@@ -1,0 +1,28 @@
+// $state
+  // LIGHT_OFF
+  // LIGHT_ON
+
+{
+	screensize(960,640)
+	int($state,LIGHT_OFF)
+}function(init)
+
+{
+	visible(false,dark)
+	visible(true,on)
+	visible(false,off)
+	// exit state
+	if(touch(release,on)==true) procedure( set($state,LIGHT_OFF) >> touchclear() )
+}function(light_on_update)
+
+{	
+	visible(true,dark)
+	visible(false,on)
+	visible(true,off)
+	// exit state
+	if(touch(release,off)==true) procedure( set($state,LIGHT_ON) >> touchclear() )
+}function(light_off_update)
+
+// state update
+if($state==LIGHT_ON) function(light_on_update)
+if($state==LIGHT_OFF) function(light_off_update)
