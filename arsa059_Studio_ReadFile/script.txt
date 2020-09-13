@@ -1,0 +1,10 @@
+{
+	screensize(960,640)
+
+	set($fp, fopen("credit-utf-8.txt","r") )
+	while(1) procedure( if(feof($fp)==true) break() >> addstring($msg_utf_8,fgets($fp)) )
+	fclose($fp,"r")
+}function(init)
+
+text(720, 0, "credit-utf-8.txt UTF-8",255,255,255,255)
+text(280,30,"$msg_utf_8")

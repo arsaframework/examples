@@ -1,0 +1,23 @@
+﻿	SAROS REAL BATTLE
+	Producer: 
+ASST.PROF.DR.ARSA TANGCHTISOMKIT
+        Co Producer / Art Director:
+PRACHA JARUPRATEEPKUL 
+	Actor Voice 
+วิภาดา จตุยศพร (Kigga, Freeya) 
+ไกวัล วัฒนไกร (Exact, Kentao) 
+อิทธิพล มามีเกตุ (Remon, Ramon) 
+ภัทรวุฒิ สมุทรนาวี (Mu, Kasim) 
+มนูญ เรืองเชื้อเหมือน (BJ, Gaygound) 
+ธนกฤต เจนคลองธรรม (Jerido, Nucnun)
+
+	ARSA FRAMEWORK
+Technical Director
+ASST.PROF.DR.ARSA TANGCHTISOMKIT 
+Graphic Programmer WING64 
+Physics Programmer  WING128 
+AI Programmer WING256
+Network Programmer WING512 
+Tool Programmer MAC SOHAL
+Audio Programmer DURAL 
+Asset System Programmer WEBSKYWALKER

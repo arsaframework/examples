@@ -1,0 +1,132 @@
+{
+	setportrait()	
+	screensize(640,960)	
+	int($delay_time, 100)
+	int($missile_prefix, missile)
+	int($miss_time, gettime())
+	add($miss_time,$delay_time)
+
+	int($show_num, 1)
+	int($found,0) // = 1 found = 0 not found
+	int($dist,99999) // 99999 is max distance
+	string($mu_state,MU_THINKING)
+	string($target_name,"")
+	//alog("$mu_state $target_name $found $dist")
+}function(init)
+
+{
+	if($mu_state!=MU_THINKING) return()
+	string($layer,getlayername())
+	!isvisible($layer,continue())
+
+	set($d,getdistance(jet,$layer))
+	if($d > $dist ) continue()
+
+	set($dist,$d)
+	set($found,1)
+	set($target_name,$layer)	
+	int($target_x,getposx($target_name))
+	int($target_y,getposy($target_name))
+}function(mu_thinking)
+
+{
+	int($x,getposx(jet))
+	int($y,getposy(jet))
+	int($speed,8)
+	if($x > $target_x) add($x,-$speed)
+	if($x < $target_x) add($x,$speed)
+	pos(jet,$x,$y)
+	if(abs($x-$target_x)<getwidth($target_name)) if($miss_time<gettime()) function(add_mis)
+	!isvisible($target_name, proc( set($found,0) >> set($dist,99999) >> setstring($mu_state,MU_THINKING)) )
+}function(mu_walk)
+
+{
+	if($found==0) return()
+	set($mu_state,MU_WALK) 
+	setcolor($target_name,255,0,0)	
+	builtin($target_name, "r=0x0x360")
+	//set($id, getlayerid($target_name) )
+	//alog($id: $target_name)
+}function(mu_walk_spawn)
+
+if($mu_state==MU_THINKING) proc( getlayerall(box,function(mu_thinking)) >> function(mu_walk_spawn) )
+if($mu_state==MU_WALK) function(mu_walk)
+
+{
+	set($px,$x+($i*$step))
+	set($py,$y+($j*$step))
+	pos(null, $px,$py)	
+	add($j,1)	
+	if($j>1) proc( add($i,1) >> set($j,0) )
+	if($i>5) set($i,0)
+}function(enemy_square)
+
+{
+	setstring($mu_state,MU_THINKING)
+	setstring($target_name,"")
+	int($x,82)
+	int($y,180)
+	int($step,90)
+	int($i,0)
+	int($j,0)
+	getlayerall(box, proc( function(enemy_square) >> visible(true,null) >> setcolor(null,255,255,255)))
+	anim("","clearall")
+}function(reset_score)
+
+{
+	setstring($mu_state,MU_THINKING)
+	setstring($target_name,"")
+	set($bw, getwidth(box))
+	set($sw, getscreensizewidth() )
+	getlayerall(box,proc( set($x,random(0,$sw-$bw)) >> set($y,random(100,500)) >> pos(null,$x,$y) >> visible(true,null) >> setcolor(null,255,255,255)))
+	anim("","clearall")
+}function(reset_random)
+
+touch(release,random,function(reset_random))
+
+{
+	set( $miss_time, gettime() )
+	add($miss_time,$delay_time)
+	set($missile_name, $missile_prefix$miss_time)
+	clonelayer($missile_name, m1)
+	visible(true, $missile_name)
+	pos($missile_name, getposx(jet), getposy(jet))	
+}function(add_mis)
+
+{
+	visible(false,null)
+	removelayer($name)
+	string($name_box, getlayername())
+	anim($name_box,"clear")
+}function(hit_box2)
+
+{
+	string($name, getlayername())
+	move($name, 0, -1000)	
+	if(getposy($name)<0) removelayer($name)
+	hitlayer($name, box1, function(hit_box2))
+}function(update_mis)
+
+getlayerall($missile_prefix, function(update_mis))
+touch(release,reset,function(reset_score))
+
+{
+set($layer_count,getlayercount())
+set($current_time, gettime())
+set($fps,getcurrentfps())
+text(10,10,FPS: $fps)
+text(10,40,Layer count: $layer_count)
+text(10,70,Time: $current_time)
+}function(debug)
+if( 0 != isdebug() ) function(debug)
+
+{
+	visible(true, "show_num")
+	visible(false, "hide_num")
+	set($i,0)
+	getlayerall(box, proc(add($i,1)>>string($layer,getlayername())>>!isvisible($layer,continue())>>set($x, getposxf($layer,"c"))>>set($y, getposyf($layer,"t|c"))>>text($x,$y,"$i",0,0,0,255)) )
+}	function(show_num)
+if($show_num==1) function(show_num)
+if($show_num==0) proc(visible(false, "show_num")>>visible(true, "hide_num"))
+if(touch(release,"show_num")==true) set($show_num,0)
+if(touch(release,"hide_num")==true) set($show_num,1)

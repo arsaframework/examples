@@ -1,0 +1,26 @@
+{
+	screensize(960,640)
+	function(loadfont)
+}function(init)
+
+{
+	set($msg_th,"")
+	set($msg_ch,"")
+	set($msg_jp,"")
+
+	set( $fp, fopen("th.txt","r") )
+	while(1) proc( if(feof($fp)==true) break() >> addstring($msg_th,fgets($fp)) )
+	fclose($fp, "r")
+
+	set( $fp, fopen("ch.txt","r") )
+	while(1) proc( if(feof($fp)==true) break() >> addstring($msg_ch,fgets($fp)) )
+	fclose($fp, "r")
+
+	set( $fp, fopen("jp.txt","r") )
+	while(1) proc( if(feof($fp)==true) break() >> addstring($msg_jp,fgets($fp)) )
+	fclose($fp, "r")
+}function(loadfont)
+
+text(0,0,$msg_th)
+text(ch.ttf, 35, 0,80,$msg_ch,100,100,255,255)
+text(jp.ttf, 30, 0,425,$msg_jp,255,0,200,255)

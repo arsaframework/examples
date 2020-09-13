@@ -1,0 +1,21 @@
+{
+	screensize(960,640)
+}function(init)
+text(10,10,"Function - can be call other function.")
+{
+  text(10,40, "function call1")
+}function(call1)
+{
+	text(10,70, "function call2 -> function call3 and function call4" )
+	function(call3)
+	function(call4)
+}function(call2)
+{
+	text(10,100, "function call3")
+}function(call3)
+{
+	text(10,130, "function call4")
+}function(call4)
+
+function(call1)
+function(call2)

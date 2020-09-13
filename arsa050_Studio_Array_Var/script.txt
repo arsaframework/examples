@@ -1,0 +1,32 @@
+{
+	screensize(960,640)
+}function(init)
+
+int($i[3], 0)
+float($f[3], 0)
+string($str[3],"")
+
+set($i[0], 10)
+set($i[1], 20)
+set($i[2], 30)
+
+set($f[0], 0.543)
+set($f[1], 1.7)
+set($f[2], 20.6327)
+
+setstring($str[0], "Hello Array")
+setstring($str[1], "I'm Slot two.")
+setstring($str[2], "ending")
+
+text(10, 10, "Variable Array")
+text(10, 40, "Int 0: $i[0]")
+text(10, 70, "Int 1: $i[1]")
+text(10, 100, "Int 2: $i[2]")
+
+text(300, 40, "Float 0: $f[0]")
+text(300, 70, "Float 1: $f[1]")
+text(300, 100, "Float 2: $f[2]")
+
+text(600, 40, "String 0: $str[0]")
+text(600, 70, "String 1: $str[1]")
+text(600, 100, "String 2: $str[2]")

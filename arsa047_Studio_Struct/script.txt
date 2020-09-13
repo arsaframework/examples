@@ -1,0 +1,15 @@
+{
+	screensize(960,640)
+}function(init)
+
+struct($Player,Name,Hp, Att, Def, Int)
+setstring($Player.Name,"Saros World")
+set($Player.Att,50)
+set($Player.Def,20)
+set($Player.Int,30)
+
+text(10, 10, "Player Status.")
+text(10, 40, "Name: $Player.Name")
+text(10, 70, "ATT: $Player.Att")
+text(10, 100, "DEF: $Player.Def")
+text(10, 130, "INT: $Player.Int")

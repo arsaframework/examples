@@ -1,0 +1,27 @@
+{
+	screensize(960,640)
+
+	string($filename,"https://sarosworld.com/credit.txt")
+	string($filename2,"https://sarosworld.com/credit-utf-8.txt")
+
+	set($fp,fopen($filename,"r"))
+	set( $fp2, fopen($filename2,"r") )
+
+	set($size, fsize($fp))
+	set($size2, fsize($fp2))
+
+	while(1) procedure( if(feof($fp)==true) break() >> addstring($msg,fgets($fp)) )	
+	while(1) procedure( if(feof($fp2)==true) break() >> addstring($msg_utf_8,fgets($fp2)) )
+
+	fclose($fp, "r")
+	fclose($fp2, "r")
+}function(init)
+
+text(10, 0, "$filename : ASCII",255,0,0,255)
+text(500, 0, "$filename2 : UTF-8",255,0,0,255)
+
+text(10, 30, "$size Bytes",255,0,0,255)
+text(500, 30, "$size2 Bytes",255,0,0,255)
+
+text(20,30,$msg)
+text(530,30,$msg_utf_8)

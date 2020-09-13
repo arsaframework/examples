@@ -1,0 +1,13 @@
+{
+	screensize(960,640)
+}function(init)
+
+text(350, 50, "Advance For-Loop")
+set($posx, 130)
+set($posy, 100)
+set($step, 50)
+
+{
+	text($posx+($i*($step+20)),$posy+($j*$step),"[$i][$j]")
+}function(show_text)
+for($i=0;$i<10;$i++) for($j=0;$j<10;$j++) function(show_text)

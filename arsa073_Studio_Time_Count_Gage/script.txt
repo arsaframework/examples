@@ -1,0 +1,34 @@
+{
+	screensize(960,640)
+	function(reset)
+	setvisibleflags("gage","l")
+}function(init)
+
+{
+	// time is millisecond, 1000 millisec = 1 sec
+	// 10000 = 10 sec
+	int($time_max, 10000)
+	int($time_delay, $time_max)
+	int($time_count, gettime())
+	add($time_count,$time_delay)
+}function(reset)
+
+// get current time
+int($time_current, gettime())
+
+// calculate time
+set($time_current, $time_count-$time_current)
+
+// safe, not lessthan zero
+if($time_current<=0) set($time_current,0)
+
+// show text
+set($time_show, ceil($time_current/1000) )
+text(jp.ttf, 60, 350, 350, Time: $time_show)
+
+// gage
+int($percent, ($time_current*100)/$time_max)
+setvisiblepercent(gage,$percent,100)
+
+// reset
+if(touch(release,reset)==true) function(reset)

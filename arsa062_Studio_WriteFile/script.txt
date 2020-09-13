@@ -1,0 +1,10 @@
+{
+	screensize(960,640)
+
+	set($fp, fopen("test.txt","w") )
+	fprintf( $fp, "Hello World\n" )
+	fprintf( $fp, "This is write text to file.\n" )
+	fclose($fp, "w")
+}function(init)
+
+ifelse($ret!=-1,text(10,10, "Please see output -> test.txt"),text(10,10, "Error! -> test.txt"))

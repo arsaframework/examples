@@ -1,0 +1,6 @@
+int($i, 10)
+float($f, 0.545)
+string($str,"Hello World")
+text(10, 10, "Int: $i")
+text(10, 50, "Float: $f")
+text(10, 90, "String: $str")

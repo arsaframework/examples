@@ -1,0 +1,27 @@
+{
+	screensize(960,640)
+	function(reset)
+}function(init)
+
+{
+	// time is millisecond, 1000 millisec = 1 sec
+	// 10000 = 10 sec
+	int($time_delay, 10000)
+	int($time_count, gettime())
+	add($time_count,$time_delay)
+}function(reset)
+
+// get current time
+int($time_current, gettime())
+
+// calculate time
+set($time_current, ceil(($time_count-$time_current)/1000))
+
+// safe, not lessthan zero
+if($time_current<=0) set($time_current,0)
+
+// show text
+text(jp.ttf, 80, 250, 250, Time: $time_current)
+
+// reset
+if(touch(release,reset)==true) function(reset)

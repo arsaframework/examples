@@ -1,0 +1,97 @@
+{
+	setlandscape()
+	maxsize(0,0,960,640)
+	string($mu_state, "MU_THINKING" )
+	string($target_name,"")
+	int($ii,0)
+	int($score,0)	
+	int($found,0) // = 1 found = 0 not found
+	int($dist,99999) // 99999 is max distance
+	audio(hit.wav,load)
+	audio(win.wav,load)
+	text(Nithan.ttf, 200, 50, 240, YOU WIN!,0,0,255,255 )
+}function(init)
+
+{		
+	if($mu_state!=MU_THINKING) return()	
+	string($layer,getlayername())
+	!isvisible($layer,continue())
+	//alog($mu_state: $layer)
+
+	set($d,getdistance(mu,$layer))
+	if($d > $dist ) continue()
+
+	set($dist,$d)
+	set($found,1)
+	set($target_name,$layer)
+	int($target_x,getposx($target_name))
+	int($target_y,getposy($target_name))
+}function(mu_thinking)
+
+{	
+	int($x,getposx(mu))
+	int($y,getposy(mu))
+	int($speed,8)
+	if($x > $target_x) add($x,-$speed)
+	if($x < $target_x) add($x,$speed)
+	if($y > $target_y) add($y,-$speed)
+	if($y < $target_y) add($y,$speed)	
+	pos(mu,$x,$y)
+	!isvisible($target_name, proc( set($found,0) >> set($dist,99999) >> setstring($mu_state , "MU_THINKING" ))  )
+}function(mu_walk)
+
+{
+	if($found==0) return()
+	set($mu_state,MU_WALK) 
+	setcolor($target_name,255,0,0)
+	add($ii,1)
+	alog("mu_walk_spawn: $target_name, $ii")
+	builtin($target_name, "r=0x0x360")
+}function(mu_walk_spawn)
+if($mu_state==MU_THINKING) proc( getlayerall(boss,function(mu_thinking)) >> function(mu_walk_spawn) )
+if($mu_state==MU_WALK) function(mu_walk)
+
+!isvisibleall(boss,text(Nithan.ttf, 200, 120, 220, YOU WIN!,0,0,255,255 ))
+text(TS-Prachachon-NP.ttf, 50, 10, 10, Score: $score, 0,0,255,150)
+
+{
+	set($px,$x+($i*$step))
+	set($py,$y+($j*$step))
+	pos(null, $px,$py)	
+	add($j,1)	
+	if($j>3) proc( add($i,1) >> set($j,0) )
+	if($i>3) set($i,0)
+}function(enemy_square)
+
+{
+	setstring($mu_state,"MU_THINKING")
+	setstring($target_name,"")
+	set($score,0)
+	int($x,250)
+	int($y,120)
+	int($step,120)
+	int($i,0)
+	int($j,0)
+	getlayerall(boss, proc( function(enemy_square) >> visible(true,null) >> setcolor(null,255,255,255)))
+	anim("","clearall")
+}function(reset_score)
+
+{
+	setstring($mu_state,"MU_THINKING")
+	setstring($target_name,"")
+	set($score,0)	
+	getlayerall(boss,proc( set($x,random(0,892)) >> set($y,random(0,540)) >> pos(null,$x,$y) >> visible(true,null) >> setcolor(null,255,255,255)))
+	anim("","clearall")
+}function(reset_random)
+
+touch(release,reset,function(reset_score))
+touch(release,random,function(reset_random))
+
+{
+	add($score,10)
+	visible(false,null)
+	audio(hit.wav)
+	!isvisibleall(boss,audio(win.wav))
+}function(add_score)
+hitlayer(mu,boss,function(add_score))
+

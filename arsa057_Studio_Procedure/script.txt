@@ -1,0 +1,2 @@
+text(10,10,"Procedure - cannot recursive itself!")
+procedure(text(10,40, "procedure call1") >> text(10,70, "procedure call2") >> text(10,100, "procedure call3") >> text(10,130, "procedure call4"))

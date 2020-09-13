@@ -1,0 +1,13 @@
+{
+	setportrait()
+	screensize(640,960)
+	int($per,50)
+	setvisibleflags("gage","l")
+}function(init)
+
+touch(isleft,bg,add($per,-1))
+touch(isright,bg,add($per,1))
+if($per<=0) set($per,0)
+if($per>=100) set($per,100)
+setvisiblepercent(gage,$per,100)
+text(300,460,$per%)

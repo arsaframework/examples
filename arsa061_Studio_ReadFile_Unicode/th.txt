@@ -1,0 +1,3 @@
+﻿Thai Font.
+ตัวอย่างการอ่านข้อความจากไฟล์, ต้องเป็นไฟล์ txt ที่เข้ารหัสด้วย UTF-8 เท่านั้น
+Read file example, UTF-8 encoded only!

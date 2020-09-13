@@ -1,0 +1,26 @@
+{
+	screensize(960,640)
+}function(init)
+
+int($i, 10+5)
+float($f, 0.545+$i)
+string($str,"Hello World")
+string($str2,"$str How are you ?")
+string($str3,"This is ARSA Psd Script!")
+
+gint($i2, sqrt(9))
+gfloat($f2, cos(0.5)+$i2)
+gstring($str4,"I'm global var.")
+
+int($posx, 10)
+int($posy, 10)
+int($step, 30)
+text($posx, $posy, "Int: $i")
+text($posx, $posy+$step, "Float: $f")
+text($posx, $posy+($step*2), "str: $str")
+text($posx, $posy+($step*3), "str2: $str2")
+text($posx, $posy+($step*4), "str3: $str3")
+
+text($posx, $posy+($step*5), "Global Int: $i2")
+text($posx, $posy+($step*6), "Global Float: $f2")
+text($posx, $posy+($step*7), "Global String: $str4")

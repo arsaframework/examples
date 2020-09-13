@@ -1,0 +1,29 @@
+{
+	int($score,0)
+	audio(hit.wav,load)
+	audio(win.wav,load)
+	text(Nithan.ttf, 200, 80, 220, "YOU WIN!",0,0,255,255 )
+}function(init)
+
+{
+	set($score,0)
+	visibleall(true,boss)
+}function(reset_score)
+
+{
+	add($score,10)
+	visible(false,null)
+	audio(hit.wav)
+	!isvisibleall(boss,audio(win.wav))
+}function(add_score)
+
+text(TS-Prachachon-NP.ttf, 50, 10, 10, "Score: $score", 0,0,255,150)
+if($score>=100) text(Nithan.ttf, 200, 80, 220, "YOU WIN!",0,0,255,255 )
+
+touch(release,reset,function(reset_score))
+hitlayer(mu,boss,function(add_score))
+
+touch(isleft,move(mu,-500,0))
+touch(isright,move(mu,500,0))
+touch(isup,move(mu,0,-500))
+touch(isdown,move(mu,0,500))

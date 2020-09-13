@@ -1,0 +1,49 @@
+{
+	setportrait()
+	screensize(640,960)
+	int($delay_time, 100)
+	int($missile_prefix, missile)
+	int($miss_time, gettime())
+	add($miss_time,$delay_time)
+}function(init)
+
+{
+	set( $miss_time, gettime() )
+	add($miss_time,$delay_time)
+	set($missile_name, $missile_prefix$miss_time)
+	clonelayer($missile_name, m1)
+	visible(true, $missile_name)
+	pos($missile_name, getposx(jet), getposy(jet))	
+}function(add_mis)
+
+{
+	visible(false,null)
+	removelayer($name)
+}function(hit_box2)
+
+{
+	string($name, getlayername())
+	move($name, 0, -1000)	
+	if(getposy($name)<0) removelayer($name)
+	hitlayer($name, box1, visible(false,null))
+	hitlayer($name, box2, function(hit_box2))
+}function(update_mis)
+
+getlayerall($missile_prefix, function(update_mis))
+touch(down, if($miss_time<gettime()) function(add_mis))
+touch(release,reset,visibleall(true,box))
+
+touch(isleft,move(jet,-500,0))
+touch(isright,move(jet,500,0))
+touch(isup,move(jet,0,-500))
+touch(isdown,move(jet,0,500))
+
+
+{
+set($layer_count,getlayercount())
+set($current_time, gettime())
+text(10,10, Layer count: $layer_count)
+text(10,50, Time: $current_time)
+text(10,80, Missile Time: $miss_time)
+}function(debug)
+if(isdebug()>0) function(debug)

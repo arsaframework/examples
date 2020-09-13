@@ -1,0 +1,42 @@
+{
+	screensize(960,640)
+}function(init)
+
+struct($Player[3],Name,Hp, Att, Def, Int)
+
+setstring($Player[0].Name,Jerido)
+set($Player[0].Hp,500)
+set($Player[0].Att,75)
+set($Player[0].Def,22)
+set($Player[0].Int,50)
+
+setstring($Player[1].Name,Mu)
+set($Player[1].Hp,550)
+set($Player[1].Att,60)
+set($Player[1].Def,25)
+set($Player[1].Int,45)
+
+setstring($Player[2].Name,Exact)
+set($Player[2].Hp,600)
+set($Player[2].Att,70)
+set($Player[2].Def,30)
+set($Player[2].Int,50)
+
+text(10, 10, "Player Status.")
+text(10, 40, "Name: $Player[0].Name")
+text(10, 70, "HP: $Player[0].Hp")
+text(10, 100, "ATT: $Player[0].Att")
+text(10, 130, "DEF: $Player[0].Def")
+text(10, 160, "INT: $Player[0].Int")
+
+text(300, 40, "Name: $Player[1].Name")
+text(300, 70, "HP: $Player[1].Hp")
+text(300, 100, "ATT: $Player[1].Att")
+text(300, 130, "DEF: $Player[1].Def")
+text(300, 160, "INT: $Player[1].Int")
+
+text(600, 40, "Name: $Player[2].Name")
+text(600, 70, "HP: $Player[2].Hp")
+text(600, 100, "ATT: $Player[2].Att")
+text(600, 130, "DEF: $Player[2].Def")
+text(600, 160, "INT: $Player[2].Int")

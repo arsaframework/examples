@@ -1,0 +1,1 @@
+PNG warning: iCCP: known incorrect sRGB profile

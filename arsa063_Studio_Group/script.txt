@@ -1,0 +1,18 @@
+{
+	screensize(960,640)
+
+	int($mu_posx, getposxf(start_pos,"b|c"))
+	int($mu_posy, getposyf(start_pos,"b|c"))
+	//alog("x: $mu_posx y: $mu_posy")	
+	//alog("xn: $mu_posxn yn: $mu_posyn")	
+	// add group from psd file ;-P
+	//addgroup(g_mu)
+	//addelement(g_mu,mu_jump, mu_run, mu)	
+	//setgroupdrawflags(g_mu,h|b|c)
+	setgroupvisibleonlyone(g_mu,mu)
+	setgrouppos(g_mu,$mu_posx,$mu_posy)
+}function(init)
+
+if(touch(press,button_jump)==true) procedure( setgroupvisibleonlyone(g_mu,mu_jump) >> setgroupplayonlyone(g_mu,mu_jump))
+if(touch(press,arrow_right)==true) procedure( setgroupdrawflags(g_mu,b|c) >>setgroupvisibleonlyone(g_mu,mu_run) >> setgroupplayonlyone(g_mu,mu_run) >> set($mu_state,CHAR_RUN_RIGHT) )
+if(touch(press,arrow_left)==true) procedure( setgroupdrawflags(g_mu,h|b|c) >> setgroupvisibleonlyone(g_mu,mu_run) >> setgroupplayonlyone(g_mu,mu_run) >> set($mu_state,CHAR_RUN_LEFT) )

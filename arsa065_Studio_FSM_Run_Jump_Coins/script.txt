@@ -1,0 +1,144 @@
+{
+	screensize(960,640)
+	setgamefps(30)
+
+	int($speed,30)
+	int($mu_state,CHAR_IDLE)
+	int($mu_state_old,CHAR_IDLE)
+	int($mu_posx, getposxf(start_pos,"b|c"))
+	int($mu_posy, getposyf(start_pos,"b|c"))
+	int($mu_sizex, getwidth(mu_run))
+	int($mu_sizey, getheight(mu_run))
+	int($scene_maxx, getmaxsizewidth())
+	int($scene_maxy, getmaxsizeheight())
+	// add group from psd file ;-P
+	//addgroup(g_mu)
+	//addelement(g_mu,mu_jump, mu_run, mu)
+	//setgroupdrawflags(g_mu,h|b|c)
+	setgroupvisibleonlyone(g_mu,mu)	
+	setgrouppos(g_mu,$mu_posx,$mu_posy)
+	int($g_floor, $mu_posy)
+	setloopflags(mu_jump,once)
+	setfps(mu_jump,12)
+
+	function(clone_coin_square)
+	set($framecount,getframecount(coin))
+}function(init)
+
+{
+	int($coin_posx,100)
+	int($coin_posy,100)
+	int($coin_offset,60)
+	for($i=0;$i<75;$i++) for($j=0;$j<8;$j++) function(clone_coin)
+}function(clone_coin_square)
+
+{
+	int($tt, random(1,9999))
+	int($tt2, getrealtime())
+	string($name,cc-$tt-$tt2)
+	int($x,$coin_posx+($i*$coin_offset))
+	int($y,$coin_posy+($j*$coin_offset))
+	clonelayer($name, coin)
+	pos($name,$x,$y)
+	setframe($name,0)
+	setfps($name,15)
+	//rot($name,0,random(100,500),0)
+	set($rr,random(1,3))
+	if($rr==1) set($rot,"r=360x0x0x300")
+	if($rr==2) set($rot,"r=0x360x0x600")
+	if($rr==3) set($rot,"r=0x0x360x1000")
+	builtin($name,$rot)
+
+	visible(true,$name)
+}function(clone_coin)
+
+{
+	if(isplaying(null)==false) if(getframe(null)==0) play(null)
+}function(hit_coin)
+
+hitlayerall(mu_jump,cc-,function(hit_coin))
+hitlayerall(mu,cc-,function(hit_coin))
+hitlayerall(mu_run,cc-,function(hit_coin))
+if(touch(release,reset)==true) procedure(getlayerall(cc-,setframe(null,0)))
+
+{
+	procedure( setgroupvisibleonlyone(g_mu,mu_jump) >> setgroupplayonlyone(g_mu,mu_jump))
+
+	struct($jump,velx,vely,degree,speed,gravity)
+	set($jump.velx,0)
+	set($jump.vely,0)
+	int($angle,$jump.degree*3.14/180)
+	set($jump.velx,cos($angle)*$jump.speed)
+	set($jump.vely,sin($angle)*$jump.speed)
+	set($mu_state_old,$mu_state)
+	set($mu_state,CHAR_JUMP)
+}function(jump_spawn)
+
+{
+	procedure( set($jump.degree,90) >> set($jump.speed,50) >> set($jump.gravity,-5.0))
+	function(jump_spawn)
+}function(jump_spawn_up)
+
+{
+	procedure( set($jump.degree,120) >> set($jump.speed,50) >> set($jump.gravity,-4.0))
+	function(jump_spawn)
+}function(jump_spawn_left)
+
+{
+	procedure( set($jump.degree,60) >> set($jump.speed,50) >> set($jump.gravity,-4.0))
+	function(jump_spawn)
+}function(jump_spawn_right)
+
+{
+	add($mu_posx,$jump.velx)
+	add($mu_posy,-$jump.vely)
+	add($jump.vely,$jump.gravity)
+	if($mu_posx < 0+$mu_sizex/2) add($mu_posx,-$jump.velx)
+	if($mu_posx >= $scene_maxx-($mu_sizex/2)) add($mu_posx,-$jump.velx)
+	if($mu_posy>=$g_floor) procedure( set($mu_posy,$g_floor)>> ifelse($mu_state_old==CHAR_RUN_RIGHT,function(run_right_spawn),ifelse($mu_state_old==CHAR_RUN_LEFT,function(run_left_spawn),function(idle_spawn))) )
+	setgrouppos(g_mu, $mu_posx, $mu_posy)
+	moveoffset($jump.velx,-$jump.vely,false)
+}function(jump_update)
+
+{
+	procedure(set($mu_state,CHAR_IDLE) >> setgroupvisibleonlyone(g_mu,mu) >> setgroupplayonlyone(g_mu,mu) )
+}function(idle_spawn)
+
+{
+	procedure( setgroupdrawflags(g_mu,b|c) >>setgroupvisibleonlyone(g_mu,mu_run) >> setgroupplayonlyone(g_mu,mu_run) >> set($mu_state,CHAR_RUN_RIGHT) )
+}function(run_right_spawn)
+
+{
+	procedure( setgroupdrawflags(g_mu,h|b|c) >> setgroupvisibleonlyone(g_mu,mu_run) >> setgroupplayonlyone(g_mu,mu_run) >> set($mu_state,CHAR_RUN_LEFT) )
+}function(run_left_spawn)
+
+{
+	if(touch(press,button_jump)==true) function(jump_spawn_up)
+	if(touch(press,arrow_right)==true) function(run_right_spawn)
+	if(touch(press,arrow_left)==true) function(run_left_spawn)
+}function(idle_update)
+
+{
+	if($mu_posx >= $scene_maxx-($mu_sizex/2)) procedure(function(idle_spawn)>>return())
+	add($mu_posx,$speed)
+	setgrouppos(g_mu, $mu_posx, $mu_posy)
+	moveoffset($speed,0,false)
+	if(touch(press,arrow_left)==true) function(run_left_spawn)
+	if(touch(press,button_jump)==true) function(jump_spawn_right)
+}function(run_right_update)
+
+{
+	if($mu_posx < 0+$mu_sizex/2) procedure(function(idle_spawn)>>return())
+	add($mu_posx,-$speed)
+	setgrouppos(g_mu, $mu_posx, $mu_posy)
+	moveoffset(-$speed,0,false)	
+	if(touch(press,arrow_right)==true) function(run_right_spawn)
+	if(touch(press,button_jump)==true) function(jump_spawn_left)
+}function(run_left_update)
+
+if($mu_state==CHAR_IDLE) function(idle_update)
+if($mu_state==CHAR_RUN_RIGHT) function(run_right_update)
+if($mu_state==CHAR_RUN_LEFT) function(run_left_update)
+if($mu_state==CHAR_JUMP) function(jump_update)
+
+text(10,10,getcurrentfps())

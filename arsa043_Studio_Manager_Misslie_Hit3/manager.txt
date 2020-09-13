@@ -1,0 +1,130 @@
+{
+	setportrait()
+	screensize(640,960)
+	for($i=0;$i<5;$i++) for($j=0;$j<5;$j++) function(clone_box)
+	
+	int($miss_time, 0)
+	string($miss_prefix,"")
+	string($missile_toggle,MISSILE_ONE)	
+
+	int($m1_id, getlayerid("m1"))
+	//alog("id: $m1_id, hello")
+}function(init)
+
+{
+	string($box_name, box_$i$j)
+	//alog($box_name)
+
+	clonelayer($box_name,box)
+	visible(true,$box_name)
+	setframe($box_name,random(0,2))
+
+	pos($box_name, ($i*100)+100, ($j*100)+150)
+
+	int($rr,random(0,100))
+	set($rr,$rr%3)
+	set($vel,random(100,300));
+	//if($rr==0) rot($box_name,0,0,$i*50)
+	if($rr==0) builtin($box_name, "r=0x0x360x$vel")
+	if($rr==0) setalpha($box_name,random(128,200))
+	//if($rr==1) rot($box_name,0,$i*-50,0)
+	if($rr==1) builtin($box_name, "r=0x360x0x$vel")
+	if($rr==2) play($box_name)
+	if($rr==2) setfps($box_name,random(2,10))	
+}function(clone_box)
+
+{
+	set( $tt, gettime() )
+	set($missile_name,$miss_prefix$tt)
+	//clonelayer($missile_name, m1)
+	clonelayerbyid($missile_name, $m1_id, true)
+	visible(true, $missile_name)
+	pos($missile_name, getposx(jet), getposy(jet))	
+
+	// spin
+	set($name,$missile_name)
+	if(strstr($name,missile1)==true) builtin($name, "r=0x0x360x800x0") // rot(null, 0, 1000,0)
+	if(strstr($name,missile2)==true) builtin($name, "r=0x360x0x1000x0") // rot(null, 0, 1000,0)
+	if(strstr($name,missile3)==true) builtin($name, "r=0x0x360x600x0") // rot(null, 0,0,600)
+	if(strstr($name,missile4)==true) builtin($name, "r=0x0x360x-600x0") // rot(null, 0,0,-600)
+
+}function(add_mis)
+
+{
+	set($miss_prefix,missile1)
+	function(add_mis)
+}function(add_mis1)
+
+{
+	set($miss_prefix,missile2)
+	function(add_mis)
+	set($miss_prefix,missile3)
+	function(add_mis)
+	set($miss_prefix,missile4)
+	function(add_mis)
+}function(add_mis3)
+
+{
+	set( $miss_time, gettime() )	
+	ifelse($missile_toggle==MISSILE_ONE,add($miss_time,100),add($miss_time,200))
+	ifelse($missile_toggle==MISSILE_ONE,function(add_mis1),function(add_mis3))
+}function(shoot)
+
+{
+	string($name, getlayername())
+
+	// move
+	if(strstr($name,"missile1")==true) move(null, 0, -1000)
+	if(strstr($name,"missile2")==true) move(null, 0, -700)
+	if(strstr($name,"missile3")==true) move(null, 500, -700)
+	if(strstr($name,"missile4")==true) move(null, -500, -700)
+
+	// hit box_
+	hitlayer($name, box_, function(hit_box2))
+
+	// out screen
+	if(getposy($name)<0) removelayer($name)
+
+}function(update_mis)
+
+{
+	// invisible box
+	visible(false,null)
+	// remove missile
+	removelayer($name)
+}function(hit_box2)
+
+{
+	visible(true, type1)
+	visible(false, type2)
+	touch(release,type1,procedure(set($missile_toggle,MISSILE_THREE)>>touchclear()))
+}function(toggle_missile_one)
+
+{
+	visible(false, type1)
+	visible(true, type2)
+	touch(release,type2,procedure(set($missile_toggle,MISSILE_ONE)>>touchclear()))	
+}function(toggle_missile_three)
+
+if($missile_toggle==MISSILE_ONE) function(toggle_missile_one)
+if($missile_toggle==MISSILE_THREE) function(toggle_missile_three)
+
+touch(down, if($miss_time<gettime()) function(shoot))
+getlayerall(missile, function(update_mis))
+
+touch(release,reset,visibleall(true,box_))
+touch(isleft,move(jet,-500,0))
+touch(isright,move(jet,500,0))
+touch(isup,move(jet,0,-500))
+touch(isdown,move(jet,0,500))
+
+{
+set($layer_count,getlayercount())
+set($current_time, gettime())
+set($fps,getcurrentfps())
+text(10,10,FPS: $fps)
+text(10,40,Layer count: $layer_count)
+text(10,70,Time: $current_time)
+text(10,100,Missile Time: $miss_time)
+}function(debug)
+if(isdebug()>0) function(debug)

@@ -1,0 +1,3 @@
+text(10,10,"While Loop")
+int($i,0)
+while($i<10) procedure(text(10,($i*30)+40,"Value is: $i") >> add($i, 1))

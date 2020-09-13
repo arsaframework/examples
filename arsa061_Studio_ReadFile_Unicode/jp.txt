@@ -1,0 +1,8 @@
+﻿Japanese Font.
+Download1: http://welina.holy.jp/font/tegaki/chif/
+Download2: http://www.freejapanesefont.com/tag/true-type/
+FontName: ちはやフォント (jp.ttf)
+漢字対応の手書きフォントです
+JIS第一水準漢字制覇、ギリシャ・ロシア語対応
+絵文字も少し入っていますので、文字コード表で確認してください
+（または罫線（けいせん）と打っていただければ出るようになっています。）
