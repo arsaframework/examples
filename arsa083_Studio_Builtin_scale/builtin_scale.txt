@@ -1,0 +1,11 @@
+Scale Up
+scale=1x2x1
+
+Scale Down
+scale=2x1x1
+
+Scale Loop scale=1x2x1x0
+
+Scale PingPong scale=1x2x1x0x1
+
+scale=2x1x1x0x1
