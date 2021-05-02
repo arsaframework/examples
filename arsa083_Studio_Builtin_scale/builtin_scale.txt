@@ -1,6 +1,0 @@
-scale=1x2x1
-scale=2x1x1
-
-scale=1x2x1x2
-scale=1x2x1x0x1
-scale=2x1x1x0x1
