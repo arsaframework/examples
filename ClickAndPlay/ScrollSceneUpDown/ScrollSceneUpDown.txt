@@ -7,8 +7,8 @@
 }function(init)
 
 // move offset var
-touch("isup", add($oy,$osp))
-touch("isdown", add($oy,-$osp))
+touch("isup", add($oy,-$osp))
+touch("isdown", add($oy,$osp))
 touch("isleft", add($ox,-$osp))
 touch("isright", add($ox,$osp))
 
