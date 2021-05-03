@@ -1,0 +1,11 @@
+{
+	screensize(640,960)
+}function(init)
+
+{
+	psd("loading.psd")
+	drawonce()
+	psd("ScrollSceneUpDown_Advanced.psd")
+}function(map)
+
+touch("release", "BACK", function(map))

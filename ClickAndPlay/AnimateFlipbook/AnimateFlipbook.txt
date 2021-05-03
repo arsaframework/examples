@@ -1,0 +1,32 @@
+{
+	screensize(640,960)
+	visible(false, "tomato")
+	set($tm, array()) // allocate dynamic array
+}function(init)
+
+{
+	set($pt, getlayername(null) )
+	if( -1 != array.search($tm, $pt) ) return()
+
+	set($x, getposxf($pt, "c") )
+	set($y, getposyf($pt, "c") )
+	set($tt, gettime())
+	set($newname, "tomatoclone$tt")
+	clonelayer($newname, "tomato")
+	setdrawflags($newname, "b")
+	visible(true, $newname)
+	pos($newname, $x, $y)
+	play($newname)
+	array.push_back( $tm, $pt )
+}function(tomato_new)
+
+{
+	getlayerall("tomatoclone", removelayer(null) )
+	array.clear($tm)
+}function(tomato_reset)
+
+touch("release", "pt", function(tomato_new) )
+touch("release", "reset", function(tomato_reset) )
+
+set($total, array.size($tm) )
+text(10,10, "Tomatos: $total")

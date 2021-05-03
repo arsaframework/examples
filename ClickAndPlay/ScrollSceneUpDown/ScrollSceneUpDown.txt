@@ -1,0 +1,29 @@
+{
+	screensize(640,960) // set screensize
+	maxsize(0, 0, 1150, 2072) // set scene maxsize
+	set( $ox, (1150-640)/2 ) // center offset x
+	set( $oy, 2072-960 ) // buttom offset y
+	set( $osp, 20 ) // offset speed
+}function(init)
+
+// move offset var
+touch("isup", add($oy,$osp))
+touch("isdown", add($oy,-$osp))
+touch("isleft", add($ox,-$osp))
+touch("isright", add($ox,$osp))
+
+// pack offset var
+if($ox < 0) set($ox,0)
+if($ox > 1150-640) set($ox,1150-640)
+if($oy < 0) set($oy,0)
+if($oy > 2072-960) set($oy,2072-960)
+
+// show/hide move icon
+ifelse($ox<=0, visible(false,"moveleft"), visible(true,"moveleft"))
+ifelse($ox>=1150-640, visible(false,"moveright"), visible(true,"moveright"))
+ifelse($oy<=0, visible(false,"moveup"), visible(true,"moveup"))
+ifelse($oy>=2072-960, visible(false,"movedown"), visible(true,"movedown"))
+
+setoffset( $ox, $oy ) // move offset
+
+text(10, 10, "ox: $ox, oy: $oy") // show debug ox oy

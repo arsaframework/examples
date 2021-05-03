@@ -1,0 +1,67 @@
+{
+	screensize(640,960)
+	visible(false, "tomato")
+	set($tm, array()) // allocate dynamic array
+	int($score, 0)
+
+	audio("new.wav", "load")
+	audio("coin.mp3", "load")
+}function(init)
+
+{
+	set($pt, getlayername(null) )
+	set($found, 0)
+	for($i=0; $i<array.size($tm); ++i) proc( set($id, array.get($tm,$i) ) >> if( $pt == array.get($id, 1) ) set($found,1) >> if($found==1) return() )
+
+	set($x, getposxf($pt, "c") )	// get center position
+	set($y, getposyf($pt, "c") )	// get center position
+	set($tt, gettime())		// get virtual time
+	set($newname, "tomatoclone$tt") // new name of layer
+	clonelayer($newname, "tomato")	// clone layer
+	setdrawflags($newname, "b")	// set tomato draw flags to buttom
+	visible(true, $newname)		// visible new tomato layer
+	pos($newname, $x, $y)		// set new pos tomato layer
+	play($newname)			// play tomato animate
+
+	set($tm_data, array() ) // allocate tomato data
+	array.push_back($tm_data, $newname) // keep tomato name
+	array.push_back($tm_data, $pt) // keep point
+
+	array.push_back( $tm, $tm_data )
+
+	audio("new.wav", "stop")
+	audio("new.wav")
+}function(tomato_new)
+
+{
+	getlayerall("tomatoclone", removelayer(null) )
+	for($i=0; $i<array.size($tm); ++i) proc( set($id, array.get($tm,$i) ) >> array.close($id) )
+	array.clear($tm)
+}function(tomato_reset)
+
+{
+	set($tp, getlayername(null) )
+	set($f, getframe($tp) )
+	if($f < 5) return()
+	
+	set($found, -1)
+	for($i=0; $i<array.size($tm); ++i) proc( set($id, array.get($tm,$i) ) >> if( $tp == array.get($id, 0) ) set($found,$i) >> if($found!=-1) break() )
+	
+	if($found==-1) return()
+
+	array.close(array.get($tm,$found)) // close sub array
+	array.erase($tm, $found) // remove tomato data
+	add( $score, 10 )
+	audio("coin.mp3", "stop")
+	audio("coin.mp3")
+
+	removelayer($tp) // !!!last command always!!!
+}function(tomato_keep)
+
+touch("press", "pt", function(tomato_new) )
+touch("release", "reset", function(tomato_reset) )
+touch("down", "tomatoclone", function(tomato_keep))
+
+text(10,10, "Scores: $score")
+set($total, array.size($tm) )
+text(10,40, "Tomatos: $total")

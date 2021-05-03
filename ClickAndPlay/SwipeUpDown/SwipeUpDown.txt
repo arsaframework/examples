@@ -1,0 +1,23 @@
+{
+	set($state, 0)
+}function(init)
+
+{
+	touch( "press", touch("isup", builtin($namein, "movein=1x2500x3")) )
+	touch( "press", touch("isup", builtin($nameout, "moveout=1x2500x2")) )
+	touch( "press", touch("isup", proc(set($state, $state_change) >> touchclear()) ) )
+}function(update_isup, $nameout, $namein, $state_change)
+
+{
+	touch( "press", touch("isdown", builtin($namein, "movein=1x2500x2")) )
+	touch( "press", touch("isdown", builtin($nameout, "moveout=1x2500x3")) )
+	touch( "press", touch("isdown", proc(set($state, $state_change) >> touchclear()) ) )
+}function(update_isdown, $nameout, $namein, $state_change)
+
+if($state== 0) function(update_isup, "bird","ant", 1)
+if($state== 1) function(update_isup, "ant","squid", 2)
+if($state== 2) function(update_isdown, "squid","ant", 1)
+if($state== 1) function(update_isdown, "ant","bird", 0)
+
+ifelse($state== 0, visible(false,"moveup"), visible(true,"moveup"))
+ifelse($state== 2, visible(false,"movedown"), visible(true,"movedown"))
