@@ -1,8 +1,11 @@
 AnimateBuiltin
 Result:
+
 ![result](AnimateBuiltin.gif)
 
+
 Source code:
+```
 
 {
 	set($state, 0)
@@ -49,3 +52,4 @@ if($state== 1) function(update_isright, "ant","bird", 0)
 
 ifelse($state== 0, visible(false,"moveleft"), visible(true,"moveleft"))
 ifelse($state== 2, visible(false,"moveright"), visible(true,"moveright"))
+```
