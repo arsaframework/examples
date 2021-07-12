@@ -1,0 +1,30 @@
+set($thickess, 3)
+
+text(5, 20, "Line - thickness: $thickess")
+draw.line(0,50,640,50, $thickess)
+
+text(5, 70, "Rect - thickness: $thickess")
+draw.rect(100,100,550,250, $thickess)
+
+text(230, 130, "Pixel - thickness: $thickess")
+draw.pixel((100+550)*0.5,(100+250)*0.5, $thickess)
+
+text(5, 270, "Rect - fill")
+draw.rect(20,300,620,450, 1, true)
+
+text(5, 470, "Triangle - none fill")
+draw.poly(180,620,-100, 3, false)
+
+text(350, 470, "Star - fill and none fill")
+draw.poly(450,600,-100, 3, true)
+draw.poly(450,600,100, 3, false)
+
+text(5, 720, "Hexagon - texture")
+draw.poly(180,850,100, 6, true, 0, 100, "arsa_studio_icon.jpg")
+
+text(350, 720, "Circle - fill")
+draw.circle(450,850,90)
+
+// show fps
+text(500, 20, "FPS:")
+text(550, 20, getcurrentfps())
