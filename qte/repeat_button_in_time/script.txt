@@ -1,0 +1,35 @@
+{
+	screensize(640,960)
+	function(reset)
+}function(init)
+
+{
+	int($time_max, 3000) // 3 sec
+	int($time_delay, $time_max)
+	int($time_count, gettime())
+	add($time_count,$time_delay)
+	set($percent, 100 )
+
+	set($bt, 0)
+}function(reset)
+
+{
+	set($time_current, gettime())
+	set($time_current, $time_count-$time_current)
+	if($time_current<=0) set($time_current,0)
+	set($percent, ($time_current*100)/$time_max)
+	setvisiblepercent($gage_layername,$percent,100)
+}function(update_gate, $gage_layername)
+
+{
+	if($percent<=0)	return()
+	add($bt,1)
+	play("panda")
+}function(add_button)
+
+if(touch(press,"panda")==true) function(add_button)
+function(update_gate, "loadingbar")
+ifelse($percent<=0, visible(true,"Restart"), visible(false, "Restart"))
+if(touch(press,"Restart")==true) function(reset)
+
+text("Circular.ttf", 120, 290,300, "$bt")

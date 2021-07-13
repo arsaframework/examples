@@ -1,0 +1,68 @@
+{
+	screensize(640,960)
+	int($max, 4)
+	function(button_init_all, $max)
+}function(init)
+
+{	
+	int($time_max[$max_button])
+	set($time_max[0], 1000) // 1 sec
+	set($time_max[1], 3000) // 3 sec
+	set($time_max[2], 4000) // 5 sec
+	set($time_max[3], 5000) // 5 sec
+
+	int($time_current[$max_button])
+	int($time_delay[$max_button])
+	int($time_count[$max_button], gettime())
+
+	for($i=0;$i<$max_button;++$i) set($time_delay[$i], $time_max[$i]) 
+	for($i=0;$i<$max_button;++$i) add($time_count[$i],$time_delay[$i])
+	int($percent[$max_button], 100 )
+}function(button_init_all, $max_button)
+
+{
+	if(function(is_button_ready, $slot)==true) return()
+	set($time_current[$slot], gettime())
+	set($time_current[$slot], $time_count[$slot]-$time_current[$slot])
+	if($time_current[$slot]<=0) set($time_current[$slot],0)
+	set($percent[$slot], 100-(($time_current[$slot]*100)/$time_max[$slot]))
+	if($horizontal==true) if($set_draw==true) setvisiblepercent($gage_layername,$percent[$slot],100) // reverse gage
+	if($horizontal==false) if($set_draw==true)setvisiblepercent($gage_layername,100, $percent[$slot]) // reverse gage
+}function(update_gage, $slot, $gage_layername, $horizontal, $set_draw)
+
+{
+	if(function(is_button_ready, $slot)==false) return()
+	set($time_count[$slot], gettime())
+	set($time_delay[$slot], $time_max[$slot]) 
+	add($time_count[$slot],$time_delay[$slot])
+	set($percent[$slot],0)
+}function(spawn_gage, $slot, $gage_layername)
+
+{
+	if(touch(press,$gage_layername)==true) function(spawn_gage, $slot, $gage_layername)
+	function(update_gage, $slot, $gage_layername, $horizontal, $set_draw)
+}function(update_gage_all,$slot, $gage_layername, $horizontal, $set_draw)
+
+{
+	ifelse($percent[$slot]>=100, return(true), return(false))
+}function(is_button_ready, $slot)
+
+{
+	return ($percent[$slot])
+}function(get_button_percent, $slot)
+
+function(update_gage_all,0, "loadingbar", true, true)
+function(update_gage_all,1, "Restart_gage", true, true)
+function(update_gage_all,2, "circle_gage", false, true)
+function(update_gage_all,3, "circle_temp_bg", false, false)
+
+set($x, getposxf("circle_temp", "c"))
+set($y, getposyf("circle_temp", "c"))
+set($sz, getheight("hero"))
+draw.poly($x, $y, ($sz*0.5)+2, 60, true, 0, function(get_button_percent, 3), "hero", 255,255,255,255)
+
+set($fz,60)
+if(function(is_button_ready, 0)==true) text("Circular.ttf", $fz, 100,150, "Ready")
+if(function(is_button_ready, 1)==true)text("Circular.ttf", $fz, 100,320, "Ready")
+if(function(is_button_ready, 2)==true)text("Circular.ttf", $fz, 100,550, "Ready")
+if(function(is_button_ready, 3)==true)text("Circular.ttf", $fz, 100,800, "Ready")
