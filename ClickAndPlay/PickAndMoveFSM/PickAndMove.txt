@@ -1,0 +1,20 @@
+{
+	set($state,STATE_IDLE)
+	set($layername, "bird")
+}function(init)
+
+// idle to move
+if($state==STATE_IDLE) if(touch("isleft", $layername)==true) set($state,STATE_DOWN)
+if($state==STATE_IDLE) if(touch("isright", $layername)==true) set($state,STATE_DOWN)
+if($state==STATE_IDLE) if(touch("isup", $layername)==true) set($state,STATE_DOWN)
+if($state==STATE_IDLE) if(touch("isdown", $layername)==true) set($state,STATE_DOWN)
+
+
+// return to idle
+if($state==STATE_DOWN) if(touch("release")==true) set($state,STATE_IDLE)
+
+// move machine
+if($state==STATE_DOWN) if(touch("isleft")==true) move($layername, -500, 0)
+if($state==STATE_DOWN) if(touch("isright")==true) move($layername, 500, 0)
+if($state==STATE_DOWN) if(touch("isup")==true) move($layername, 0, -500)
+if($state==STATE_DOWN) if(touch("isdown")==true) move($layername, 0, 500)

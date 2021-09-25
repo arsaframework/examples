@@ -1,0 +1,35 @@
+{
+	set($state,STATE_IDLE)	
+}function(init)
+
+{
+	set($state,STATE_DOWN)
+	builtin($layername,"r=0x0x10x20x0x1 rf=c")
+	setalpha($layername, 100)
+}function(selected)
+
+{
+	set($state,STATE_IDLE)
+	builtin($layername,"r=0x0x0x0x0x1")
+	setalpha($layername, 255)
+}function(released)
+
+// idle to layername
+if($state==STATE_IDLE) if(touch("press", "bird")==true) set($layername, "bird")
+if($state==STATE_IDLE) if(touch("press", "squid")==true) set($layername, "squid")
+if($state==STATE_IDLE) if(touch("press", "ant")==true) set($layername, "ant")
+
+// idle and layername to move
+if($state==STATE_IDLE) if(touch("isleft", $layername)==true) function(selected)
+if($state==STATE_IDLE) if(touch("isright", $layername)==true) function(selected)
+if($state==STATE_IDLE) if(touch("isup", $layername)==true) function(selected)
+if($state==STATE_IDLE) if(touch("isdown", $layername)==true) function(selected)
+
+// return to idle
+if($state==STATE_DOWN) if(touch("release")==true) function(released)
+
+// move machine
+if($state==STATE_DOWN) if(touch("isleft")==true) move($layername, -500, 0)
+if($state==STATE_DOWN) if(touch("isright")==true) move($layername, 500, 0)
+if($state==STATE_DOWN) if(touch("isup")==true) move($layername, 0, -500)
+if($state==STATE_DOWN) if(touch("isdown")==true) move($layername, 0, 500)
