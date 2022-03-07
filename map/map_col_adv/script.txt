@@ -1,0 +1,73 @@
+{
+	screensize(640,960)
+	maxsize(0,0,640*2,960*3)
+	set($score,0)
+}function(init)
+
+// get player info
+set($name, "mu")
+set($ox, getposx($name))
+set($oy, getposy($name))
+set($dx, touch(gettouchx_diff))
+set($dy, touch(gettouchy_diff))
+
+// protect warp player
+set($maxd, 100)
+if($dx > $maxd) set($dx,$maxd)
+if($dy > $maxd) set($dy,$maxd)
+if($dx < -$maxd) set($dx,-$maxd)
+if($dy < -$maxd) set($dy,-$maxd)
+
+// move player
+set($sp, 50)
+touch(isleft,move($name,$dx*$sp,0))
+touch(isright,move($name,$dx*$sp,0))
+touch(isup,move($name,0,$dy*$sp))
+touch(isdown,move($name,0,$dy*$sp))
+
+// collision wall
+hitlayer($name,"wall",function(col))
+
+// collision boss
+hitlayer($name,"boss",function(colboss))
+
+// move offset
+set($cx, getposx($name))
+set($cy, getposy($name))
+setoffset($cx-320, $cy-480)
+
+{
+	set($layer1, $name)
+	set($layer2, $cc)
+
+	// https://levelup.gitconnected.com/2d-collision-detection-8e50b6b8b5c0
+	// right
+	set($xl1, getposxf($layer1,"r"))
+	set($xl2, getposxf($layer2,"l"))
+	if($xl1 >= $xl2) posx($name,$ox)
+
+	// left
+	set($xl1, getposxf($layer1,"l"))
+	set($xl2, getposxf($layer2,"r"))
+	if($xl1 <= $xl2) posx($name,$ox)
+
+	// top
+	set($yl1, getposyf($layer1,"t"))
+	set($yl2, getposyf($layer2,"b"))
+	if($yl1 <= $yl2) posy($name,$oy)
+
+	// bottom
+	set($yl1, getposyf($layer1,"b"))
+	set($yl2, getposyf($layer2,"t"))
+	if($yl1 >= $yl2) posy($name,$oy)
+}function(col)
+
+{
+    set($cc, getlayername("null"))
+    visible(false,$cc)
+    add( $score, 10 )
+}function(colboss)
+
+text(480,910, "Score: $score")
+
+if(touch("release","reset")==true) visibleall(true, "boss")

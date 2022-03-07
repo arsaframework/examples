@@ -1,0 +1,42 @@
+{
+    screensize(640,960)
+    maxsize(0,0,1920, 3840)
+
+    // get screen info
+    set($maxw, getmaxsizewidth())
+    set($maxh, getmaxsizeheight())
+    set($sw, getscreensizewidth())
+    set($sh, getscreensizeheight())
+    set($hsw, $sw*0.5)
+    set($hsh, $sh*0.5)
+}function(init)
+
+// move player
+set($name,"player")
+set($dx, touch("gettouchx_diff"))
+set($dy, touch("gettouchy_diff"))
+set($sp, 50)
+touch("isleft",move($name,$dx*$sp,0))
+touch("isright",move($name,$dx*$sp,0))
+touch("isup",move($name,0,$dy*$sp))
+touch("isdown",move($name,0,$dy*$sp))
+
+// pack player pos
+set($x, getposx($name))
+set($y, getposy($name))
+set($w, getwidth($name))
+set($h, getheight($name))
+if($x < 0 ) set($x,0)
+if($y < 0 ) set($y,0)
+if($x > $maxw-$w ) set($x,$maxw-$w )
+if($y > $maxh-$h ) set($y,$maxh-$h)
+pos($name,$x, $y)
+
+// move map
+set($ox, $x-$hsw)
+set($oy, $y-$hsh)
+if($ox < 0 ) set($ox, 0)
+if($oy < 0 ) set($oy, 0)
+if($ox > $maxw-$sw ) set($ox, $maxw-$sw)
+if($oy > $maxh-$sh ) set($oy, $maxh-$sh)
+setoffset($ox,$oy)
