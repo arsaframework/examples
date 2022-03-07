@@ -22,7 +22,7 @@ set($dx, touch(gettouchx_diff))
 set($dy, touch(gettouchy_diff))
 
 // protect warp player
-set($maxd, 100)
+set($maxd, 10)
 if($dx > $maxd) set($dx,$maxd)
 if($dy > $maxd) set($dy,$maxd)
 if($dx < -$maxd) set($dx,-$maxd)
