@@ -38,7 +38,7 @@ setoffset($cx-320, $cy-480)
 
 {
 	set($layer1, $name)
-	set($layer2, $cc)
+	set($layer2, getlayername("null"))
 
 	// https://levelup.gitconnected.com/2d-collision-detection-8e50b6b8b5c0
 	// right
@@ -70,4 +70,4 @@ setoffset($cx-320, $cy-480)
 
 text(480,910, "Score: $score")
 
-if(touch("release","reset")==true) visibleall(true, "boss")
+if($dx==0) if($dy==0) if(touch("release","reset")==true) visibleall(true, "boss")

@@ -11,7 +11,7 @@ set($dx, touch(gettouchx_diff))
 set($dy, touch(gettouchy_diff))
 
 // protect warp player
-set($maxd, 100)
+set($maxd, 50)
 if($dx > $maxd) set($dx,$maxd)
 if($dy > $maxd) set($dy,$maxd)
 if($dx < -$maxd) set($dx,-$maxd)
@@ -32,7 +32,7 @@ hitlayer($name,"boss",function(colboss))
 
 {
 	set($layer1, $name)
-	set($layer2, $cc)
+	set($layer2, getlayername("null"))
 
 	// https://levelup.gitconnected.com/2d-collision-detection-8e50b6b8b5c0
 	// right

@@ -46,7 +46,7 @@ setoffset($cx-$hsw, $cy-$hsh)
 
 {
 	set($layer1, $name)
-	set($layer2, $cc)
+	set($layer2, getlayername("null"))
 
 	// https://levelup.gitconnected.com/2d-collision-detection-8e50b6b8b5c0
 	// right
