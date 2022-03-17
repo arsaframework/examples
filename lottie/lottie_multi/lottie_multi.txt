@@ -1,0 +1,64 @@
+{
+    screensize(640,960)
+
+    set( $ms, map() ) // allocate map    
+
+    // set file
+    map.set($ms, "video1", "79568-success.json" )
+    map.set($ms, "video6", "79616-warriors.json" )
+    map.set($ms, "video4", "79616-warriors.json" )
+    map.set($ms, "video2", "sel/rocket.json" )
+    map.set($ms, "video3", "sel/vocalno.json" )
+    map.set($ms, "Layer 1", "sel/bigbang.json" )
+    //map.log($ms)
+
+    // cache
+    for($i=0;$i<map.size($ms);++$i) lottie(map.getvaluebyid($ms,$i), "cache")
+    
+    set( $ref, map() ) // allocate ref pointer map
+
+    // load
+    for($i=0;$i<map.size($ms);++$i) proc( set($id,lottie(map.getvaluebyid($ms,$i), "load")) >> map.set($ref,map.getkeybyid($ms,$i),$id) )    
+    //map.log($ref)
+
+    map.close($ms) // free map
+}function(init)
+
+{
+    function(clear_lottie)
+}function(deinit)
+
+{
+    // clear playat
+    for($i=0;$i<map.size($ref);++$i) lottie(map.getvaluebyid($ref,$i), "clearplayat", map.getkeybyid($ref,$i))
+
+    lottie("null", "clear")
+    lottie("null", "clearcache")
+
+    map.close($ref) // free ref map
+}function(clear_lottie)
+
+// first playat
+for($i=0;$i<map.size($ref);++$i) if(lottie(map.getvaluebyid($ref,$i), "isreadyfirst")==true) lottie(map.getvaluebyid($ref,$i), "playat", map.getkeybyid($ref,$i))
+
+text(10,20,getcurrentfps())
+set($ccount, lottie("", "getcachecount"))
+set($lcount, lottie("", "getcount"))
+text(10,50,"cache: $ccount, count: $lcount")
+
+if(touch("press", "reset")==true) proc( function(deinit) >> function(init) )
+if(touch("press", "clear")==true) function(clear_lottie)
+
+{
+    set($name, getlayername(null))
+
+    set($id, map.get($ref, $name) )
+    if($id=="") return()
+
+    set($fn, lottie($id,"getfilename"))
+
+    lottie($id, "clearplayat", $name)
+    lottie($id, "clear")
+    lottie($fn, "clearcache")
+}function(clear_lottie_single)
+if(touch("press", "video")==true) function(clear_lottie_single)
