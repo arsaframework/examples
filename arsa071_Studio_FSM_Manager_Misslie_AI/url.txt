@@ -1,0 +1,3 @@
+arsa071_Studio_FSM_Manager_Misslie_AI
+ARSA Framework performance testing: real-time AI to find out nearest objects and fire missile with ARSA script and random or uniform target objects.
+https://youtu.be/IAJW45C_YO4

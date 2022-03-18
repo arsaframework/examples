@@ -1,5 +1,8 @@
 {
 	screensize(960,640)
+
+	visible(false, "start_pos")
+
 	int($speed,10)
 	int($mu_state,CHAR_IDLE)
 	int($mu_state_old,CHAR_IDLE)

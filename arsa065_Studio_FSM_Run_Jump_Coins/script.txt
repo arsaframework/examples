@@ -2,6 +2,9 @@
 	screensize(960,640)
 	setgamefps(30)
 
+	visible(false, "coin")
+	visible(false, "start_pos")
+
 	int($speed,30)
 	int($mu_state,CHAR_IDLE)
 	int($mu_state_old,CHAR_IDLE)
@@ -22,7 +25,7 @@
 	setfps(mu_jump,12)
 
 	function(clone_coin_square)
-	set($framecount,getframecount(coin))
+	set($framecount,getframecount(coin))	
 }function(init)
 
 {

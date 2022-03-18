@@ -1,0 +1,19 @@
+screensize(640,960)
+
+// down on layer and moving
+if(pickup("isleft", "obj")==true) move("null", -500, 0)
+if(pickup("isright", "obj")==true) move("null", 500, 0)
+if(pickup("isup", "obj")==true) move("null", 0, -500)
+if(pickup("isdown", "obj")==true) move("null", 0, 500)
+
+// first contact
+if(pickup("press", "obj")==true) proc( setalpha("null",128) >> builtin("null", "r=0x0x10x20x0x1") )
+
+// end contact
+if(pickup("release", "obj")==true) proc( setalpha("null",255) >> builtin("null", "r=0x0x0x0x0x1") )
+
+// show layer name on obj position each
+set($layername, pickupgetlayername() )
+set($x,getposx($layername))
+set($y,getposy($layername))
+text($x,$y-40,"$layername",0,0,0,255)

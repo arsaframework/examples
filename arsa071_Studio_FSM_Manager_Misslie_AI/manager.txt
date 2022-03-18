@@ -16,7 +16,7 @@
 
 {
 	if($mu_state!=MU_THINKING) return()
-	string($layer,getlayername())
+	string($layer,getlayername())	
 	!isvisible($layer,continue())
 
 	set($d,getdistance(jet,$layer))
@@ -62,6 +62,8 @@ if($mu_state==MU_WALK) function(mu_walk)
 }function(enemy_square)
 
 {
+	set($found,0) // = 1 found = 0 not found
+	set($dist,99999) // 99999 is max distance
 	setstring($mu_state,MU_THINKING)
 	setstring($target_name,"")
 	int($x,82)
@@ -69,16 +71,18 @@ if($mu_state==MU_WALK) function(mu_walk)
 	int($step,90)
 	int($i,0)
 	int($j,0)
-	getlayerall(box, proc( function(enemy_square) >> visible(true,null) >> setcolor(null,255,255,255)))
+	getlayerall(box, proc( function(enemy_square) >> visible(true,null) >> setcolor(null,255,255,255)>> rot(null,0,0,0)))
 	anim("","clearall")
 }function(reset_score)
 
 {
+	set($found,0) // = 1 found = 0 not found
+	set($dist,99999) // 99999 is max distance
 	setstring($mu_state,MU_THINKING)
 	setstring($target_name,"")
 	set($bw, getwidth(box))
 	set($sw, getscreensizewidth() )
-	getlayerall(box,proc( set($x,random(0,$sw-$bw)) >> set($y,random(100,500)) >> pos(null,$x,$y) >> visible(true,null) >> setcolor(null,255,255,255)))
+	getlayerall(box,proc( set($x,random(0,$sw-$bw)) >> set($y,random(100,500)) >> pos(null,$x,$y) >> visible(true,null) >> setcolor(null,255,255,255) >> rot(null,0,0,0)))
 	anim("","clearall")
 }function(reset_random)
 
@@ -111,12 +115,12 @@ getlayerall($missile_prefix, function(update_mis))
 touch(release,reset,function(reset_score))
 
 {
-set($layer_count,getlayercount())
-set($current_time, gettime())
-set($fps,getcurrentfps())
-text(10,10,FPS: $fps)
-text(10,40,Layer count: $layer_count)
-text(10,70,Time: $current_time)
+	set($layer_count,getlayercount())
+	set($current_time, gettime())
+	set($fps,getcurrentfps())
+	text(10,10,FPS: $fps)
+	text(10,40,Layer count: $layer_count)
+	text(10,70,Time: $current_time)
 }function(debug)
 if( 0 != isdebug() ) function(debug)
 
@@ -130,3 +134,4 @@ if($show_num==1) function(show_num)
 if($show_num==0) proc(visible(false, "show_num")>>visible(true, "hide_num"))
 if(touch(release,"show_num")==true) set($show_num,0)
 if(touch(release,"hide_num")==true) set($show_num,1)
+//alog( \"$mu_state, $target_name, $dist"\ )

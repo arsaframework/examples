@@ -4,9 +4,9 @@
 
 struct($Player,Name,Hp, Att, Def, Int)
 setstring($Player.Name,"Saros World")
-set($Player.Att,50)
-set($Player.Def,20)
-set($Player.Int,30)
+set($Player.Att,500)
+set($Player.Def,200)
+set($Player.Int,300)
 
 text(10, 10, "Player Status.")
 text(10, 40, "Name: $Player.Name")

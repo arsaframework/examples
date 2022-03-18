@@ -1,5 +1,6 @@
 {
 	set($state,STATE_IDLE)	
+	screensize(640,960)
 }function(init)
 
 {

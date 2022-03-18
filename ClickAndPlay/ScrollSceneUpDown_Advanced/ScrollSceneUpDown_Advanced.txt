@@ -21,7 +21,9 @@
 	psd($g_state)
 }function(getstate)
 
-touch("release", "state", function(getstate))
+set($dx, touch("gettouchx_diff") )
+set($dy, touch("gettouchy_diff") )
+if($dx==0) if($dy==0) touch("press", "state", function(getstate))
 
 // move offset var
 touch("isup", add($oy,-$osp))

@@ -1,6 +1,8 @@
 {
 	screensize(960,640)
 
+	visible(false, "start_pos")
+
 	int($mu_posx, getposxf(start_pos,"b|c"))
 	int($mu_posy, getposyf(start_pos,"b|c"))
 	//alog("x: $mu_posx y: $mu_posy")	

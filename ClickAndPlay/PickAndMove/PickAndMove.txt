@@ -1,4 +1,11 @@
-if(touch("isleft", "bird")==true) move("null", -500, 0)
-if(touch("isright", "bird")==true) move("null", 500, 0)
-if(touch("isup", "bird")==true) move("null", 0, -500)
-if(touch("isdown", "bird")==true) move("null", 0, 500)
+// down on layer and moving
+if(pickup("isleft", "bird")==true) move("null", -500, 0)
+if(pickup("isright", "bird")==true) move("null", 500, 0)
+if(pickup("isup", "bird")==true) move("null", 0, -500)
+if(pickup("isdown", "bird")==true) move("null", 0, 500)
+
+// first contact
+if(pickup("press", "bird")==true) proc( setalpha("null",128) >> builtin("null", "r=0x0x10x20x0x1") )
+
+// end contact
+if(pickup("release", "bird")==true) proc( setalpha("null",255) >> builtin("null", "r=0x0x0x0x0x1") )

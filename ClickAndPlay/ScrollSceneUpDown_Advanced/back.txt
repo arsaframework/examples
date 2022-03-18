@@ -4,6 +4,7 @@
 
 {
 	psd("loading.psd")
+	psdrenderall()
 	drawonce()
 	psd("ScrollSceneUpDown_Advanced.psd")
 }function(map)
