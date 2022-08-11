@@ -1,0 +1,47 @@
+{
+    screensize(640,960)
+    maxsize(1500, 1101)
+
+    set($name, "car")
+
+    set($maxwp, 9)
+    int($wp[$maxwp])
+    set($wp[0], "wp1")
+    set($wp[1], "wp2")
+    set($wp[2], "wp3")
+    set($wp[3], "wp4")
+    set($wp[4], "wp5")
+    set($wp[5], "wp6")
+    set($wp[6], "wp7")
+    set($wp[7], "wp8")
+    set($wp[8], "wp9")
+
+    set($idx, 0)
+    set($sp,1)
+
+    audio("Luke-Bergs-Bliss.mp3")
+}function(init)
+
+{
+  return( $v0 + $t * ($v1 - $v0) )
+}function(lerp, $v0, $v1, $t)
+
+set($tx, getposxf($wp[$idx],"c"))
+set($ty, getposyf($wp[$idx], "c"))
+
+set($x, getposx($name))
+set($y, getposy($name))
+set($zrot, getzrot($tx, $ty, $x, $y))
+rot($name, 0, 0, -$zrot)
+
+set($dt,getdeltatime())
+add($sp, -0.5*$dt)
+if($sp < 0) set($sp,0)
+set($x, function(lerp, $tx, $x, $sp) )
+set($y, function(lerp, $ty, $y, $sp) )
+pos($name, $x, $y)
+
+setoffset($x-320, $y-480)
+
+hitlayer($name, $wp[$idx], proc(add($idx,1) >> set($sp,1)) )
+if($idx>=$maxwp) psd("carmap.psd")

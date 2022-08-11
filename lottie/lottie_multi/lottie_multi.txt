@@ -32,8 +32,8 @@
     // clear playat
     for($i=0;$i<map.size($ref);++$i) lottie(map.getvaluebyid($ref,$i), "clearplayat", map.getkeybyid($ref,$i))
 
-    lottie("null", "clear")
-    lottie("null", "clearcache")
+    // clear lottie and cache
+    for($i=0;$i<map.size($ref);++$i) proc( set($id, map.getvaluebyid($ref,$i)) >> set($fn, lottie($id, "getfilename") ) >> lottie($id, "clear") >> lottie($fn, "clearcache") )
 
     map.close($ref) // free ref map
 }function(clear_lottie)

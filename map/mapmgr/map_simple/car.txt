@@ -1,0 +1,31 @@
+{
+    screensize(640,960)
+
+    set($name, "car")
+
+    int($wp[3])
+    set($wp[0], "wp1")
+    set($wp[1], "wp2")
+    set($wp[2], "wp3")
+
+    set($idx, 0)
+}function(init)
+
+set($tx, getposxf($wp[$idx],"c"))
+set($ty, getposyf($wp[$idx], "c"))
+
+set($x, getposx($name))
+set($y, getposy($name))
+set($zrot, getzrot($tx, $ty, $x, $y))
+rot($name, 0, 0, -$zrot)
+draw.line($tx, $ty, $x, $y, 3)
+
+set($sp, "10")
+if($x < $tx) add($x, $sp)
+if($x > $tx) add($x, -$sp)
+if($y < $ty) add($y, $sp)
+if($y > $ty) add($y, -$sp)
+pos($name, $x, $y)
+
+hitlayer($name, $wp[$idx], add($idx,1))
+if($idx>2) set($idx,2)

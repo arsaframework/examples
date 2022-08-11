@@ -1,0 +1,48 @@
+{
+    screensize(640,960)
+    maxsize(1003, 1004)
+
+    // GO
+    // BACK
+    set($state, GO)
+
+    set($name, "car")
+
+    set($maxwp, 6)
+    int($wp[$maxwp])
+    set($wp[0], "wp1")
+    set($wp[1], "wp2")
+    set($wp[2], "wp3")
+    set($wp[3], "wp4")
+    set($wp[4], "wp5")
+    set($wp[5], "wp6")
+
+    set($idx, 0)
+}function(init)
+
+set($tx, getposxf($wp[$idx],"c"))
+set($ty, getposyf($wp[$idx], "c"))
+
+set($x, getposx($name))
+set($y, getposy($name))
+set($zrot, getzrot($tx, $ty, $x, $y))
+rot($name, 0, 0, -$zrot)
+
+set($sp, "10")
+if($x < $tx) add($x, $sp)
+if($x > $tx) add($x, -$sp)
+if($y < $ty) add($y, $sp)
+if($y > $ty) add($y, -$sp)
+pos($name, $x, $y)
+
+setoffset($x-320, $y-480)
+
+hitlayer($name, $wp[$idx], ifelse($state==GO, add($idx,1),add($idx,-1)))
+if($idx<0) set($idx,0)
+if($idx>=$maxwp) set($idx,$maxwp-1)
+
+touch("release", "reset", ifelse($state==GO,set($state,BACK),set($state,GO)) )
+
+set($str,"")
+ifelse($state==GO,set($str,"GO"),set($str,"BACK") )
+text(25, 150, "Mode: $str")

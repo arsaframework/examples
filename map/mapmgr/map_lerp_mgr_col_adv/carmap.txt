@@ -1,0 +1,220 @@
+{
+    screensize(640, 960)
+    maxsize(1003, 1004)
+
+    set($score,0)
+
+	audio("mixkit-fairy-arcade-sparkle-866.wav", "load")
+
+    // becarefull this's const value, plz do not change it.
+    set($name, "car")
+
+    set($maxwp, 6)
+    int($wp[$maxwp])
+    set($wp[0], "wp1")
+    set($wp[1], "wp2")
+    set($wp[2], "wp3")
+    set($wp[3], "wp4")
+    set($wp[4], "wp5")
+    set($wp[5], "wp6")
+
+    set($carprefix_r, "ccr")
+    set($carprefix_g, "ccg")
+    set($carprefix_b, "ccb")
+    set($cardelay, 500)
+    set($cartime, gettime())
+    add($cartime, $cardelay)
+ 
+    set($list, array())
+    set($fx, function(fx::init))
+}function(init)
+
+{
+    function(fx::deinit, $fx)
+    array.close($list)
+}function(deinit)
+
+{
+  return( $v0 + $t * ($v1 - $v0) )
+}function(lerp, $v0, $v1, $t)
+
+{
+    set($carinfo, map())
+
+    set( $cartime, gettime() )
+    add( $cartime, $cartime )
+
+    // random car, difference score
+    set($carrand, random(1,3))
+    if($carrand==1) set( $carname, "$carprefix_r$cartime")
+    if($carrand==2) set( $carname, "$carprefix_g$cartime")
+    if($carrand==3) set( $carname, "$carprefix_b$cartime")
+
+    map.set($carinfo, "wp_num", 0)
+    if($carrand==1) set($sprand, 0.2)
+    if($carrand==2) set($sprand, 0.3)
+    if($carrand==3) set($sprand, 0.4)
+    map.set($carinfo, "vel", $sprand)
+    map.set($carinfo, "velcount", 1)
+    map.set($carinfo, "name", $carname)
+    
+    clonelayer($carname, "car f=l")
+    visible(true, $carname)
+    if($carrand==1) setcolor($carname, 255, 100, 100)
+    if($carrand==2) setcolor($carname, 100, 255, 100)
+    if($carrand==3) setcolor($carname, 100, 100, 255)
+    pos($carname, getposx($name), getposy($name))
+
+    array.push_back($list, $carinfo)
+
+    // reset spawn time
+    set($cartime, gettime())
+    add($cartime, $cardelay)    
+}function(carmgr_add)
+
+{
+    // get map from array
+    set($carinfo, array.get($list,$i))
+
+    // get data from map
+    set($wnum, map.get($carinfo,"wp_num"))
+    set($myname, map.get($carinfo,"name"))
+    set($sp, map.get($carinfo,"velcount"))
+    set($vel, map.get($carinfo,"vel"))
+
+    // get waypoint
+    set($mywp, $wp[$wnum])
+    set($tx, getposxf($mywp,"c"))
+    set($ty, getposyf($mywp, "c"))
+
+    // get car pos
+    set($x, getposx($myname))
+    set($y, getposy($myname))
+    set($zrot, getzrot($tx, $ty, $x, $y))
+    rot($myname, 0, 0, -$zrot)
+
+    set($dt,getdeltatime())
+    add($sp, -$vel*$dt)
+    if($sp < 0) set($sp,0)
+    set($x, function(lerp, $tx, $x, $sp) )
+    set($y, function(lerp, $ty, $y, $sp) )
+    pos($myname, $x, $y)
+
+    hitlayer($myname, $mywp, proc(add($wnum,1) >> set($sp,1)) )
+    
+    // save data to map
+    map.set($carinfo,"velcount", $sp )
+    map.set($carinfo,"wp_num", $wnum )
+
+    if($wnum>=$maxwp) proc( map.close($carinfo) >> array.erase($list,$i) >> add($i, -1) >> removelayer($myname) )
+
+}function(carmgr_update)
+
+// call manager
+if($cartime<gettime()) function(carmgr_add)
+for($i=0;$i<array.size($list);++$i) function(carmgr_update)
+
+// move map offset
+set($x, touch("gettouchx_diff"))
+set($y, touch("gettouchy_diff"))
+set($sp,20)
+moveoffset($x*$sp, $y*$sp)
+
+// debug data
+{
+set($layer_count,getlayercount())
+set($current_time, gettime())
+set($fps,getcurrentfps())
+set($list_count,array.size($list))
+set($fx_count,array.size($fx))
+
+text(10,10,"FPS: $fps", 0,0,0,255 )
+text(10,40,"Layer count: $layer_count", 0,0,0,255)
+text(10,70,"List count: $list_count", 0,0,0,255)
+text(10,100,"Score: $score", 0,0,0,255)
+text(10,130,"Fx count: $fx_count", 0,0,0,255)
+}function(debug)
+function(debug)
+
+// collision
+{
+    // get map from array
+    set($carinfo, array.get($list,$i))
+
+    // get data from map
+    set($myname, map.get($carinfo,"name"))
+    //alog("$carinfo $myname $name")
+    if($myname==$name) return($carinfo)
+    return("")
+}function(getminfo_check, $name)
+
+{
+    set($cinfo, "")
+    for($i=0;$i<array.size($list);++$i) proc( set($cinfo,function(getminfo_check, $name)) >> if($cinfo!="") break() )
+    return($cinfo)
+}function(getminfo, $name)
+
+{
+    set($cinfo, function(getminfo, $name))
+    if($cinfo=="") return()
+    set($id, array.search($list, $cinfo) )
+    function(fx::add_tillend, $fx, "coin", getposxf($name,"c"), getposyf($name,"c"), "mixkit-fairy-arcade-sparkle-866.wav")
+    if($id != -1) proc( add($score,$addnum) >> map.close($cinfo) >> array.erase($list, $id) >> removelayer($name) )
+}function(carremove, $name, $addnum)
+
+touch("press",$carprefix_r, function(carremove, getlayername(null), 1) )
+touch("press",$carprefix_g, function(carremove, getlayername(null), 5) )
+touch("press",$carprefix_b, function(carremove, getlayername(null), 10) )
+
+// reset
+{
+    set($score,0)
+    for($i=0;$i<array.size($list);++$i) proc( set($carinfo, array.get($list,$i)) >> set($myname, map.get($carinfo,"name")) >> removelayer($myname) >> map.close($carinfo) )
+    array.clear($list)
+} function(reset)
+touch("release", "reset", function(reset))
+
+{
+    set($fx,array())
+    return($fx)
+}function(fx::init)
+
+{
+    for($i=0;$i<array.size($fx);++$i) proc( set($fxmap, array.get($fx,$i)) >> set($name, map.get($fxmap,"name")) >> removelayer($name) >> map.close($fxmap) )
+    array.close($fx)
+}function(fx::deinit, $fx)
+
+{
+    set($fxmap, array.get($fx, $i) )
+    set($type, map.get($fxmap, "type") )
+    set($fxname, map.get($fxmap, "name") )
+    set($frame, getframe($fxname) )
+    set($framemax, getframecount($fxname) )
+    if($type == "tillend") if($frame >= $framemax-1) proc( removelayer($fxname) >> map.close($fxmap) >> array.erase($fx, $i) >> add($i,-1) )
+}function(fx::update_single, $fx)
+
+{
+    for($i=0;$i<array.size($fx);++$i) function(fx::update_single, $fx)
+}function(fx::update, $fx)
+
+{
+    set($fxmap, map())    
+    // set  type
+    map.set($fxmap, "type", "tillend")
+
+    // set new name and clone layer
+    set($time, gettime())
+    set($newname, "$name$time")
+    clonelayer($newname, $name)
+    play($newname)
+    pos($newname, $x, $y)
+    visible(true, $newname)
+    map.set($fxmap, "name", $newname)
+
+    // add to fx list
+    array.push_back( $fx, $fxmap )
+
+    if($sndname!="") audio($sndname, "playonce")
+}function(fx::add_tillend, $fx, $name, $x, $y, $sndname )
+
+function(fx::update, $fx)

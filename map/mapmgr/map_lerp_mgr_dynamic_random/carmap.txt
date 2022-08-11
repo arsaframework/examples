@@ -1,0 +1,114 @@
+{
+    screensize(640, 960)
+    maxsize(1003, 1004)
+
+    set($name, "car")
+
+    set($maxwp, 6)
+    int($wp[$maxwp])
+    set($wp[0], "wp1")
+    set($wp[1], "wp2")
+    set($wp[2], "wp3")
+    set($wp[3], "wp4")
+    set($wp[4], "wp5")
+    set($wp[5], "wp6")
+
+    set($sp,1)
+
+    set($carprefix, "cc")
+    set($cardelay, 500)
+    set($cartime, gettime())
+    add($cartime, $cardelay)
+ 
+    set($list, array())
+}function(init)
+
+{
+    array.close($list)
+}function(deinit)
+
+{
+  return( $v0 + $t * ($v1 - $v0) )
+}function(lerp, $v0, $v1, $t)
+
+{
+    set($carinfo, map())
+
+    set( $cartime, gettime() )
+    add( $cartime, $cartime )
+    set( $carname, "$carprefix$cartime")
+
+    map.set($carinfo, "wp_num", 0)
+    map.set($carinfo, "vel", 0.3)
+    map.set($carinfo, "velcount", 1)
+    map.set($carinfo, "name", $carname)
+    
+    clonelayer($carname, "car f=l")
+    visible(true, $carname)
+    setcolor($carname, random(1,255), random(1,255), random(1,255))
+    pos($carname, getposx($name), getposy($name))
+
+    array.push_back($list, $carinfo)
+
+    // reset spawn time
+    set($cartime, gettime())
+    add($cartime, $cardelay)    
+}function(carmgr_add)
+
+{
+    // get map from array
+    set($carinfo, array.get($list,$i))
+
+    // get data from map
+    set($wnum, map.get($carinfo,"wp_num"))
+    set($myname, map.get($carinfo,"name"))
+    set($sp, map.get($carinfo,"velcount"))
+    set($vel, map.get($carinfo,"vel"))
+
+    // get waypoint
+    set($mywp, $wp[$wnum])
+    set($tx, getposxf($mywp,"c"))
+    set($ty, getposyf($mywp, "c"))
+
+    // get car pos
+    set($x, getposx($myname))
+    set($y, getposy($myname))
+    set($zrot, getzrot($tx, $ty, $x, $y))
+    rot($myname, 0, 0, -$zrot)
+
+    set($dt,getdeltatime())
+    add($sp, -$vel*$dt)
+    if($sp < 0) set($sp,0)
+    set($x, function(lerp, $tx, $x, $sp) )
+    set($y, function(lerp, $ty, $y, $sp) )
+    pos($myname, $x, $y)
+
+    hitlayer($myname, $mywp, proc(add($wnum,1) >> set($sp,1)) )
+    
+    // save data to map
+    map.set($carinfo,"velcount", $sp )
+    map.set($carinfo,"wp_num", $wnum )
+    if($wnum>=$maxwp) proc( removelayer($myname) >> map.close($carinfo) >> array.erase($list,$i) >> add($i, -1) )
+}function(carmgr_update)
+
+// call manager
+if($cartime<gettime()) function(carmgr_add)
+for($i=0;$i<array.size($list);++$i) function(carmgr_update)
+
+// move map offset
+set($x, touch("gettouchx_diff"))
+set($y, touch("gettouchy_diff"))
+set($sp,20)
+moveoffset($x*$sp, $y*$sp)
+
+// debug data
+{
+set($layer_count,getlayercount())
+set($current_time, gettime())
+set($fps,getcurrentfps())
+set($list_count,array.size($list))
+text(10,10,"FPS: $fps", 0,0,0,255 )
+text(10,40,"Layer count: $layer_count", 0,0,0,255)
+text(10,70,"List count: $list_count", 0,0,0,255)
+}function(debug)
+function(debug)

@@ -1,0 +1,89 @@
+{
+    screensize(640, 960)
+    maxsize(1003, 1004)
+
+    set($name, "car")
+
+    set($maxwp, 6)
+    int($wp[$maxwp])
+    set($wp[0], "wp1")
+    set($wp[1], "wp2")
+    set($wp[2], "wp3")
+    set($wp[3], "wp4")
+    set($wp[4], "wp5")
+    set($wp[5], "wp6")
+
+    set($sp,1)
+
+    set($carmax, 10)
+    set($carnum, 0)
+    set($carprefix, "cc")
+    set($cardelay, 500)
+    set($cartime, gettime())
+    add($cartime, $cardelay)
+    struct($carinfo[$carmax], wp_num, name, vel, velcount)
+}function(init)
+
+{
+  return( $v0 + $t * ($v1 - $v0) )
+}function(lerp, $v0, $v1, $t)
+
+{
+    if($carnum >= $carmax) return()
+
+    set( $cartime, gettime() )
+    add( $cartime, $cartime )
+
+    set( $carinfo[$carnum].wp_num, 0 )
+    set( $carinfo[$carnum].vel, 0.3 )
+    set( $carinfo[$carnum].velcount, 1 )
+    set( $carinfo[$carnum].name, "$carprefix$cartime" )
+    clonelayer($carinfo[$carnum].name, "car f=l")
+    visible(true, $carinfo[$carnum].name)
+    pos($carinfo[$carnum].name, getposx($name), getposy($name))	
+    add($carnum, 1)
+
+    set($cartime, gettime())
+    add($cartime, $cardelay)    
+}function(carmgr_add)
+
+{
+    set($idx, $i)
+    set($wnum, $carinfo[$idx].wp_num)
+
+    // get waypoint
+    set($mywp, $wp[$wnum])
+    set($tx, getposxf($mywp,"c"))
+    set($ty, getposyf($mywp, "c"))
+
+    // get car pos
+    set($myname, $carinfo[$idx].name)
+    set($x, getposx($myname))
+    set($y, getposy($myname))
+    set($zrot, getzrot($tx, $ty, $x, $y))
+    rot($myname, 0, 0, -$zrot)
+
+    set($dt,getdeltatime())
+    set($sp, $carinfo[$idx].velcount)
+    add($sp, -$carinfo[$idx].vel*$dt)
+    if($sp < 0) set($sp,0)
+    set($x, function(lerp, $tx, $x, $sp) )
+    set($y, function(lerp, $ty, $y, $sp) )
+    pos($myname, $x, $y)
+
+    hitlayer($myname, $mywp, proc(add($wnum,1) >> set($sp,1)) )
+    if($wnum>=$maxwp) proc(set($wnum,$maxwp-1) >> set($sp,0))
+
+    set($carinfo[$idx].velcount, $sp)
+    set($carinfo[$idx].wp_num, $wnum)
+}function(carmgr_update)
+
+// call manager
+if($cartime<gettime()) function(carmgr_add)
+for($i=0;$i<$carnum;++$i) function(carmgr_update)
+
+// move map offset
+set($x, touch("gettouchx_diff"))
+set($y, touch("gettouchy_diff"))
+set($sp,20)
+moveoffset($x*$sp, $y*$sp)

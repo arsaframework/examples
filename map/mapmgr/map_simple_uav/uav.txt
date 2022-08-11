@@ -1,0 +1,21 @@
+{
+    screensize(640,960)
+}function(init)
+
+set($tx, getposxf("enemy","c"))
+set($ty, getposyf("enemy", "c"))
+
+set($x, getposx("uav"))
+set($y, getposy("uav"))
+set($zrot, getzrot($tx, $ty, $x, $y))
+rot("uav", 0, 0, -$zrot)
+draw.line($tx, $ty, $x, $y, 3)
+
+set($sp, "10")
+// x' = x + (di*vel)
+if($x < $tx) add($x, $sp)
+if($x > $tx) add($x, -$sp)
+if($y < $ty) add($y, $sp)
+if($y > $ty) add($y, -$sp)
+pos("uav", $x, $y)
+

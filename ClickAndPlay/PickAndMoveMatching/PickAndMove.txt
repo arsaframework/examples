@@ -1,0 +1,87 @@
+{
+	screensize(640,960)
+	set($prefix_obj, "obj")
+	set($prefix_point, "point")
+	set($prefix_shadow, "shadow")
+
+	function(reset)
+}function(init)
+
+{
+	set( $ox, getorix($name) )
+	set( $oy, getoriy($name) )
+	pos($name, $ox, $oy)
+	visible(true,$name)
+	builtin($name, "r=0x0x0x0x0x1")
+	setalpha($name,255)
+}function(reset_layer_pos, $name)
+
+{
+	set($state,STATE_IDLE)	
+	set($score, 0)
+	visible(false,"win")
+	getlayerall($prefix_shadow, setcolor("null", 0,0,0,255)) // set shadow all black
+	getlayerall($prefix_obj, function(reset_layer_pos,getlayername("null")) )
+}function(reset)
+
+// down on layer and moving
+if(pickup("isleft", "obj")==true) move("null", -500, 0)
+if(pickup("isright", "obj")==true) move("null", 500, 0)
+if(pickup("isup", "obj")==true) move("null", 0, -500)
+if(pickup("isdown", "obj")==true) move("null", 0, 500)
+
+// first contact
+if(pickup("press", "obj")==true) proc( setalpha("null",128) >> builtin("null", "r=0x0x10x20x0x1") )
+
+// end contact
+if(pickup("release", "obj")==true) proc( setalpha("null",255) >> builtin("null", "r=0x0x0x0x0x1") )
+
+// get current pickup layername
+set($layername, pickupgetlayername() )
+
+// check layername pickup
+if($layername == "") return()
+
+// show layer name on obj position each
+set($x,getposx($layername))
+set($y,getposy($layername))
+text($x,$y-40,"$layername",0,0,0,255)
+
+// prepare prefix
+set( $pointname, string.replace($layername, $prefix_obj, $prefix_point) )
+set( $shadowname, string.replace($layername, $prefix_obj, $prefix_shadow) )
+
+// hit function
+{
+	function(released) 
+	pos($layername,$shadowname)
+	setcolor($shadowname,255,255,255,255)
+	add($score,1)
+	visible(false,$layername)
+	set($layername,"")
+	pickupclear()
+}function(hit)
+
+// hit
+hitlayer($pointname, $layername, function(hit) )
+
+// show win
+if($score >= 3 ) visible(true,"win")
+
+// clamp pos
+set($x, getposx($layername))
+set($y, getposy($layername))
+set($w, getwidth($layername))
+set($h, getheight($layername))
+set($sw, getscreensizewidth())
+set($sh, getscreensizeheight())
+if($x < 0 ) posx($layername, 0)
+if($y < 120 ) posy($layername, 120)
+if($x > $sw-$w ) posx($layername, $sw-$w)
+if($y > $sh-$h ) posy($layername, $sh-$h)
+
+// reset game
+if(touch("release", "reset")==true) function(reset)
+
+// show score text
+text(25,10,"Score: $score", 0,0,0,255)
