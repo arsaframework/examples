@@ -1,0 +1,38 @@
+{
+	set( $name, "Group 2")
+	set( $state, 0 )
+	set( $sp, 0.2 ) // 0.1 - 1.0
+}function(init)
+
+set( $dx, touch("gettouchx_diff") )
+set( $dy, touch("gettouchy_diff") )
+
+set( $x, getposx($name) )
+set( $y, getposy($name) )
+
+add( $x, $dx )
+add( $y, $dy )
+
+if(pickup(down, $name)==true) set( $state , 0 )
+if(pickup(down, $name)==true) if(abs($dx) > 5 ) posx( $name, $x )
+if(pickup(down, $name)==true) if(abs($dy) > 5 ) posy( $name, $y )
+
+if(pickup(release, $name)==true) set($state,1)
+
+if($state==1) function(moving_origin, $name, $sp)
+
+{
+  return( $v0 + $t * ($v1 - $v0) )
+}function(lerp, $v0, $v1, $t)
+
+{
+	set( $ox, getorix($name) )
+	set( $oy, getoriy($name) )
+	set( $cx, getposx($name) )
+	set( $cy, getposy($name) )
+
+	set($cx, function(lerp, $cx, $ox, $sp) )
+	set($cy, function(lerp, $cy, $oy, $sp) )
+	posx( $name, $cx )
+	posy( $name, $cy )
+}function(moving_origin, $name, $sp)
