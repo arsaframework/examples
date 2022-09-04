@@ -6,15 +6,8 @@
 set( $dx, touch("gettouchx") )
 set( $dy, touch("gettouchy") )
 
-//set( $x, getposx($name) )
-//set( $y, getposy($name) )
-
-set( $x, $dx )
-set( $y, $dy )
-
-if(pickup(down, $name)==true) set( $state , 0 )
-if(pickup(down, $name)==true) if(abs($dx) > 5 ) posx( $name, $x )
-if(pickup(down, $name)==true) if(abs($dy) > 5 ) posy( $name, $y )
+if(pickup(down, $name)==true) posx( $name, $dx )
+if(pickup(down, $name)==true) posy( $name, $dy )
 
 set( $cx, getposx($name) )
 set( $cy, getposy($name) )

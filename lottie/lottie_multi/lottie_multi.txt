@@ -41,10 +41,10 @@
 // first playat
 for($i=0;$i<map.size($ref);++$i) if(lottie(map.getvaluebyid($ref,$i), "isreadyfirst")==true) lottie(map.getvaluebyid($ref,$i), "playat", map.getkeybyid($ref,$i))
 
-text(10,20,getcurrentfps())
+text(10,20,getcurrentfps(),10,10,10,255)
 set($ccount, lottie("", "getcachecount"))
 set($lcount, lottie("", "getcount"))
-text(10,50,"cache: $ccount, count: $lcount")
+text(10,50,"cache: $ccount, count: $lcount",10,10,10,255)
 
 if(touch("press", "reset")==true) proc( function(deinit) >> function(init) )
 if(touch("press", "clear")==true) function(clear_lottie)
