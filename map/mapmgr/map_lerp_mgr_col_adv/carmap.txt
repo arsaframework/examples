@@ -35,10 +35,6 @@
 }function(deinit)
 
 {
-  return( $v0 + $t * ($v1 - $v0) )
-}function(lerp, $v0, $v1, $t)
-
-{
     set($carinfo, map())
 
     set( $cartime, gettime() )
@@ -96,8 +92,8 @@
     set($dt,getdeltatime())
     add($sp, -$vel*$dt)
     if($sp < 0) set($sp,0)
-    set($x, function(lerp, $tx, $x, $sp) )
-    set($y, function(lerp, $ty, $y, $sp) )
+    set($x, lerp( $tx, $x, $sp) )
+    set($y, lerp( $ty, $y, $sp) )
     pos($myname, $x, $y)
 
     hitlayer($myname, $mywp, proc(add($wnum,1) >> set($sp,1)) )

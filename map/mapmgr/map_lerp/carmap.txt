@@ -17,10 +17,6 @@
     set($sp,1)
 }function(init)
 
-{
-  return( $v0 + $t * ($v1 - $v0) )
-}function(lerp, $v0, $v1, $t)
-
 set($tx, getposxf($wp[$idx],"c"))
 set($ty, getposyf($wp[$idx], "c"))
 
@@ -30,10 +26,10 @@ set($zrot, getzrot($tx, $ty, $x, $y))
 rot($name, 0, 0, -$zrot)
 
 set($dt,getdeltatime())
-add($sp, -0.5*$dt)
+add($sp, -0.1*$dt)
 if($sp < 0) set($sp,0)
-set($x, function(lerp, $tx, $x, $sp) )
-set($y, function(lerp, $ty, $y, $sp) )
+set($x, lerp($tx, $x, $sp) )
+set($y, lerp($ty, $y, $sp) )
 pos($name, $x, $y)
 
 setoffset($x-320, $y-480)

@@ -28,10 +28,6 @@
 }function(deinit)
 
 {
-  return( $v0 + $t * ($v1 - $v0) )
-}function(lerp, $v0, $v1, $t)
-
-{
     set($carinfo, map())
 
     set( $cartime, gettime() )
@@ -78,8 +74,8 @@
     set($dt,getdeltatime())
     add($sp, -$vel*$dt)
     if($sp < 0) set($sp,0)
-    set($x, function(lerp, $tx, $x, $sp) )
-    set($y, function(lerp, $ty, $y, $sp) )
+    set($x, lerp( $tx, $x, $sp) )
+    set($y, lerp( $ty, $y, $sp) )
     pos($myname, $x, $y)
 
     hitlayer($myname, $mywp, proc(add($wnum,1) >> set($sp,1)) )
@@ -103,12 +99,12 @@ moveoffset($x*$sp, $y*$sp)
 
 // debug data
 {
-set($layer_count,getlayercount())
-set($current_time, gettime())
-set($fps,getcurrentfps())
-set($list_count,array.size($list))
-text(10,10,"FPS: $fps", 0,0,0,255 )
-text(10,40,"Layer count: $layer_count", 0,0,0,255)
-text(10,70,"List count: $list_count", 0,0,0,255)
+	set($layer_count,getlayercount())
+	set($current_time, gettime())
+	set($fps,getcurrentfps())
+	set($list_count,array.size($list))
+	text(10,10,"FPS: $fps", 0,0,0,255 )
+	text(10,40,"Layer count: $layer_count", 0,0,0,255)
+	text(10,70,"List count: $list_count", 0,0,0,255)
 }function(debug)
 function(debug)
