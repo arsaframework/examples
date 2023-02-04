@@ -1,0 +1,3 @@
+{
+	screensize(640,960)
+}function(init)

@@ -1,0 +1,37 @@
+#include "buulib.lib"
+#include "widget.lib"
+
+{
+	screensize(640,960)
+	maxsize(0,0,640, 1920)
+
+	set($list, array())
+
+	getlayerall("book", function(getbooks) )
+}function(init)
+
+{
+	array.close($list)
+}function(deinit)
+
+{
+	set($name,getlayername(null))
+	set($name, string.replace($name, "book ", "") )
+	array.push_back($list, $name)
+}function(getbooks)
+
+{
+	url(function(buu::lib::getbook, $name),false,true)
+}function(callback, $name)
+
+{
+	 set($name, array.get($list,null) )
+	 function(widget::buttons::callback, $name, callback )
+}function(updatebooks)
+array.for($list, function(updatebooks))
+
+function(widget::scroll::v)
+
+textlayer("FPS", getcurrentfps())
+
+touch("release", "home", psd("ebook_buu_start.psd") )

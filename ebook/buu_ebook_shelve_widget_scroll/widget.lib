@@ -1,0 +1,54 @@
+{
+    set($szb, 1.1)
+    set($szn, 1)
+    set($hcolor, 100)
+    set($ncolor, 255)
+    if($active==true) scale($name, $szb,$szb,$szb)
+    if($active==true) setalpha($name, $hcolor)
+    if($active==false) scale($name, $szn,$szn,$szn)
+    if($active==false) setalpha($name, $ncolor)
+}function(widget::buttons::button_action, $name, $active)
+
+{
+    if(isset(allowp)==false) set($allowp,"false")
+    set($tret, "false")
+    if($allowp==true) touch("down", $name, proc(function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("press", $name, proc(set($allowp,"true")>>function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("release", $name, proc(function(widget::buttons::button_action,$name,false)>>set($tret, "true")))
+    if($tret==false) function(widget::buttons::button_action,$name,false)
+
+    set($tx, touch("gettouchx_diff"))
+    set($ty, touch("gettouchy_diff"))
+    set($tdf,5)
+    if($allowp==true) if($tx<-$tdf) set($allowp,"false")
+    if($allowp==true) if($tx>$tdf) set($allowp,"false")
+    if($allowp==true) if($ty<-$tdf) set($allowp,"false")
+    if($allowp==true) if($ty>$tdf) set($allowp,"false")
+
+    if($allowp==true) if(touch("release", $name)==true) psd($psd)
+}function(widget::buttons::psd, $name, $psd)
+
+{
+    if(isset(allowp)==false) set($allowp,"false")
+    set($tret, "false")
+    if($allowp==true) touch("down", $name, proc(function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("press", $name, proc(set($allowp,"true")>>function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("release", $name, proc(function(widget::buttons::button_action,$name,false)>>set($tret, "true")))
+    if($tret==false) function(widget::buttons::button_action,$name,false)
+
+    set($tx, touch("gettouchx_diff"))
+    set($ty, touch("gettouchy_diff"))
+    set($tdf,5)
+    if($allowp==true) if($tx<-$tdf) set($allowp,"false")
+    if($allowp==true) if($tx>$tdf) set($allowp,"false")
+    if($allowp==true) if($ty<-$tdf) set($allowp,"false")
+    if($allowp==true) if($ty>$tdf) set($allowp,"false")
+
+    if($allowp==true) if(touch("release", $name)==true) function($callback, $name)
+}function(widget::buttons::callback, $name, $callback)
+
+{
+    set($ty, touch("gettouchy_diff"))
+    set($sp, 50)
+    moveoffset(0, -$ty*$sp)
+}function(widget::scroll::v)
