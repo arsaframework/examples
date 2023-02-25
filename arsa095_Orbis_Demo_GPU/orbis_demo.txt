@@ -1,0 +1,173 @@
+{
+	screensize(640, 960)
+	set($player, "player")
+	set($enemy, "enemy")
+	set($missile, "projectile")
+	set($playerz, 0)
+	set($missilesp, 1000)
+	set($score, 0)
+	set($scoreadd, 10)
+
+	pos($player, 640/2, 960/2)
+
+	int($delay_time, 200)
+	int($missile_prefix, "ms")
+	int($miss_time, gettime())
+	add($miss_time,$delay_time)
+
+	int($enemy_delay_time, 1000)
+	int($enemy_prefix, "enenen")
+	int($enemy_time, gettime())
+	add($enemy_time,$delay_time)
+
+	visible(false, $missile)
+	visible(false, $enemy)
+
+	set($t,0.0)
+	set($bgname, "Layer 1")
+	set($oldsid, getmaterialtype($bgname) )
+	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("No Man's Starfield.txt")) )
+	settexturelayer($bgname, "canvas2.png", 1 )
+}function(init)
+
+{
+	gpu.removeshader($sid)
+}function(deinit)
+
+{
+	set($length, $x*$x + $y*$y )
+	if($length == 0.0) return($x)
+	set($length,  1.0 / sqrt($length) )
+	return($x*$length)
+}function(normalizex, $x, $y)
+
+{
+	set($length, $x*$x + $y*$y )
+	if($length == 0.0) return($y)
+	set($length,  1.0 / sqrt($length) )
+	return($y*$length)
+}function(normalizey, $x, $y)
+
+{
+	set($lx, getposx($name))
+	set($ly, getposy($name))
+	set($wx, getwidth($name))
+	set($wy, getheight($name))
+	set($sw, getscreensizewidth())
+	set($sh, getscreensizeheight())
+
+	if($lx+$wx<0) return(true)
+	if($ly+$wy<0) return(true)
+	if($lx>$sw) return(true)
+	if($ly>$sh) return(true)
+	return(false)
+}function(isoutscreen, $name)
+
+{
+	set( $enemy_time, gettime() )
+	add($enemy_time,$enemy_delay_time)
+	set($enemy_name, $enemy_prefix$enemy_time)
+	clonelayer($enemy_name, "enemy f=c")
+	visible(true, $enemy_name)
+
+	set($sw, getscreensizewidth())
+	set($sh, getscreensizeheight())
+	set($randir, random(1,4))
+
+	if($randir==1) pos($enemy_name, random(0,$sw), $sh)
+	if($randir==2) pos($enemy_name, random(0,$sw), 0)
+	if($randir==3) pos($enemy_name, $sw, random(0,$sh))
+	if($randir==4) pos($enemy_name, 0, random(0,$sh))
+
+	set($lx, getposx($player))
+	set($ly, getposy($player))
+	set($ex, getposx($enemy_name))
+	set($ey, getposy($enemy_name))
+	set($ensp, random(10,500) )
+
+	set($dx, $lx-$ex)
+	set($dy, $ly-$ey)
+	setuserstring($enemy_name, "dx", function(normalizex, $dx, $dy))
+	setuserstring($enemy_name, "dy", function(normalizey, $dx, $dy))
+	setuserstring($enemy_name, "sp", $ensp)
+
+	builtin($enemy_name, "r=0x0x360")
+}function(add_enemy)
+
+{
+	set($name,getlayername(null))
+	set($dx, getuserstring($name, "dx") )
+	set($dy, getuserstring($name, "dy") )
+	set($sp, getuserstring($name, "sp") )
+
+	move($name, $dx*$sp, $dy*$sp)
+	if(function(isoutscreen, $name)==true) removelayer($name)
+
+	hitlayerfirst($name, $player, proc( if($score>$gscore)set($gscore,$score) >> psd("obis_demo_gameover.psd")) )
+}function(update_enemy)
+
+{
+	set( $miss_time, gettime() )
+	add($miss_time,$delay_time)
+	set($missile_name, $missile_prefix$miss_time)
+	clonelayer($missile_name, "projectile f=c")
+	visible(true, $missile_name)
+	pos($missile_name, getposx($player), getposy($player))
+	rot( $missile_name, 0, 0, -$playerz )
+	set($dx, $tx-$px)
+	set($dy, $ty-$py)
+	setuserstring($missile_name, "dx", function(normalizex, $dx, $dy))
+	setuserstring($missile_name, "dy", function(normalizey, $dx, $dy))
+	setuserstring($missile_name, "sp", $missilesp)
+}function(add_mis)
+
+{
+	set($name,getlayername(null))
+	set($dx, getuserstring($name, "dx") )
+	set($dy, getuserstring($name, "dy") )
+	set($sp, getuserstring($name, "sp") )
+
+	move($name, $dx*$sp, $dy*$sp)
+	if(function(isoutscreen, $name)==true) removelayer($name)
+
+	hitlayerfirst($name, $enemy_prefix, proc( add($score, $scoreadd) >> removelayer(getlayername(null))) )
+}function(update_mis)
+
+{
+	set( $tx, touch("gettouchx") )
+	set( $ty, touch("gettouchy") )
+	//alog($tx)
+
+	set( $px, getposx($player) )
+	set( $py, getposy($player) )
+
+	set( $playerz, getzrot( $tx, $ty, $px, $py))
+	rot( $player, 0, 0, -$playerz )	
+}function(touchdown)
+
+touch(down, function(touchdown) )
+getlayerall($missile_prefix, function(update_mis))
+getlayerall($enemy_prefix, function(update_enemy))
+if($enemy_time<gettime()) function(add_enemy)
+touch(down, if($miss_time<gettime()) function(add_mis))
+
+if($score>$gscore) set($gscore,$score) 
+
+textlayerfont(scoremax_text, "Bebas-Regular.ttf", $gscore)
+textlayerfont(score_text, "Bebas-Regular.ttf", $score)
+
+set($fps, getcurrentfps() )
+textlayerfont("fps_text", "VeraMono.ttf", $fps )
+
+{
+	set($sw, getscreensizewidth())
+	set($sh, getscreensizeheight())
+	add($t,getdeltatime())
+	set($t, clamp($t,0.0,100.0))
+	setmaterialtype($bgname, $sid)
+	gpu.setconst($bgname,"iChannel0", 1)
+	gpu.setconst($bgname,"iTime", $t)
+	gpu.setconst($bgname,"iResolution", $sw, $sh, 1)
+}function(gpubg)
+
+//ifelse($fps >= 30, function(gpubg), setmaterialtype($bgname, $oldsid))
