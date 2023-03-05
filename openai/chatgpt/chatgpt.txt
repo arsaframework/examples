@@ -1,0 +1,18 @@
+#include "openai.lib"
+#include "widget.lib"
+
+{
+	screensize(640,960)
+	maxsize(0,0,640,1920)
+
+	set($token, "enter your key")
+
+	set($question, "Situation of Games and Animation Industrial in Thailand ?")
+
+	set($answer, function(openai::chatgpt, $token, $question) )
+}function(init)
+
+textarea("question", "qarea", $question) // display question
+textarea("text", "Layer 3", $answer) // display answer
+
+function(widget::scroll::v)

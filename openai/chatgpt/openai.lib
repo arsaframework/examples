@@ -1,0 +1,9 @@
+{
+	set($openai_id, curl(\"-X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{  "model": "text-davinci-003",  "prompt": "$question", "max_tokens": 1000, "temperature": 1.0 }' https://api.openai.com/v1/completions"\) )
+	set($openai_j, xml.json(curl.getresult($openai_id)) )
+	set($openai_answer, xml.value($openai_j, "choices[0]/text") ) // keep answer
+	set($openai_answer, string.strip($openai_answer)) // remove \n
+	xml.close($openai_j)
+	curl.freecmd($openai_id)
+	return($openai_answer)
+}function(openai::chatgpt, $token, $question)
