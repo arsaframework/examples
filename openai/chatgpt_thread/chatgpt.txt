@@ -1,4 +1,4 @@
-#include "openai.lib"
+﻿#include "openai.lib"
 #include "widget.lib"
 
 {
@@ -9,9 +9,15 @@
 
 	set($question, "Display about THAI education in 2023 year ?")
 	//set($question, "Situation of Games and Animation Industrial in Thailand ?")
-
-	set($answer, function(openai::chatgpt, $token, $question) )
+	set($id, function(openai::chatgptx, $token, $question) )
 }function(init)
+
+{
+	function(openai::chatgptx::close, $id)
+}function(deinit)
+
+set($answer, function(openai::chatgptx::getresult, $id) )
+if($answer != "" ) visible(false, "canvas")
 
 textarea("question", "qarea", $question) // display question
 textarea("text", "Layer 3", $answer) // display answer
