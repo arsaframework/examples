@@ -1,0 +1,29 @@
+﻿#include "openai.lib"
+#include "widget.lib"
+
+{
+	screensize(640,960)
+	maxsize(0,0,640,1920)
+
+	set($token, "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")
+
+	//set($question, "Display about THAI education in 2023 year ?")
+	//set($question, "Situation of Games and Animation Industrial in Thailand ?")
+	set($question, "introduction course syllabus in creation mobile application with chatgpt as in generic information")
+	//set($question, "Learning Outcomes chatgpt course")
+	set($id, function(openai::chatgptx, $token, $question) )
+	visible(false, "copyjson")
+}function(init)
+
+{
+	function(openai::chatgptx::close, $id)
+}function(deinit)
+
+set($answer, function(openai::chatgptx::getresult, $id) )
+if($answer != "" ) proc( visible(false, "canvas") >> visible(true, "copyjson") )
+
+touch(release, "copyjson", setclipboard($answer) )
+textarea("question", "qarea", $question) // display question
+textarea("text", "Layer 3", $answer) // display answer
+
+function(widget::scroll::v)
