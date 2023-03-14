@@ -5,7 +5,7 @@
 	screensize(640,960)
 	maxsize(0,0,640,1920)
 
-	set($token, "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")
+	set($token, "")
 
 	//set($question, "Display about THAI education in 2023 year ?")
 	//set($question, "Situation of Games and Animation Industrial in Thailand ?")
