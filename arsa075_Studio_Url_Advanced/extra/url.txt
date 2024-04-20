@@ -1,3 +1,5 @@
+#include "tr.txt"
+
 {
 	banner("ca-app-pub-5830071361163984/1793511050")
 	bannershow()
@@ -8,11 +10,11 @@
 	function(reset)
 	int($ts,0.5)
 
-	bat($ts,function(movex, "blue_clear", "r", 3000)) //bat($ts,function(movex, "blue_clear", "r", 3000)
-	bat($ts,function(movex, "blue_dot", "l", 3000))
-	bat($ts+0.5,function(movey, "DOWNLOAD", "b", 3000))
+	bat($ts,function(movex, "blue_clear", "r", 300)) //bat($ts,function(movex, "blue_clear", "r", 3000)
+	bat($ts,function(movex, "blue_dot", "l", 300))
+	bat($ts+0.5,function(movey, "DOWNLOAD", "b", 300))
 	bat($ts+0.8,function(rot_loop, "DOWNLOAD", "rotz", 0, 15, 200, 0.05, 1))
-	bat($ts+1.5,function(movex, "free", "l", 3000))
+	bat($ts+1.5,function(movex, "free", "l", 300))
 	bat($ts+1.8,function(vis, "url", "visiblex", "r", 0, 100, 300))
 	bat($ts+2.0,function(rot_loop, "url", "rotz", 0, 15, 200, 3, 5))
 
@@ -25,22 +27,22 @@
 	bat($ts,function(vis, "sarosworld official channels", "visiblex", "c", 0, 100, 300))
 
 	add($ts,3.5)
-	bat($ts,function(movex, "blue_clear", "l", 3000, true))
-	bat($ts+0.2,function(movex, "blue_dot", "l", 3000, true))
-	bat($ts,function(movex, "DOWNLOAD", "l", 3000, true))
-	bat($ts+0.2,function(movex, "free", "l", 3000, true))
+	bat($ts,function(movex, "blue_clear", "l", 300, true))
+	bat($ts+0.2,function(movex, "blue_dot", "l", 300, true))
+	bat($ts,function(movex, "DOWNLOAD", "l", 300, true))
+	bat($ts+0.2,function(movex, "free", "l", 300, true))
 	bat($ts+0.2,anim("url", "clear"))
-	bat($ts+0.2,function(movex, "url", "l", 3000, true))
+	bat($ts+0.2,function(movex, "url", "l", 300, true))
 
 	bat($ts+1,function(offset, "blue_clear", "offsety", 0, 500, 1800))
 	//bat($ts+1,function(offset, "blue_clear", "offsetx", 0, 380, 1800))
 	//bat($ts+1.5,function(offset, "blue_clear", "offsety", 0, 230, 1800))
 
-	bat($ts+2,function(move_des, "DOWNLOAD", "DOWNLOAD", "dl_point", 3000))
+	bat($ts+2,function(move_des, "DOWNLOAD", "DOWNLOAD", "dl_point", 300))
 
 	//bat($ts+3,function(offset, "blue_clear", "offsety", 230, 300, 1800))
 
-	bat($ts+3.2,function(move_des, "free", "free", "free_point", 3000,false))
+	bat($ts+3.2,function(move_des, "free", "free", "free_point", 100,false))
 	bat($ts+3.2,function(scale, "free", 5, 1, 10))
 
 	//function(scale, $name, $start, $end, $vel, $snd, $wait )
@@ -52,151 +54,6 @@
 	batplay()
 
 }function(init)
-
-{
-	if($wait=="") setstring($wait,"true")
-	anim($name, $axis, $start, $end, $vel, $wait)
-}function(offset, $name, $axis, $start, $end, $vel, $wait)
-
-{
-	visible(true,$name)
-	//anim($name,"fade",0,255,300,false)
-	if($axis=="x") anim($name,"visible",1,1,100,1,$vel)
-	if($axis=="x") anim($name,"visible",100,1,100,100,$vel)
-	if($axis=="y") anim($name,"visible",1,1,1,100,$vel)
-	if($axis=="y") anim($name,"visible",1,100,100,100,$vel)
-}function(line_in, $name, $axis, $vel )
-
-{
-	visible(true,$name)
-	if($axis=="x") anim($name,"visible",100,100,1,100,$vel)
-	if($axis=="x") anim($name,"visible",1,100,1,1,$vel)	
-	if($axis=="y") anim($name,"visible",100,100,100,1,$vel)
-	if($axis=="y") anim($name,"visible",100,1,1,1,$vel)
-	anim($name,"fade",255,0,300)
-}function(line_out, $name, $axis, $vel )
-
-{
-	visible(true,$name)
-	if($wait=="") setstring($wait,"true")
-	int($ox, getorix($name))
-	int($ox_off, $ox+$offset)
-	anim($name, "movex", $ox, $ox_off, $vel, $wait)
-	anim($name, "delay", $delay )
-	anim($name, "movex", $ox_off, $ox, $vel, $wait)
-	anim($name, "delay", $delay )
-	int($count,anim($name, "getcount"))
-	anim($name, "loop", $count-4,$count-1,$loop)
-}function(movex_loop, $name, $offset, $vel, $delay, $loop, $wait )
-
-{
-	visible(true,$name)
-	if($wait=="") setstring($wait,"true")
-	int($ox, getoriy($name))
-	int($ox_off, $ox+$offset)
-	anim($name, "movey", $ox, $ox_off, $vel, $wait)
-	anim($name, "delay", $delay )
-	anim($name, "movey", $ox_off, $ox, $vel, $wait)
-	anim($name, "delay", $delay )
-	int($count,anim($name, "getcount"))
-	anim($name, "loop", $count-4,$count-1,$loop)
-}function(movey_loop, $name, $offset, $vel, $delay, $loop, $wait )
-
-{
-	visible(true,$name)
-	if($wait=="") setstring($wait,"true")
-	anim($name, $axis, $start, $end, $vel, $wait)
-	//anim($name, "delay", $delay )
-	anim($name, $axis, $end, $start, $vel, $wait)
-	anim($name, "delay", $delay )
-	int($count,anim($name, "getcount"))
-	anim($name, "loop", $count-3,$count-1,$loop)
-}function(rot_loop, $name, $axis, $start, $end, $vel, $delay, $loop, $wait )
-
-{
-	if($wait=="") setstring($wait,"true")
-	visible(true,$name)
-	anim($name, $axis, $start, $end, $vel, $wait )
-}function(rot, $name, $axis, $start, $end, $vel, $wait )
-
-{
-	if($wait=="") setstring($wait,"true")
-	visible(true,$name)
-	anim($name, "clear" )
-	if($axis=="movex") anim($name, $axis, getorix($name), getoutx($name,$pivot_out), $vel, $wait )
-	if($axis=="movey") anim($name, $axis, getoriy($name), getouty($name,$pivot_out), $vel, $wait )
-}function(scroll, $name, $axis, $pivot_out, $vel, $wait )
-
-{
-	visible(true,$layer)
-	video($filename, play)
-	video($filename, playat, $layer)
-}function(video_play_at, $filename, $layer )
-
-{
-	visibleall($vis,$name)
-}function(visible_all_path, $name, $vis)
-
-{
-	if($wait=="") setstring($wait,"true")
-	anim($name, "audio", $snd, $wait )
-}function(audio, $name, $snd, $wait )
-
-{
-	if($wait=="") setstring($wait,"true")
-	if($snd!="") anim($name, "audio", $snd, false )
-	anim($name, "scale", $start, $start, $end, $end, $vel, $vel, $wait)
-	//anim($name, "scale", $end, $end, $start, $start, $vel, $vel, $wait)	
-}function(scale, $name, $start, $end, $vel, $snd, $wait )
-
-{
-	if($wait=="") setstring($wait,"true")
-	anim($name, "scale", $start, $start, $end, $end, $vel, $vel, $wait)
-	anim($name, "scale", $end, $end, $start, $start, $vel, $vel, $wait)
-	anim($name, "delay", $delay )
-	int($count,anim($name, "getcount"))
-	anim($name, "loop", $count-3,$count-1,$loop)
-}function(scale_loop, $name, $start, $end, $vel, $delay, $loop, $wait )
-
-
-{
-	visible(true, $name)
-	anim($name, "fade", 0, 255, 500, false)
-	anim($name, "scale", 20, 20, 1, 1, $vel)
-}function(scale_in, $name, $vel )
-
-{
-	if($wait=="") setstring($wait,"true")
-	visible(true, $name)
-	anim($name, "fade", $start, $end, $vel, $wait)
-}function(fade, $name, $start, $end, $vel, $wait)
-
-{
-	visible(true, $name)
-	setvisibleflags($name,$pivot)
-	anim($name, $axis, $start, $end, $vel)
-}function(vis, $name, $axis, $pivot, $start, $end, $vel)
-
-{
-	if($wait=="") setstring($wait,"true")
-	visible(true, $name)
-	anim($name, "move", getposx($src), getposy($src), getorix($des), getoriy($des), $vel, $vel, $wait)
-}function(move_des, $name, $src, $des, $vel, $wait)
-
-{
-	if($wait=="") setstring($wait,"true")
-	visible(true, $name)
-	if($out==true) anim($name, "movey", getoriy($name), getouty($name,$pivot), $vel, $wait)
-	if($out!=true) anim($name, "movey", getouty($name,$pivot), getoriy($name), $vel, $wait)
-}function(movey, $name, $pivot, $vel, $out, $wait)
-
-{
-	if($wait=="") setstring($wait,"true")
-	//alog("name = $name wait = $wait")
-	visible(true, $name)
-	if($out==true) anim($name, "movex", getorix($name), getoutx($name,$pivot), $vel, $wait)
-	if($out!=true) anim($name, "movex", getoutx($name,$pivot), getorix($name), $vel, $wait)
-}function(movex, $name, $pivot, $vel, $out, $wait)
 
 {
 	visible(false)

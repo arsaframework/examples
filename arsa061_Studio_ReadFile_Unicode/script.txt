@@ -1,6 +1,6 @@
 {
 	screensize(960,640)
-	//setbgcolor(255,255,255,255)
+	setbgcolor(255,255,255,255)
 	function(loadfont)
 }function(init)
 
@@ -22,6 +22,6 @@
 	fclose($fp, "r")
 }function(loadfont)
 
-text(0,0,$msg_th, 0,0,0,255)
-text(ch.ttf, 35, 0,80,$msg_ch,100,100,255,255)
-text(jp.ttf, 30, 0,425,$msg_jp,255,0,200,255)
+text(50,0,$msg_th, 100,100,100,255)
+text(ch.ttf, 35, 50,80,$msg_ch,100,100,255,255)
+text(jp.ttf, 30, 50,425,$msg_jp,255,0,200,255)

@@ -1,0 +1,42 @@
+#include <widget.lib>
+
+{
+	screensize(640, 1351)
+	visibleall(false, pass)
+
+	set($totalnum, 10)
+	set($passcode, 120232)
+	set($enter, "")
+	set($toknum, num)
+	set($wrong, 0)
+}function(init)
+
+{
+	set( $name, string.replace( $name, $toknum, "") )
+	set( $enter, string.cat( $enter, $name ) )
+}function(button_event, $name)
+
+{
+	lint($name, "$toknum$i")
+	function(widget::buttons::callback2, $name, button_event)
+}function(button_update)
+
+set( $size, string.size($enter) )
+if($size > 0) visible(true, pass0)
+if($size > 1) visible(true, pass1)
+if($size > 2) visible(true, pass2)
+if($size > 3) visible(true, pass3)
+if($size > 4) visible(true, pass4)
+if($size > 5) visible(true, pass5)
+if($size > 5) ifelse($enter == $passcode, psd(home1.psd), proc( add($wrong,1) >> function(button_clear)) )
+
+{
+	visibleall(false, pass)
+	set($enter,"")
+}function(button_clear)
+
+touch(release, cancel, function(button_clear))
+touch(release, emergency, phonecall(911))
+if($wrong >= 3) exit()
+
+for($i=0; $i<$totalnum; ++$i) function(button_update)

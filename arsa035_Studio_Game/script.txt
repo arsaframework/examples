@@ -1,4 +1,6 @@
 {
+	setlandscape()
+	screensize(640, 960)
 	int($score,0)
 	audio(hit.wav,load)
 	audio(win.wav,load)

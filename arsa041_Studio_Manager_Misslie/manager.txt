@@ -11,7 +11,7 @@
 	set( $miss_time, gettime() )
 	add($miss_time,$delay_time)
 	set($missile_name, $missile_prefix$miss_time)
-	clonelayer($missile_name, m1)
+	clonelayer($missile_name, "m1 f=c")
 	visible(true, $missile_name)
 	pos($missile_name, getposx(jet), getposy(jet))	
 }function(add_mis)

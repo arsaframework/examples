@@ -1,0 +1,4 @@
+{
+	ifreset()
+}function(deinit)
+ifcount("if count", 1, 3) alog("test if count")

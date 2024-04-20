@@ -1,0 +1,6 @@
+{
+	set($buu_lib_url, "https://www.2ebook.com/new/pdf-viewer-master/external/pdfjs-2.1.266-dist/web/viewer.php?file=")
+	set($bookid, string.cat($bookid, ".pdf") )
+	set($buu_lib_url, string.cat($buu_lib_url, $bookid) )
+	return($buu_lib_url)
+}function(buu::lib::getbook, $bookid)

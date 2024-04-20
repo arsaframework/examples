@@ -60,7 +60,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\AndroidManifest.xml"
+			RelativePath="AndroidManifest.xml"
 			>
 		</File>
 		<File

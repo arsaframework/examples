@@ -3,6 +3,7 @@
   // LIGHT_ON
 
 {
+	setlandscape()
 	screensize(960,640)
 	int($state,LIGHT_OFF)
 }function(init)

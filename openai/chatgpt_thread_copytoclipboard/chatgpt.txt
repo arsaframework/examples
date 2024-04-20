@@ -5,12 +5,15 @@
 	screensize(640,960)
 	maxsize(0,0,640,1920)
 
-	set($token, "")
+	set($token, "xxx")
 
 	//set($question, "Display about THAI education in 2023 year ?")
 	//set($question, "Situation of Games and Animation Industrial in Thailand ?")
-	set($question, "introduction course syllabus in creation mobile application with chatgpt as in generic information")
+	//set($question, "introduction course syllabus in creation mobile application with chatgpt as in generic information")
 	//set($question, "Learning Outcomes chatgpt course")
+	//set($question, "ffmpeg 6.0 tutorial display video sync with audio in c sourcecode")
+	//set($question, "theory of PHP connect mysql with CRUD system display in Markdown format")
+	set($question, "ผลกระทบวงกว้าง Engagement activities and impact pathway ด้านเศรษฐกิจ STEM & CODING")
 	set($id, function(openai::chatgptx, $token, $question) )
 	visible(false, "copyjson")
 }function(init)

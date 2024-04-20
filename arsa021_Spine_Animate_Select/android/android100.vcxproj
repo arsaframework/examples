@@ -12,9 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="AndroidManifest.xml" />
+    <Xml Include="build.xml" />
+    <Xml Include="path.xml" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="jni\Android.mk" />
+    <None Include="jni\Application.mk" />
+    <None Include="project.properties" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F8050E62-34B9-4F83-A90B-709DC3CCD37F}</ProjectGuid>

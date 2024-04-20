@@ -1,0 +1,88 @@
+{
+	set( $ovy, 300 )
+
+	screensize(640,960) // set screensize
+	maxsize(0, 0-$ovy, 1150, 4140+$ovy) // set scene maxsize
+	set( $ox, (1150-640)/2 ) // center offset x
+	set( $oy, 4140-960 ) // buttom offset y
+	set( $osp, 30 ) // offset speed
+
+	setorder("bg bg hud", 0)
+	setorder("croc hud", 0)
+	setorder("bun11 copy hud", 0)
+	
+
+	set($sp, 1000)
+	set($fric, -300)
+	set($acc, 0)
+	set($dir, 0)
+	set($yd, 0)
+}function(init)
+
+{
+	set($acc, $a)
+	set($dir, $d)
+}function(setdir, $a, $d)
+
+{
+	set($acc, 0)
+	set($dir, 0)
+}function(stop)
+
+{
+	//set( $yd, touch("gettouchy_diff") )
+	set( $yd, $ty)
+	set( $ty, 0 )
+	//alog($yd)
+	if($yd>0) set($dir, 1)
+	if($yd<0) set($dir, -1)
+	set( $yd, abs($yd) )
+}function(get_yd)
+
+// move offset var
+//if( touch("ismoving") == true ) touch("isup", function(setdir, $sp, -1))
+//if( touch("ismoving") == true ) touch("isdown", function(setdir, $sp, 1))
+
+//if( touch("release") == true ) set( $yd, touch("gettouchy_diff_fromstart") )
+if( touch("release") == true ) function(get_yd)
+text(10, 100, "ys: $yd dir: $dir")
+//if( touch("release") == true ) if( touch("gettime") < 0.3 ) alog($yd)
+//if( touch("release") == true ) function(setdir, abs($yd), $yd)
+
+{
+	set($ty,touch("gettouchy_diff"))
+	add($oy,-$ty)
+	set( $yd, 0)
+}function(move)
+
+if( touch("down") == true ) function(move)
+//if( touch("down") == true ) 
+if($yd > 0) proc( add($oy,-($yd*$dir)) >> add($yd,-0.9) )
+
+//if( touch("ismoving") == true ) add($oy,$ty)
+//set($oy, )
+//alog($ty)
+//touch("isup", add($oy,$ty))
+//touch("isdown", add($oy,$ty))
+
+//touch("isleft", add($ox,-$osp))
+//touch("isright", add($ox,$osp))
+
+//set($delta, getdeltatime() )
+//add( $oy, ($acc*$delta)*$dir)
+//add($acc, $fric*$delta)
+//if($acc < 0) function(stop)
+
+// pack offset var
+if($ox <= 0) set($ox,0)
+if($ox >= 1150-640) set($ox,1150-640)
+if($oy <= 0-$ovy) proc( set($oy,0-$ovy)  >> set($yd, 0) )
+if($oy >= (4140-960)+$ovy) proc( set($oy,(4140-960)+$ovy) >> set($yd, 0) )
+
+if(touch("up")==true) if($oy <= 0)  add($oy,$osp)
+if(touch("up")==true) if($oy >= (4140-960)) add($oy,-$osp)
+//alog($oy)
+
+setoffset( $ox, $oy ) // move offset
+
+text(10, 70, "ox: $ox, oy: $oy, acc: $acc") // show debug ox oy

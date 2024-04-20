@@ -1,7 +1,9 @@
 {
+	setlandscape()
 	screensize(960,640)
 	function(reset)
 	setvisibleflags("gage","l")
+	setbgcolor(100,100,100,255)
 }function(init)
 
 {

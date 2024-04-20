@@ -1,0 +1,104 @@
+{
+	screensize(640,960)
+	set($state, 0)
+	set($t,0.0)
+	set($sw, getscreensizewidth())
+	set($sh, getscreensizeheight())
+
+	set($mid, map())	
+	function(add_shader, $mid, "Layer 3", "vs.txt", "canny.frag")
+	function(add_shader, $mid, "Layer 4", "vs.txt", "simple.txt")	
+	function(add_shader, $mid, "caption", "vs.txt", "shimmer.txt")
+	
+	settexturelayer("caption", "shimmer", 1)
+
+	set($weak,0.15)
+	set($strong,0.3)
+}function(init)
+
+{
+	if(touch(down, $nameout) == false) return()
+
+	touch("isleft", builtin($namein, "movein=0x2500x1"))
+	touch("isleft", builtin($nameout, "moveout=0x2500x0"))
+	touch("isleft", proc(set($state, $state_change) >> touchclear()) )
+}function(update_isleft, $nameout, $namein, $state_change)
+
+{
+	if(touch(down, $nameout) == false) return()
+
+	touch("isright", builtin($namein, "movein=0x2500x0"))
+	touch("isright", builtin($nameout, "moveout=0x2500x1"))
+	touch("isright", proc(set($state, $state_change) >> touchclear()) )
+}function(update_isright, $nameout, $namein, $state_change)
+
+if($state== 0) function(update_isleft, "Layer 3","Layer 4", 1)
+if($state== 1) function(update_isright, "Layer 4","Layer 3", 0)
+
+ifelse($state== 0, visible(false,"moveleft"), visible(true,"moveleft"))
+ifelse($state== 1, visible(false,"moveright"), visible(true,"moveright"))
+
+{
+	function(remove_shader, $mid)
+	map.close($mid)
+	alog(gpu.getshadercount())
+}function(deinit)
+
+{
+	set( $sid, gpu.addshader($vs_filename, $ps_filename) )	
+	map.set($map_id, $layer, $sid )
+	setmaterialtype($layer, $sid)
+}function(add_shader, $map_id, $layer, $vs_filename, $ps_filename)
+
+{
+	for($i=0; $i<map.size($map_id); ++$i ) gpu.removeshader(map.getvaluebyid($map_id,$i))
+}function(remove_shader, $map_id )
+
+{
+	set($name, map.getkeybyid($map_id, $num) )
+	
+	gpu.setconst($name,"uTextureUnit", 0)
+
+	//gpu.setconst($name,"uResolution", $sw, $sh, 1)
+	gpu.setconst($name,"uResolution", getwidth($name), getheight($name), 1)
+	gpu.setconst($name,"uWeakThreshold", $weak)
+	gpu.setconst($name,"uStrongThreshold", $strong)
+}function(update_shader, $map_id, $num)
+
+for($i=0; $i<map.size($mid); ++$i ) function(update_shader, $mid, $i)
+
+textlayer("FPS", getcurrentfps(), 10,10,10,255)
+
+{
+	lint($framemax, 1)
+	lint($start, getposx($bgname) )
+	lint($end, getwidth($bgname) )
+	lint($cursorw,  getwidth($cursor) )
+	lint($cursorpos,  $start )
+
+	lint($x, touch(gettouchx) )
+	if( pickup(isright, $cursor)==true ) posx($cursor, $x)
+	if( pickup(isleft, $cursor)==true ) posx($cursor, $x)
+
+	// pack cursor
+	set($x, getposx($cursor) )
+	if($x <= $start) posx($cursor, $start)
+	if($x >= ($start+$end)-$cursorw) posx($cursor, ($start+$end)-$cursorw)
+
+	// set gage
+	set($x, getposx($cursor) )
+	lint($percent, (($x-$start)*100)/($end-$cursorw) ) // calculate percent
+	setvisiblepercent($gagename, $percent, 100)
+
+	lfloat($ff, ($percent*$framemax)/100 )
+	return($ff)
+}function(slidebar, $cursor, $gagename, $bgname)
+
+
+set($strong, function(slidebar, "cursor1", "loadingbar1", "bg1") )
+set($weak, function(slidebar, "cursor2", "loadingbar2", "bg2") )
+textlayerfont("frametext1", "DisposableDroidBB.ttf", $strong, 0, 151, 184)
+textlayerfont("frametext2", "DisposableDroidBB.ttf", $weak, 0, 151, 184)
+
+//touch(release, "save", savelayertoimage("Layer 3", "canny.png") )
+touch(release, "save", savescreenshot() )

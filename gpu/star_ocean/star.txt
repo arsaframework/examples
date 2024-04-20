@@ -1,0 +1,98 @@
+{
+	screensize(640,960)
+	set($state, 0)
+	set($t,0.0)
+	set($sw, getscreensizewidth())
+	set($sh, getscreensizeheight())
+
+	set($mid, map())	
+	function(add_shader, $mid, "Layer 8", "vs.txt", "ocean.txt")
+	function(add_shader, $mid, "Layer 9", "vs.txt", "explosion.txt")
+	function(add_shader, $mid, "Layer 3", "vs.txt", "Main Sequence Star.txt")
+	function(add_shader, $mid, "Layer 7", "vs.txt", "Phantom Star for CineShader.txt")
+	function(add_shader, $mid, "Layer 5", "vs.txt", "Star Nest.txt")
+	function(add_shader, $mid, "Layer 6", "vs.txt", "The Universe Within.txt")
+	function(add_shader, $mid, "Layer 4", "vs.txt", "Warp Speed 2.txt")
+	function(add_shader, $mid, "caption", "vs.txt", "shimmer.txt")
+	
+	settextureclamp("caption", mirror)
+	settextureclamp("Layer 3", mirror)
+	settexturelayer("caption", "shimmer", 1)
+	settexturelayer("Layer 3", "92d7758c402f0927011ca8d0a7e40251439fba3a1dac26f5b8b62026323501aa.jpg", 3 )
+	settexturelayer("Layer 9", "canvas.png", 3 )
+	settexturelayer("Layer 9", "canvas2.png", 4 )
+
+}function(init)
+
+{
+	touch("isleft", builtin($namein, "movein=0x2500x1"))
+	touch("isleft", builtin($nameout, "moveout=0x2500x0"))
+	touch("isleft", proc(set($state, $state_change) >> touchclear()) )
+}function(update_isleft, $nameout, $namein, $state_change)
+
+{
+	touch("isright", builtin($namein, "movein=0x2500x0"))
+	touch("isright", builtin($nameout, "moveout=0x2500x1"))
+	touch("isright", proc(set($state, $state_change) >> touchclear()) )
+}function(update_isright, $nameout, $namein, $state_change)
+
+if($state== 0) function(update_isleft, "Layer 3","Layer 4", 1)
+if($state== 1) function(update_isleft, "Layer 4","Layer 5", 2)
+if($state== 2) function(update_isleft, "Layer 5","Layer 6", 3)
+if($state== 3) function(update_isleft, "Layer 6","Layer 7", 4)
+if($state== 4) function(update_isleft, "Layer 7","Layer 8", 5)
+if($state== 5) function(update_isleft, "Layer 8","Layer 9", 6)
+
+
+if($state== 6) function(update_isright, "Layer 9","Layer 8", 5)
+if($state== 5) function(update_isright, "Layer 8","Layer 7", 4)
+if($state== 4) function(update_isright, "Layer 7","Layer 6", 3)
+if($state== 3) function(update_isright, "Layer 6","Layer 5", 2)
+if($state== 2) function(update_isright, "Layer 5","Layer 4", 1)
+if($state== 1) function(update_isright, "Layer 4","Layer 3", 0)
+
+ifelse($state== 0, visible(false,"moveleft"), visible(true,"moveleft"))
+ifelse($state== 6, visible(false,"moveright"), visible(true,"moveright"))
+
+{
+	function(remove_shader, $mid)
+	map.close($mid)
+	//alog(gpu.getshadercount())
+}function(deinit)
+
+{
+	set( $sid, gpu.addshader($vs_filename, $ps_filename) )	
+	map.set($map_id, $layer, $sid )
+	setmaterialtype($layer, $sid)
+}function(add_shader, $map_id, $layer, $vs_filename, $ps_filename)
+
+{
+	for($i=0; $i<map.size($map_id); ++$i ) gpu.removeshader(map.getvaluebyid($map_id,$i))
+}function(remove_shader, $map_id )
+
+{
+	set($name, map.getkeybyid($map_id, $num) )
+	
+	gpu.setconst($name,"uTextureUnit", 0)
+	gpu.setconst($name,"uTextureUnit2", 1)
+	gpu.setconst($name,"iChannel0", 3)
+	gpu.setconst($name,"iChannel2", 4)
+
+	//set($sec,gettime())
+	//gpu.setconst($name,"iTime", $sec/1000.0)
+	gpu.setconst($name,"iTime", $t)
+
+	gpu.setconst($name,"iResolution", $sw, $sh, 1)
+
+	gpu.setconst($name,"iMouse", 0, 960, 1.0, 0.0)
+}function(update_shader, $map_id, $num)
+
+add($t,getdeltatime())
+set($t, clamp($t,0.0,10.0))
+//set($t,gettime())
+//set($t,$t/1000.0)
+
+for($i=0; $i<map.size($mid); ++$i ) \
+	function(update_shader, $mid, $i)
+
+textlayer("FPS", getcurrentfps(), 10,10,10,255)

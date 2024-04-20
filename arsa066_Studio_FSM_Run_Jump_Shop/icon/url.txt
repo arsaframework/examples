@@ -1,7 +1,0 @@
-arsa066_Studio_FSM_Run_Jump_Shop
-
-https://youtu.be/s5NfEQvHxJs
-
-ARSA Framework performance testing: real-time rendering with ARSA script and 1,116 coins to collision detect between characters each.
-
-http://www.arsa.ai/license

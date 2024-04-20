@@ -3,6 +3,13 @@
 }function(init)
 
 int($score, 79)
+ifelse($score>=80,set($grade,A),\
+	ifelse($score>=70,set($grade,B),\
+		ifelse($score>=60,set($grade,C),\
+			ifelse($score>=50,set($grade,D),set($grade,F) )\
+		)\
+	)\
+)
+
 text(10,10,"Score: $score")
-ifelse($score>=80,set($grade,A),ifelse($score>=70,set($grade,B),ifelse($score>=60,set($grade,C),ifelse($score>=50,set($grade,D),set($grade,F)))))
 text(10,40,"Grade is: $grade")

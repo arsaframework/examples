@@ -1,0 +1,69 @@
+{
+	screensize(640,960)
+	set($name, "combo.mpg" )
+
+
+	function(play_video)
+
+	set($frame, 0 )
+	set($framemax, audio("$name", getdurationend))
+
+	set($bgname, "bg" )
+	set($start, getposx($bgname) )
+	set($end, getwidth($bgname) )
+
+	set($cursor, "cursor" )
+	set($cursorw,  getwidth($cursor) )
+	set($cursorpos,  $start )
+
+	set($gagename, "loadingbar" )
+
+	set($cursorpercent, 0 )
+	
+}function(init)
+
+{
+	video($name,clearplayat,video)
+}function(deinit)
+
+{
+	video($name,play)
+	video($name,playat,video)
+}function(play_video)
+
+touch(release, video($name,isend,function(play_video)))
+video($name,isend,visible(false,playing))
+video($name,!isend,visible(true,playing))
+video($name,isend,visible(true,msg))
+video($name,!isend,visible(false,msg))
+
+video($name,!isend, set($dr, audio("$name", getduration) ) )
+//textlayer( "bg_cur", $dr )
+//textlayer( "bg_time", $framemax )
+
+set($x, touch(gettouchx) )
+if( pickup(isright, $cursor)==true ) posx($cursor, $x)
+if( pickup(isleft, $cursor)==true ) posx($cursor, $x)
+
+// pack cursor
+set($x, getposx($cursor) )
+
+set($cursorpercent, ($dr*100)/$framemax)
+set($x, $start+ (($cursorpercent*($end-$cursorw))/100) )
+posx($cursor, $x)
+//alog( $start $cursorpercent $end $x)
+if($x <= $start) posx($cursor, $start)
+if($x >= ($start+$end)-$cursorw) posx($cursor, ($start+$end)-$cursorw)
+
+// set gage
+set($x, getposx($cursor) )
+set($percent, (($x-$start)*100)/($end-$cursorw) ) // calculate percent
+setvisiblepercent($gagename, $percent, 100)
+
+// sync lottie frame
+set($ff, ($percent*$framemax)/100 )
+set( $ff, floor($ff) )
+lottie($lt, seek, $ff)
+
+textlayer("frametext", $ff )
+

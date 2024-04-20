@@ -52,7 +52,13 @@
 	if($y > $target_y) add($y,-$speed)
 	if($y < $target_y) add($y,$speed)	
 	pos(mu,$x,$y)
-	!isvisible($target_name, proc( set($found,0) >> set($dist,99999) >> setstring($mu_state , "MU_THINKING" ))  )
+	!isvisible($target_name, \
+				proc( \
+					set($found,0) >> \
+					set($dist,99999) >> \
+					setstring($mu_state , "MU_THINKING" ) \
+					) \
+			   ) // !isvisible
 }function(mu_walk)
 
 {
@@ -63,7 +69,11 @@
 	//alog("mu_walk_spawn: $target_name, $ii")
 	builtin($target_name, "r=0x0x360")
 }function(mu_walk_spawn)
-if($mu_state==MU_THINKING) proc( getlayerall(boss,function(mu_thinking)) >> function(mu_walk_spawn) )
+if($mu_state==MU_THINKING) \
+	proc( \
+			getlayerall(boss,function(mu_thinking)) >> \
+			function(mu_walk_spawn) \
+		)
 if($mu_state==MU_WALK) function(mu_walk)
 
 !isvisibleall(boss,text(Nithan.ttf, 120, 30, 420, COMPLETED,0,0,0,255 ))
@@ -90,7 +100,13 @@ text(TS-Prachachon-NP.ttf, 50, 10, 80, Score: $score, 0,0,0,255)
 	int($step,120)
 	int($i,0)
 	int($j,0)
-	getlayerall(boss, proc( function(enemy_square) >> visible(true,null) >> setcolor(null,255,255,255)))
+	getlayerall(boss, \
+				proc( \
+						function(enemy_square) >> \
+						visible(true,null) >> \
+						setcolor(null,255,255,255) \
+					) \
+				)
 	anim("","clearall")
 }function(reset_score)
 
@@ -100,7 +116,15 @@ text(TS-Prachachon-NP.ttf, 50, 10, 80, Score: $score, 0,0,0,255)
 	set($dist,99999)
 	set($found,0)
 	set($score,0)	
-	getlayerall(boss,proc( set($x,random(0,540)) >> set($y,random(120,892)) >> pos(null,$x,$y) >> visible(true,null) >> setcolor(null,255,255,255)))
+	getlayerall(boss, \
+					proc( \
+							set($x,random(0,540)) >> \
+							set($y,random(120,892)) >> \
+							pos(null,$x,$y) >> \
+							visible(true,null) >> \
+							setcolor(null,255,255,255) \
+						)\
+				)
 	anim("","clearall")
 }function(reset_random)
 

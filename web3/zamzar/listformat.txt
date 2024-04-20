@@ -1,0 +1,8 @@
+{
+
+	set($id, curl("curl https://api.zamzar.com/v1/formats/doc -u xxx") )
+	string.tofile( "zamzar_format.json", curl.getresult($id))
+	xml.fsave("zamzar_format.json", json, "zamzar_format.xml", xml)
+
+	curl.freecmd($id)
+}function(init)

@@ -1,2 +1,0 @@
-Hello World
-This is write text to file.

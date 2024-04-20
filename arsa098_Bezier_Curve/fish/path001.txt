@@ -1,0 +1,43 @@
+{
+	setlandscape()
+	screensize(960,640)
+	set($wav, gpu.addshader(vs.txt, wave.frag) )
+	set($name, Layer 1)
+	setmaterialtype($name, $wav)
+
+	set($sp, 7)
+	anim(Shape 1, spline, 3, $sp, 0, 1, -180)
+	anim(Shape 1, spline, 1, $sp, 0, 1, -180)
+	anim(Shape 1, spline, 2, $sp, 0, 1, -180)
+	anim(Shape 1, spline, 3, $sp, 1, 1, -180)
+	anim(Shape 1, loop, 0, 3, 0 )
+
+	anim(Shape 2, spline, 2, $sp, 0, 1, 0)
+	anim(Shape 2, spline, 2, $sp, 1, 1, 0)
+	anim(Shape 2, loop, 0, 1, 0 )
+
+	anim(Shape 3, spline, 1, $sp, 0, 1, 270)
+	anim(Shape 3, spline, 1, $sp, 1, 1, 270)
+	anim(Shape 3, loop, 0, 1, 0 )
+
+	anim(Shape 4, spline, 0, $sp, 1, 1, 225, true, false)
+	anim(Shape 4, spline, 0, $sp, 0, 1, 225, true, false)
+	anim(Shape 4, loop, 0, 1, 0 )
+
+	anim(Shape 5, spline, 2, $sp, 1, 1, 0)
+	anim(Shape 5, spline, 2, $sp, 0, 1, 0)
+	anim(Shape 5, loop, 0, 1, 0 )	
+}function(init)
+
+{
+	gpu.removeshader($wav)	
+}function(deinit)
+
+draw.layer(Layer 1, -1, 0)
+gpu.setconst($name,"uTextureUnit", 0)
+gpu.setconst($name,"time", getdeltatime())
+gpu.setconst($name,"waveLength", 100.0 )
+gpu.setconst($name,"waveSpeed", 0.01 )
+gpu.setconst($name,"waveRow", 0.0, 1.0) 
+
+textlayer(fps, getcurrentfps())

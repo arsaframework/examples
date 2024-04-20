@@ -7,6 +7,7 @@ void init()
 	json = arsa_AddJson();
 	json->load("data/spineboy.json");
 	json->setPosition(irr::core::vector3df(320,960,1));
+	json->setScale(irr::core::vector3df(0.9f));
 	json->setAnimation("run");
 
 	g_psd->load("crosshair.psd");

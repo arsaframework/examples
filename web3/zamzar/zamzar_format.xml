@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<name>doc</name>
+<targets>
+	<name>bmp</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>docx</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>gif</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>html</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>html5</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>html5-1page</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>jpg</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>md</name>
+	<credit_cost>1</credit_cost>
+</targets>
+<targets>
+	<name>mht</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>mp3</name>
+	<credit_cost>3</credit_cost>
+</targets>
+<targets>
+	<name>odt</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>pcx</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>pdf</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>pdfa1a</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>pdfa1b</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>png</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>ps</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>thumbnail</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>tiff</name>
+	<credit_cost>2</credit_cost>
+</targets>
+<targets>
+	<name>txt</name>
+	<credit_cost>2</credit_cost>
+</targets>

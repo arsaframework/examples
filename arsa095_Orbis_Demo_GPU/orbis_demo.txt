@@ -26,7 +26,7 @@
 	set($t,0.0)
 	set($bgname, "Layer 1")
 	set($oldsid, getmaterialtype($bgname) )
-	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("No Man's Starfield.txt")) )
+	set( $sid, gpu.addshader("vs.txt", "No Man's Starfield.txt" ))
 	settexturelayer($bgname, "canvas2.png", 1 )
 }function(init)
 
@@ -103,7 +103,9 @@
 	move($name, $dx*$sp, $dy*$sp)
 	if(function(isoutscreen, $name)==true) removelayer($name)
 
-	hitlayerfirst($name, $player, proc( if($score>$gscore)set($gscore,$score) >> psd("obis_demo_gameover.psd")) )
+	hitlayerfirst($name, $player, \
+		proc( if($score>$gscore)set($gscore,$score) >> \
+				psd("obis_demo_gameover.psd")) )
 }function(update_enemy)
 
 {
@@ -130,7 +132,12 @@
 	move($name, $dx*$sp, $dy*$sp)
 	if(function(isoutscreen, $name)==true) removelayer($name)
 
-	hitlayerfirst($name, $enemy_prefix, proc( add($score, $scoreadd) >> removelayer(getlayername(null))) )
+	hitlayerfirst($name, $enemy_prefix, \
+					proc( \
+							add($score, $scoreadd) >> \
+							removelayer(getlayername(null)) \
+						) \
+				)
 }function(update_mis)
 
 {

@@ -1,0 +1,73 @@
+{
+	//set($lt_name, "145040-dinosaur-sticker.json" )
+	set($lt_name, "https://lottie.host/c571542b-5691-4e7b-93cc-521330eb09f0/bUnSSopK63.json")
+	set($lt_canvas, "canvas" )
+	set($coin_snd, "coin.mp3" )
+	set($dino_snd, "dino.mp3" )	
+
+	audio($coin_snd, load)
+	audio($dino_snd, load)
+
+	//lottie($lt_name, cache)
+	set($lt, lottie($lt_name, load) )	
+
+	set($frame, 0 )
+	set($fmax, 2 )	
+	set($ftime, 100 )
+	set($framedelay, gettime() )
+
+	set($state, 0)
+	set($score, 0 )
+}function(init)
+
+{
+	lottie($lt, playat, $lt_canvas)
+	lottie($lt, loop, once)
+	set($state, 1)
+}function(lottie_ready)
+
+{
+        lottie($lt, "clearplayat", $lt_canvas) // clear playat
+        lottie($lt, "clear") // MUST clear lottie by id
+        lottie($lt_name, "clearcache") // MUST clear cache by filename
+}function(deinit)
+
+{
+	builtin( $lt_canvas, "scale=1.0x1.1x0.8x0x1")
+	lottie($lt, "play")
+	set($state, 2)
+}function(start_spawn)
+
+{
+	if( gettime() > $framedelay ) proc( set($framedelay, gettime()) >> add($framedelay, $ftime) >> add( $frame, 1 ))
+	if( $frame > $fmax ) set( $frame, 0 )
+	lottie( $lt, seek, $frame )
+	if(touch(release, $lt_canvas)==true) set($state, 3)
+}function(start)
+
+{
+	anim( $lt_canvas, clearall )
+	set($state, 4)
+	add($score,1)
+	audio($coin_snd, playonce)
+}function(update_spawn)
+{
+	lottie($lt, "isend", set($state, 1))
+	set($fc, lottie($lt, getframe ) )
+	if( $fc > 60 ) if( $fc < 70 ) audio($dino_snd)
+}function(update)
+
+if(lottie($lt, isreadyfirst)==true) function(lottie_ready)
+
+if( $state == 1 ) function(start_spawn)
+if( $state == 2 ) function(start)
+if( $state == 3 ) function(update_spawn)
+if( $state == 4 ) function(update)
+
+textlayerfont("scoretext", "DisposableDroidBB.ttf", $score, 0, 151, 184)
+
+//set($ff, lottie($lt, getframe ) )
+//set($fend, lottie($lt, getframecount ) )
+
+//textlayerfont("frametext", "DisposableDroidBB.ttf", "$fend $fc $ff $state", 0, 151, 184)
+touch(release, "home", psd("lottie_home.psd"))

@@ -1,0 +1,8 @@
+{
+	ifreset()
+}function(deinit)
+
+ifcount("if count 1", 1, 3) alog("test if count 1")
+iftime("if time 1", 1, 3000) alog("test if time 1")
+iftime("if time 2", 1, 1000) ifcount("if count 2", 1, 3) alog("test if time 2 and count 2")
+ifcount("if count 3", 1, 3) iftime("if time 3", 1, 10) alog("test if count 3 and time 3")

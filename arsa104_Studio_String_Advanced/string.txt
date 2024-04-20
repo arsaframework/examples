@@ -1,0 +1,131 @@
+﻿{
+	set($str, "hello - how are you?")
+
+	alog( ======simple string function========== )
+	alog( string.empty($str) ) // result: false
+	alog( string.empty("") ) // result: true
+	alog( string.size($str) ) // result: 20
+	alog( string.replacewhitespace(\"\thello\thow \nare you?"\) ) // result: "	hello	how are you?"
+	alog( string.cat($str," [end]") ) // result: "hello - how are you? [end]"
+	alog( string.erase($str,8) ) // result: "hello - ow are you?"
+	alog( string.sub($str,8, 3) ) // result: "how"
+	alog( string.replace($str,"you", "me") ) // result: "hello - how are me?"
+	alog( string.charat($str,8) ) // result: h
+	alog( string.upper($str) ) // result: "HELLO - HOW ARE YOU?"
+	alog( string.lower($str) ) // result: "hello - how are you?"
+	alog( string.find($str,"h") ) // result: 0
+	alog( string.findlast($str,"h") ) // result: 8	
+	alog( string.findclearfirst($str,"h") ) // result: "ello - how are you?"
+	alog( string.findclearlast($str,"?") ) // result: "hello - how are you"
+	alog( string.addprefix($str,"john: ") ) // result: "john: hello - how are you?"
+	alog( string.addsuffix($str," [end]") ) // result: "hello - how are you? [end]"
+	alog( string.tokn($str,2) ) // result: "how"
+	alog( string.tokn($str,3) ) // result: "are"
+	alog( string.tokn($str,4) ) // result: "you?"
+
+	//================================
+	// advanced
+	//================================
+	// base64 encode decode
+	alog( "" )
+	alog( ======base64 encode decode========== )
+	alog( string.base64encode($str) ) // result: "aGVsbG8gLSBob3cgYXJlIHlvdT8="
+	alog( string.base64decode(string.base64encode($str)) ) // result: "hello - how are you?"
+
+	// url encode decode
+	alog( "" )
+	alog( ======url encode decode========== )
+	alog( string.urlencode($str) ) // result: "hello+-+how+are+you%3f"
+	alog( string.urldecode(string.urlencode($str)) ) // result: "hello - how are you?"
+
+	// binary encode decode
+	alog( "" )
+	alog( ======binary encode decode========== )
+	alog( string.binaryencode($str) ) // result: "0110100001100101011011000110110001101111001000000010110100100000011010000110111101110111001000000110000101110010011001010010000001111001011011110111010100111111"
+	alog( string.binarydecode(string.binaryencode($str)) ) // result: "hello - how are you?"
+
+	// decimal encode decode
+	alog( "" )
+	alog( \"======decimal encode decode (encode in binary, cannot print) =========="\ )
+	alog( string.decencode($str) ) // result: 104 101 108 108 111 32 45 32 104 111 119 32 97 114 101 32 121 111 117 63
+	alog( string.decdecode(string.decencode($str)) ) // result: "hello - how are you?"
+
+	// heximal encode decode
+	alog( "" )
+	alog( ======heximal encode decode========== )
+	alog( string.hexencode($str) ) // result: 68656c6c6f202d20686f772061726520796f753f
+	alog( string.hexdecode(string.hexencode($str)) ) // result: "hello - how are you?"
+
+	// compression uncompression
+	alog( "" )
+	alog( ======compression and uncompression========== )
+	string.tofile( "a.zip", string.compress($str), false, ascii ) // a.zip, ascii flag is save as binary file.
+	alog( string.uncompress(ftostring("a.zip", ascii)) ) // result: "hello - how are you?" , ascii flag is read as binary file.
+
+	// md5, sha256, crc32
+	alog( "" )
+	alog( "======md5, sha256, crc32==========" )
+	alog( string.md5($str) ) // result: aea36ff47f10470c66746aeda9fa0d18
+	alog( string.sha256($str) ) // result: 08ddca8914dd34e00b708f18fcf632f161b6cfbe85c230e971cc167fc267f8b3
+	alog( string.crc32($str) ) // result: 3787c4f1
+
+	// encryption decryption
+	alog( "" )
+	alog( ======encryption decryption========== )
+	string.tofile( "b.zip", string.encryption($str, "password"), false, ascii ) // result: b.zip
+	alog( string.decryption(ftostring("b.zip", ascii), "password") ) // result: "hello - how are you?"
+	alog( "" )
+
+	// encryption decryption with random password	
+	alog( ======encryption decryption with random password========== )
+	set($random_pass, random_string_custom(10, "abcdefghijklmnopqrstuvwxyz") ) // 10 char length random password from string
+	alog($random_pass) // show password
+	string.tofile( "c.zip", string.encryption($str, $random_pass), false, ascii ) // result: c.zip
+	alog( string.decryption(ftostring("c.zip", ascii), $random_pass) ) // result: "hello - how are you?"
+
+	// zip unzip with crc32 checksum and random password
+	alog( "" )
+	alog( ======zip unzip with crc32 checksum and random password========== )
+	set($dzip, "d.zip" ) // zip name
+	set($alisname, "dummy" ) // just an alias name
+	string.tofile( $dzip, string.zip($str, $alisname, $random_pass), false, ascii ) // d.zip, ascii flag is save as binary file.
+	alog(string.crc32(string.unzip(ftostring($dzip,ascii), $alisname, $random_pass))) // result: 3787c4f1
+	alog( string.unzip(ftostring($dzip,ascii), $alisname, $random_pass)) // result: "hello - how are you?"
+
+	// zip unzip crc32 with faddzip
+	alog( "" )
+	alog( ======zip unzip crc32 with faddzip !!!support no password only!!!========== )
+	set($ezip, "e.zip" ) // zip name
+	set($alisname, "dummy" ) // just an alias name
+	string.tofile( $ezip, string.zip($str, $alisname), false, ascii ) // e.zip, ascii flag is save as binary file.
+	faddzip($ezip) // adding zipfile to filesystem
+	alog(string.crc32(ftostring($alisname, ascii))) // result: 3787c4f1
+	alog( ftostring($alisname, ascii) ) // read alias name from zipfile in filesystem	
+	fremove($ezip) // remove zipfile from filesystem
+}function(init)
+
+set($x, 20 )
+set($y, 100 )
+text( $x, $y-40, "Testing encryption and Compression" )
+text( $x, $y, string.base64decode(string.base64encode($str)) )
+text( $x, $y+40, string.decdecode(string.decencode($str)) )
+text( $x, $y+80, string.urldecode(string.urlencode($str)) )
+text( $x, $y+120, string.binarydecode(string.binaryencode($str)))
+text( $x, $y+160, string.uncompress(ftostring("a.zip", ascii)) )
+text( $x, $y+200, string.decryption(ftostring("b.zip", ascii), "password") )
+text( $x, $y+240, string.decryption(ftostring("c.zip", ascii), $random_pass) )
+text( $x, $y+280, string.unzip(ftostring($dzip,ascii), $alisname, $random_pass))
+text( $x, $y+320, string.hexdecode(string.hexencode($str)) )
+
+
+set($x, 350 )
+text( $x, $y, base64 )
+text( $x, $y+40, dec )
+text( $x, $y+80, url )
+text( $x, $y+120, binary )
+text( $x, $y+160, compress )
+text( $x, $y+200, enc password: password )
+text( $x, $y+240, enc password: $random_pass )
+text( $x, $y+280, zip password: $random_pass )
+text( $x, $y+320, hex )
+text(600,10, getcurrentfps())

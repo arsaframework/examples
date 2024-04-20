@@ -1,0 +1,13 @@
+{
+	psdrenderall()
+	drawonce()
+	screensize(640,960)
+
+	set($key, "xxx" )
+	set($image, "ping_bg.jpg")
+	set($image_out, "depth.jpg")
+	set($ret, curl(\"-X POST https://clipdrop-api.co/portrait-depth-estimation/v1 -H 'x-api-key: $key' -F 'image_file=@$image' -o $image_out"\) )
+
+	settexture("original", $image)
+	settexture("result", $image_out)
+}function(init)

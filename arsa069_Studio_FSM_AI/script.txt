@@ -1,4 +1,6 @@
 {
+	setlandscape()
+	screensize(640,960)
 	string($mu_state,MU_THINKING)	
 	string($target_name,"")
 	int($score,0)

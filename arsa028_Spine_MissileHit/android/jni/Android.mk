@@ -12,8 +12,7 @@ ARSA_LIB_FOLDER = c:/arsa/lib
 # because will add prefix laters
 # if user don't need add prefix use MY_EXT_LOCAL_SRC_FILES instread (see below)
 #################################
-MY_LOCAL_SRC_FILES = ../../main.cpp \
-	$(ARSA_INC_FOLDER)/SDL_android_main.c
+MY_LOCAL_SRC_FILES = ../../main.cpp
 
 #################################
 # current project setting
@@ -42,7 +41,7 @@ include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_C_INCLUDES := $(MY_INCLUDE)
 LOCAL_CFLAGS += $(MY_PREDEF)
-LOCAL_CXXFLAGS += -std=c++0x -Wno-switch -Wno-switch -Wno-parentheses-equality -Wno-c++11-extensions -Wno-ignored-attributes -Wno-format-security -Wno-implicit-exception-spec-mismatch -Wno-inconsistent-missing-override -Wno-extra-tokens -Wno-array-bounds -Wno-comment -Wno-tautological-constant-out-of-range-compare -Wno-tautological-compare -Wno-deprecated-register -Wno-logical-op-parentheses -Wno-writable-strings -Wno-unused-value -Wno-unused-variable -Wno-format -Wno-int-conversion -Wno-vexing-parse -Wno-unsequenced
+LOCAL_CXXFLAGS += -std=c++11 -Wno-switch -Wno-switch -Wno-parentheses-equality -Wno-c++11-extensions -Wno-ignored-attributes -Wno-format-security -Wno-implicit-exception-spec-mismatch -Wno-inconsistent-missing-override -Wno-extra-tokens -Wno-array-bounds -Wno-comment -Wno-tautological-constant-out-of-range-compare -Wno-tautological-compare -Wno-deprecated-register -Wno-logical-op-parentheses -Wno-writable-strings -Wno-unused-value -Wno-unused-variable -Wno-format -Wno-int-conversion -Wno-vexing-parse -Wno-unsequenced
 LOCAL_SRC_FILES := $(MY_OBJS)
 
 #################################
@@ -50,6 +49,6 @@ LOCAL_SRC_FILES := $(MY_OBJS)
 #################################
 LOCAL_MODULE := arsa
 LOCAL_STATIC_LIBRARIES := Arsa
-LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -llog -landroid -lz  
+LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -lOpenSLES -llog -landroid -lz  
 include $(BUILD_SHARED_LIBRARY)
 

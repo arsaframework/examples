@@ -1,0 +1,4 @@
+{
+	set($data, ftostring("ctools-7.x-1.15.zip", ascii) )
+	string.tofile("a.zip", $data, false, ascii) // a.zip size must equal ctools-7.x-1.15.zip
+}function(init)

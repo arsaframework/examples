@@ -1,0 +1,15 @@
+﻿{
+	psdrenderall()
+	drawonce()
+	screensize(640,960)
+
+	set($key, "xxx" )
+	set($prompt, "3 monkeys in the car and flowers yellow color." )
+	set($image_out, "text2image.jpg" )
+	set($ret, curl(\"-X POST https://clipdrop-api.co/text-to-image/v1 -H 'x-api-key: $key' -F 'prompt=$prompt' -o $image_out"\) )
+
+	settexture("result", $image_out)
+}function(init)
+
+
+textarea("question", "qarea", $prompt) // display prompt

@@ -3,15 +3,15 @@
 }function(init)
 
 {
-	touch( "press", touch("isleft", builtin($namein, "movein=0x2500x1")) )
-	touch( "press", touch("isleft", builtin($nameout, "moveout=0x2500x0")) )
-	touch( "press", touch("isleft", proc(set($state, $state_change) >> touchclear()) ) )
+	touch("isleft", builtin($namein, "movein=0x2500x1")) 
+	touch("isleft", builtin($nameout, "moveout=0x2500x0")) 
+	touch("isleft", proc(set($state, $state_change) >> touchclear()) ) 
 }function(update_isleft, $nameout, $namein, $state_change)
 
 {
-	touch( "press", touch("isright", builtin($namein, "movein=0x2500x0")) )
-	touch( "press", touch("isright", builtin($nameout, "moveout=0x2500x1")) )
-	touch( "press", touch("isright", proc(set($state, $state_change) >> touchclear()) ) )
+	touch("isright", builtin($namein, "movein=0x2500x0")) 
+	touch("isright", builtin($nameout, "moveout=0x2500x1")) 
+	touch("isright", proc(set($state, $state_change) >> touchclear()) ) 
 }function(update_isright, $nameout, $namein, $state_change)
 
 if($state== 0) function(update_isleft, "bird","ant", 1)

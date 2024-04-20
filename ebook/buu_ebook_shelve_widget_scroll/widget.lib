@@ -48,7 +48,8 @@
 }function(widget::buttons::callback, $name, $callback)
 
 {
+	if($sp="") set($sp, 50)
     set($ty, touch("gettouchy_diff"))
-    set($sp, 50)
+    //set($sp, 50)
     moveoffset(0, -$ty*$sp)
-}function(widget::scroll::v)
+}function(widget::scroll::v, $sp)

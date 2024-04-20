@@ -56,6 +56,8 @@
 	setlandscape()
 	screensize(640,480)
 	maxsize(0,0,4680,768)
+	setgamefps(60)
+
     set($sw, getscreensizewidth())
     set($sh, getscreensizeheight())
     set($swmax, getmaxsizewidth())

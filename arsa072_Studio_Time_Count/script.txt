@@ -1,4 +1,5 @@
 {
+	setlandscape()
 	screensize(960,640)
 	function(reset)
 }function(init)

@@ -1,0 +1,36 @@
+﻿{
+	screensize(640,960)
+
+	arsaui.init()
+	set($guid, arsaui.editbox(canvas) )
+	//arsaui.setfont($guid,  textsize, SukhumvitSet-Medium.ttf)
+	arsaui.setfont($guid,  textsize)
+	arsaui.setfocus($guid, true)
+	//arsaui.setpassword($guid, true, •)
+	//arsaui.settextalign($guid, center)
+	arsaui.setmaxchar($guid, 12)	
+	set($txt, "")
+}function(init)
+
+{
+	arsaui.remove($guid)
+	arsaui.deinit()
+}function(deinit)
+
+set($evt, arsaui.popevent($guid) )
+if($evt != -1) alog($evt)
+if($evt == 1)  starttextinput()
+if($evt == 0)  stoptextinput()
+if($evt == 17) set($txt, arsaui.getvalue($guid))
+
+touch(release, select, proc( arsaui.setfocus($guid) >> arsaui.setselecttext($guid)) )
+touch(release, copy, setclipboard(arsaui.getselecttext($guid)) )
+touch(release, paste, proc( set($txt, getclipboard()) >> \
+							arsaui.inserttext($guid, $txt) >>\
+							set($txt, arsaui.getvalue($guid)) \
+							) )
+touch(release, clear, proc( set($txt, "") >> \
+							arsaui.setvalue($guid, $txt) \
+							) )
+
+textlayer( textvalue, $txt )

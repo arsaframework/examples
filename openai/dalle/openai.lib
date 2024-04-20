@@ -1,0 +1,37 @@
+{
+	set($my_openai_j, xml.json($str_json) )
+	alog($str_json)
+	set($my_openai_answer, xml.value($my_openai_j, "choices[0]/text") ) // keep answer
+	set($my_openai_answer, string.strip($my_openai_answer)) // remove \n
+	xml.close($my_openai_j)
+	return($my_openai_answer)
+}function(openai::chargpt::answer, $str_json)
+
+{
+	set($openai_id, curl(\"-X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{  "model": "text-davinci-003",  "prompt": "$question", "max_tokens": 1000, "temperature": 1.0 }' https://api.openai.com/v1/completions"\) )
+	set( $openai_answer, function(openai::chargpt::answer, curl.getresult($openai_id)) )
+	curl.freecmd($openai_id)
+	return($openai_answer)
+}function(openai::chatgpt, $token, $question)
+
+{
+	set($open_answer,"")
+	set($openai_id, curl.thread(\"-X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{  "model": "text-davinci-003",  "prompt": "$question", "max_tokens": 4000, "temperature": 1.0 }' https://api.openai.com/v1/completions"\) )
+	return($openai_id)
+}function(openai::chatgptx, $token, $question)
+
+{
+	if(curl.isend($openai_id)==2) set($open_answer,function(openai::chargpt::answer,curl.getresult($openai_id)))
+	return( $open_answer )
+}function(openai::chatgptx::getresult, $openai_id)
+
+{
+	curl.freecmd($openai_id)
+}function(openai::chatgptx::close, $openai_id)
+
+{
+	lint($openai_id, curl(\"-X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{  "prompt": "$prompt", "n": 2, "size": "1024x1024" }' https://api.openai.com/v1/images/generations"\) )
+	lint( $openai_answer, curl.getresult($openai_id) )
+	curl.freecmd($openai_id)
+	return($openai_answer)
+}function(openai::dalle::create, $token, $prompt)

@@ -1,0 +1,13 @@
+{
+	psdrenderall()
+	drawonce()
+	screensize(640,960)
+
+	set($key, "xxx" )
+	set($image, "castle.jpg")
+	set($image_out, "remove.jpg")
+	set($ret, curl(\"-X POST https://clipdrop-api.co/remove-background/v1 -H 'x-api-key: $key' -F 'image_file=@$image' -o $image_out"\) )
+
+	settexture("original", $image)
+	settexture("result", $image_out)
+}function(init)

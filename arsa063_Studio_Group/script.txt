@@ -1,5 +1,9 @@
 {
+	setlandscape()
 	screensize(960,640)
+	maxsize(0,0,4680,768)
+	setoffset(0,288)
+	
 
 	visible(false, "start_pos")
 

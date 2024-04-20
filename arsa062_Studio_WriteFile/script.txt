@@ -1,9 +1,10 @@
-{
+﻿{
 	screensize(960,640)
 
 	set($fp, fopen("test.txt","w") )
-	fprintf( $fp, "Hello World\n" )
+	fprintf( $fp, "Hello สวัสดีครับ  World\n" )
 	fprintf( $fp, "This is write text to file.\n" )
+	fprintf( $fp, "漢字対応の手書きフォントです\n" )
 	fclose($fp, "w")
 }function(init)
 

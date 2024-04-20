@@ -1,0 +1,20 @@
+precision mediump float;
+uniform sampler2D uTextureUnit;
+uniform sampler2D uTextureUnit2;
+varying vec2 vTextureCoord;
+varying vec4 vVertexColor;
+
+uniform float     iTime;                 // shader playback time (in seconds)
+uniform vec3      iResolution;  // viewport resolution (in pixels)
+uniform vec4      iMouse;	// mouse pixel coords. xy: current (if MLB down), zw: click
+
+//void mainImage( out vec4 fragColor, in vec2 fragCoord )
+void main()
+{
+	vec2 fragCoord = vTextureCoord;
+
+	vec4 base = texture2D(uTextureUnit, fragCoord); 
+	fragCoord.x += iTime * 0.5;
+	vec4 shm = texture2D(uTextureUnit2, fragCoord);     
+    gl_FragColor = vec4(base.rgb+shm.rgb, base.a);
+}

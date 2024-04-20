@@ -1,0 +1,58 @@
+{
+	//set($lt_name, "145040-dinosaur-sticker.json" )
+	set($lt_name, "https://lottie.host/c571542b-5691-4e7b-93cc-521330eb09f0/bUnSSopK63.json")
+	set($lt_canvas, "canvas" )
+
+	//set($ret, lottie($lt_name, cache) )
+	set($lt, lottie($lt_name, load) )
+
+	set($frame, 0 )
+
+	set($bgname, "bg" )
+	set($start, getposx($bgname) )
+	set($end, getwidth($bgname) )
+
+	set($cursor, "cursor" )
+	set($cursorw,  getwidth($cursor) )
+	set($cursorpos,  $start )
+
+	set($gagename, "loadingbar" )
+	
+}function(init)
+
+{
+        lottie($lt, "clearplayat", $lt_canvas) // clear playat
+        lottie($lt, "clear") // MUST clear lottie by id
+        lottie($lt_name, "clearcache") // MUST clear cache by filename
+}function(deinit)
+
+// do one time after loaded
+if(lottie($lt, isreadyfirst)==true) \
+	proc( \
+			set($framemax, lottie($lt, getframecount)) >> \
+			lottie($lt, playat, $lt_canvas) >> \
+			lottie($lt, stop) \
+		)
+
+set($x, touch(gettouchx) )
+if( pickup(isright, $cursor)==true ) posx($cursor, $x)
+if( pickup(isleft, $cursor)==true ) posx($cursor, $x)
+
+// pack cursor
+set($x, getposx($cursor) )
+if($x <= $start) posx($cursor, $start)
+if($x >= ($start+$end)-$cursorw) posx($cursor, ($start+$end)-$cursorw)
+
+// set gage
+set($x, getposx($cursor) )
+set($percent, (($x-$start)*100)/($end-$cursorw) ) // calculate percent
+setvisiblepercent($gagename, $percent, 100)
+
+// sync lottie frame
+set($ff, ($percent*$framemax)/100 )
+set( $ff, floor($ff) )
+lottie($lt, seek, $ff)
+
+if(lottie($lt, isready)==true) textlayerfont("frametext", "DisposableDroidBB.ttf", $ff, 0, 151, 184)
+
+touch(release, "home", psd("lottie_home.psd"))

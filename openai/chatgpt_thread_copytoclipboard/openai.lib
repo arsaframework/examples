@@ -1,5 +1,6 @@
 {
 	set($my_openai_j, xml.json($str_json) )
+	alog($str_json)
 	set($my_openai_answer, xml.value($my_openai_j, "choices[0]/text") ) // keep answer
 	set($my_openai_answer, string.strip($my_openai_answer)) // remove \n
 	xml.close($my_openai_j)
@@ -15,7 +16,7 @@
 
 {
 	set($open_answer,"")
-	set($openai_id, curl.thread(\"-X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{  "model": "text-davinci-003",  "prompt": "$question", "max_tokens": 1000, "temperature": 1.0 }' https://api.openai.com/v1/completions"\) )
+	set($openai_id, curl.thread(\"-X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{  "model": "text-davinci-003",  "prompt": "$question", "max_tokens": 4000, "temperature": 1.0 }' https://api.openai.com/v1/completions"\) )
 	return($openai_id)
 }function(openai::chatgptx, $token, $question)
 

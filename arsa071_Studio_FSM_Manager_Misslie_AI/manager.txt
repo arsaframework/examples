@@ -37,7 +37,11 @@
 	if($x < $target_x) add($x,$speed)
 	pos(jet,$x,$y)
 	if(abs($x-$target_x)<getwidth($target_name)) if($miss_time<gettime()) function(add_mis)
-	!isvisible($target_name, proc( set($found,0) >> set($dist,99999) >> setstring($mu_state,MU_THINKING)) )
+	!isvisible($target_name, proc( set($found,0) \
+									>> set($dist,99999) \
+									>> setstring($mu_state,MU_THINKING) \
+								 ) \
+				)
 }function(mu_walk)
 
 {
@@ -49,7 +53,9 @@
 	//alog($id: $target_name)
 }function(mu_walk_spawn)
 
-if($mu_state==MU_THINKING) proc( getlayerall(box,function(mu_thinking)) >> function(mu_walk_spawn) )
+if($mu_state==MU_THINKING) \
+	proc(	getlayerall(box,function(mu_thinking)) >> \
+			function(mu_walk_spawn) )
 if($mu_state==MU_WALK) function(mu_walk)
 
 {
@@ -71,7 +77,10 @@ if($mu_state==MU_WALK) function(mu_walk)
 	int($step,90)
 	int($i,0)
 	int($j,0)
-	getlayerall(box, proc( function(enemy_square) >> visible(true,null) >> setcolor(null,255,255,255)>> rot(null,0,0,0)))
+	getlayerall(box, proc( function(enemy_square) >>\
+							visible(true,null) >>\
+							setcolor(null,255,255,255)>>\
+							rot(null,0,0,0)))
 	anim("","clearall")
 }function(reset_score)
 
@@ -82,7 +91,14 @@ if($mu_state==MU_WALK) function(mu_walk)
 	setstring($target_name,"")
 	set($bw, getwidth(box))
 	set($sw, getscreensizewidth() )
-	getlayerall(box,proc( set($x,random(0,$sw-$bw)) >> set($y,random(100,500)) >> pos(null,$x,$y) >> visible(true,null) >> setcolor(null,255,255,255) >> rot(null,0,0,0)))
+	getlayerall(box,proc( set($x,random(0,$sw-$bw)) \
+							>> set($y,random(100,500)) \
+							>> pos(null,$x,$y) \
+							>> visible(true,null)\
+							>> setcolor(null,255,255,255)\
+							>> rot(null,0,0,0) \
+						)\
+				) // getlayerall
 	anim("","clearall")
 }function(reset_random)
 
@@ -128,10 +144,18 @@ if( 0 != isdebug() ) function(debug)
 	visible(true, "show_num")
 	visible(false, "hide_num")
 	set($i,0)
-	getlayerall(box, proc(add($i,1)>>string($layer,getlayername())>>!isvisible($layer,continue())>>set($x, getposxf($layer,"c"))>>set($y, getposyf($layer,"t|c"))>>text($x,$y,"$i",0,0,0,255)) )
+	getlayerall(box, proc(	add($i,1)>>\
+							string($layer,getlayername())>>\
+							!isvisible($layer,continue())>>\
+							set($x, getposxf($layer,"c"))>>\
+							set($y, getposyf($layer,"t|c"))>>\
+							text($x,$y,"$i",0,0,0,255)) )
 }	function(show_num)
 if($show_num==1) function(show_num)
-if($show_num==0) proc(visible(false, "show_num")>>visible(true, "hide_num"))
+if($show_num==0) \
+	proc(	visible(false, "show_num")>>\
+			visible(true, "hide_num")\
+		)
 if(touch(release,"show_num")==true) set($show_num,0)
 if(touch(release,"hide_num")==true) set($show_num,1)
 //alog( \"$mu_state, $target_name, $dist"\ )

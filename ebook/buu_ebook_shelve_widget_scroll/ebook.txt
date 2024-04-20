@@ -30,7 +30,7 @@
 }function(updatebooks)
 array.for($list, function(updatebooks))
 
-function(widget::scroll::v)
+function(widget::scroll::v, 100)
 
 textlayer("FPS", getcurrentfps())
 

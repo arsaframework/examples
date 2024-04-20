@@ -1,0 +1,13 @@
+{
+	alog(random()) // 235099461
+	alog(random(10, 20)) // 15
+
+	alog(random_string( 8)) // 90JUMT4N
+	alog(random_string( 5)) // EIES1
+
+	alog(random_guid( )) // 4C59444B50324839B4504C50434B4A5A
+	alog(random_guid( true )) // 4D4C4232-5632-4536-8A38-42354D34465A
+
+	alog(random_string_custom( 8, "123456")) // 15542532
+	alog(random_string_custom( 5, "abc")) // bccaa
+}function(init)

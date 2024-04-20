@@ -1,0 +1,70 @@
+{
+	set( $name, "canvas")
+	set( $cx, getposx($name) )
+	set( $cy, getposy($name) )
+	set( $cw, getwidth($name) )
+	set( $ch, getheight($name) )
+
+	set( $obj, "text" )
+	set( $objw, getwidth($obj) )
+	set( $objh, getheight($obj) )
+	setcliprect("$obj", $cx, $cy, $cx+$cw, $cy+$ch)
+
+	set( $state, 0 )
+	set( $sp, 0.2 ) // 0.1 - 1.0
+	set( $offset, 20 )
+
+}function(init)
+
+set( $dx, touch("gettouchx_diff") )
+set( $dy, touch("gettouchy_diff") )
+
+set( $x, getposx($obj) )
+set( $y, getposy($obj) )
+
+//add( $x, $dx )
+add( $y, $dy )
+
+if(pickup(down, $name)==true) set( $state , 0 )
+if(pickup(down, $name)==true) if(abs($dx) > 5 ) posx( $obj, $x )
+if(pickup(down, $name)==true) if(abs($dy) > 5 ) posy( $obj, $y )
+
+if(pickup(release, $name)==true) set($state,1)
+
+if($state==1) function(moving_origin, $name, $obj, $sp)
+
+{
+  return( $v0 + $t * ($v1 - $v0) )
+}function(lerp, $v0, $v1, $t)
+
+{
+	set( $cax, getposx($canvas) )
+	set( $cay, getposy($canvas) )
+	set( $caw, getwidth($canvas) )
+	set( $cah, getheight($canvas) )
+
+	set( $ox, $cax )
+	set( $oy, $cay )
+	set( $cx, getposx($name) )
+	set( $cy, getposy($name) )
+
+	// top pack
+	//ifelse( $cy < $cay, return(), set($oy, $oy+$offset) )
+
+	// bottom pack
+	//ifelse( $cy+$objh > $cay+$cah, return(), set( $oy, (($oy-$objh)+$cah)-$offset ) )
+
+	set($subst, 0)
+	if( $cy > $cay ) set($subst, 1)
+	if( $cy < ($cay+$cah)-$objh ) set($subst, 2)
+	
+	if($subst == 0 ) return()
+	if($subst == 1 ) set($oy, $oy+$offset)
+	if($subst == 2 ) ifelse($objh > $cah, set($oy, (($oy-$objh)+$cah)-$offset), set($oy, $oy+$offset))
+
+	//set($cx, function(lerp, $cx, $ox, $sp) )
+	set($cy, function(lerp, $cy, $oy, $sp) )
+	//posx( $name, $cx )
+	posy( $name, $cy )
+}function(moving_origin, $canvas, $name, $sp)
+

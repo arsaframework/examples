@@ -1,0 +1,4 @@
+{
+	ifreset()
+}function(deinit)
+iftime("if time", 1, 3000) alog("test if time")

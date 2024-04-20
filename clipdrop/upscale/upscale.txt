@@ -1,0 +1,13 @@
+{
+	psdrenderall()
+	drawonce()
+	screensize(640,960)
+
+	set($key, "xxx" )
+	set($image, "castle64.jpg")
+	set($image_out, "scale.jpg")
+	set($ret, curl(\"-X POST https://clipdrop-api.co/super-resolution/v1 -H 'x-api-key: $key' -F 'image_file=@$image' -F upscale=4 -o $image_out"\) )
+
+	settexture("original", $image)
+	settexture("result", $image_out)
+}function(init)

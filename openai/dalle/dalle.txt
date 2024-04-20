@@ -1,0 +1,23 @@
+﻿#include "openai.lib"
+
+{
+	screensize(640,960)
+
+	visible(false, "copyjson")
+
+	set($token, "xxx")
+	set($prompt, "3 monkeys in the car and flowers" )
+	set($ret, function(openai::dalle::create, $token, $prompt) )	
+}function(init)
+
+{
+}function(deinit)
+
+//set($answer, function(openai::chatgptx::getresult, $id) )
+//if($answer != "" ) proc( visible(false, "canvas") >> visible(true, "copyjson") )
+//touch(release, "copyjson", setclipboard($answer) )
+
+textarea("question", "qarea", $prompt) // display prompt
+textarea("text", "Layer 3", $ret) // display answer
+
+//function(widget::scroll::v)

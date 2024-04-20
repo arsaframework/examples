@@ -5,8 +5,8 @@
 	setvisibleflags("gage","l")
 }function(init)
 
-touch(isleft,bg,add($per,-1))
-touch(isright,bg,add($per,1))
+touch(isleft,bg,add($per,-3))
+touch(isright,bg,add($per,3))
 if($per<=0) set($per,0)
 if($per>=100) set($per,100)
 setvisiblepercent(gage,$per,100)
