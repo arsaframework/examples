@@ -7,18 +7,18 @@
 
 	set($mid, map())	
 	function(add_shader, $mid, "Layer 8", "vs.txt", "ocean.txt")
-	function(add_shader, $mid, "Layer 9", "vs.txt", "explosion.txt")
-	function(add_shader, $mid, "Layer 3", "vs.txt", "Main Sequence Star.txt")
-	function(add_shader, $mid, "Layer 7", "vs.txt", "Phantom Star for CineShader.txt")
-	function(add_shader, $mid, "Layer 5", "vs.txt", "Star Nest.txt")
+	function(add_shader, $mid, "Layer 9", "vs.txt", "explosion.txt")	
+	function(add_shader, $mid, "Layer 7", "vs.txt", "Phantom Star for CineShader.txt")	
 	function(add_shader, $mid, "Layer 6", "vs.txt", "The Universe Within.txt")
+	function(add_shader, $mid, "Layer 5", "vs.txt", "Main Sequence Star.txt")
 	function(add_shader, $mid, "Layer 4", "vs.txt", "Warp Speed 2.txt")
+	function(add_shader, $mid, "Layer 3", "vs.txt", "Star Nest.txt")
 	function(add_shader, $mid, "caption", "vs.txt", "shimmer.txt")
 	
-	settextureclamp("caption", mirror)
-	settextureclamp("Layer 3", mirror)
+	if(getplatform()!="iOS") settextureclamp("caption", mirror)
+	if(getplatform()!="iOS") settextureclamp("Layer 5", mirror)
 	settexturelayer("caption", "shimmer", 1)
-	settexturelayer("Layer 3", "92d7758c402f0927011ca8d0a7e40251439fba3a1dac26f5b8b62026323501aa.jpg", 3 )
+	settexturelayer("Layer 5", "92d7758c402f0927011ca8d0a7e40251439fba3a1dac26f5b8b62026323501aa.jpg", 3 )
 	settexturelayer("Layer 9", "canvas.png", 3 )
 	settexturelayer("Layer 9", "canvas2.png", 4 )
 
@@ -95,4 +95,4 @@ set($t, clamp($t,0.0,10.0))
 for($i=0; $i<map.size($mid); ++$i ) \
 	function(update_shader, $mid, $i)
 
-textlayer("FPS", getcurrentfps(), 10,10,10,255)
+textlayer("FPS", getcurrentfps())
