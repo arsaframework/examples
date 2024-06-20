@@ -1,0 +1,8 @@
+{
+	touch( release, $play_button, proc( touch(limit, $stop_button) >> visible(false, $play_button) >> video($videoname, playat, $canvas) ) )
+	touch( release, $stop_button, proc( touch(limitclear) >> visible(true, $play_button) >> video($videoname, clearplayat) >> video($videoname, clear)) )
+	isvisible($play_button, proc( visible(false, $stop_button) >> visible(false, $canvas)) )
+	!isvisible($play_button, proc( visible(true, $stop_button) >> visible(true, $canvas)) )
+}function(video::play, $videoname, $play_button, $canvas, $stop_button )
+
+

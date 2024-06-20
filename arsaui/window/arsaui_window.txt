@@ -1,0 +1,82 @@
+#include "tr.txt"
+
+{
+	screensize(640, 1351)
+	function(arsaui::toggle::set, togglewin, 1)
+	set($percent, 0)
+}function(init)
+
+{
+	ifreset()
+	touch(limitclear)
+}function(deinit)
+
+{	
+	lint($main, getelementnamebynum($groupname,0) )
+	setgroupvisible($groupname, true )
+	lint($count, getelementcount($groupname) )
+	for($i=0;$i<$count;$i++) touch(limit, getelementnamebynum($groupname,$i))
+	for($i=0;$i<$count;$i++) function(movex, getelementnamebynum($groupname,$i), r, 300, false)
+	setuserstring($main, state, 1)
+}function(arsaui::window::open, $groupname)
+
+{
+	lint($main, getelementnamebynum($groupname,0) )
+	setgroupvisible($groupname, false )
+	touch(limitclear)
+	lint($count, getelementcount($groupname) )
+	lint($state, getuserstring($main, state) )
+	if($state == 1) for($i=0;$i<$count;$i++) function(movex, getelementnamebynum($groupname,$i), l, 300, true)
+	if($state == 1) setuserstring($main, state, 0)
+}function(arsaui::window::close, $groupname)
+
+{
+	lint($count, getelementcount($groupname) )
+	if($count < 2 ) return()
+	
+	lint($value, function(arsaui::toggle::value, $groupname) )
+	if($value < 0) return()
+	lint($current, getelementnamebynum($groupname,$value))
+	if($current == "") return()	
+	setgroupvisibleonlyone($groupname, $current )
+
+	lint($toggle0, getelementnamebynum($groupname,0) )
+	touch( release, $current, proc( add($value, 1) >> mod($value, $count) >> \
+					setuserstring($toggle0, value, $value)) )
+}function(arsaui::toggle, $groupname)
+
+{
+	lint($count, getelementcount($groupname) )
+	if($count < 1 ) return(-1)
+
+	lint($toggle0, getelementnamebynum($groupname,0) )
+	lint($value, getuserstring($toggle0, value) )
+	if($value == "") setuserstring($toggle0, value, 0)
+	return($value)
+}function(arsaui::toggle::value, $groupname)
+
+{
+	lint($toggle0, getelementnamebynum($groupname,0) )
+	setuserstring($toggle0, value, $value)
+}function(arsaui::toggle::set, $groupname, $value)
+
+
+function(arsaui::toggle, togglewin)
+set($togglestate, function(arsaui::toggle::value, togglewin) )
+ifcount(togglewinon, $togglestate == 1, 1) proc( function(arsaui::window::open, win) >> ifreset(togglewinoff) >> set($percent, 0) )
+ifcount(togglewinoff, $togglestate == 0, 1) proc( function(arsaui::window::close, win ) >> ifreset(togglewinon) )
+
+touch( release, exit, function(arsaui::toggle::set,togglewin,0) )
+textareafont(caption_text, caption_area, SukhumvitSet-Medium.ttf, "Data encryption by Blockchains")
+textareafont(info_text, info_area, SukhumvitSet-Medium.ttf, "The data to sensitive accession. This can increase the security of access file or material from theft or transaction fraud.")
+
+if( $togglestate == 1 ) function(prograssbar)
+
+{
+	add($percent, 0.1)
+	if($percent >= 100) set($percent, 100)
+	setvisiblepercent(percent_bg, $percent, 100)
+}function(prograssbar)
+textlayerfont( percent_text, SukhumvitSet-Medium.ttf, floor($percent))
+textlayerfont( FPS, SukhumvitSet-Medium.ttf, getcurrentfps())
+touch(release, howto, url("http://www.arsa.ai") )
