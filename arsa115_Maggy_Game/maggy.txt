@@ -1,0 +1,3 @@
+touch(press, boss, visible(false, null))
+screensize(1080,1920)
+touch(release, reset, visibleall(true, boss)) 
