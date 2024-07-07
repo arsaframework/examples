@@ -7,9 +7,9 @@
     map.set($ms, "video1", "79568-success.json" )
     map.set($ms, "video6", "79616-warriors.json" )
     map.set($ms, "video4", "79616-warriors.json" )
-    map.set($ms, "video2", "sel/rocket.json" )
-    map.set($ms, "video3", "sel/vocalno.json" )
-    map.set($ms, "Layer 1", "sel/bigbang.json" )
+    map.set($ms, "video2", "rocket.json" )
+    map.set($ms, "video3", "vocalno.json" )
+    map.set($ms, "Layer 1", "bigbang.json" )
     //map.log($ms)
 
     // cache
