@@ -4,6 +4,7 @@
 	set($wav, gpu.addshader(vs.txt, wave.frag) )
 	set($name, Layer 1)
 	setmaterialtype($name, $wav)
+	settextureclamp($name, clamp_to_edge)
 
 	set($sp, 7)
 	anim(Shape 1, spline, 3, $sp, 0, 1, -180)
