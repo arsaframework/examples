@@ -1,0 +1,30 @@
+{
+	setportrait()
+	screensize(640,960)
+	set( $sid, gpu.addshader("vs.txt", "tree.frag") )
+
+	set($name, "Layer 3" )
+	setmaterialtype($name, $sid)
+
+	set($t,0.0)
+	set($frame, 0)
+}function(init)
+
+{
+	gpu.removeshader($sid)
+}function(deinit)
+
+add($t,getdeltatime())
+set($t, clamp($t,0.0,200.1))
+gpu.setconst($name,"iTime", $t)
+
+set($sw, getscreensizewidth())
+set($sh, getscreensizeheight())
+gpu.setconst($name,"iResolution", $sw, $sh, 1)
+
+gpu.setconst($name,"iFrame", $frame, 1)
+add( $frame, 1 )
+
+textlayer(FPS, getcurrentfps())
+
+
