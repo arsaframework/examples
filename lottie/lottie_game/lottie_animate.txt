@@ -1,7 +1,7 @@
 {
 	screensize(640,960)
-	//set($lt_name, "145040-dinosaur-sticker.json" )
-	set($lt_name, "https://lottie.host/c571542b-5691-4e7b-93cc-521330eb09f0/bUnSSopK63.json")
+	set($lt_name, "145040-dinosaur-sticker.json" )
+	//set($lt_name, "https://lottie.host/c571542b-5691-4e7b-93cc-521330eb09f0/bUnSSopK63.json")
 	set($lt_canvas, "canvas" )
 
 	//set($ret, lottie($lt_name, cache) )
