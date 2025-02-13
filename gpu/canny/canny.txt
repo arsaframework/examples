@@ -1,12 +1,14 @@
 {
-	screensize(640,960)
+	screensize(640,960, true)
 	set($state, 0)
 	set($t,0.0)
 	set($sw, getscreensizewidth())
 	set($sh, getscreensizeheight())
 
+	set($cannyname, Layer 3 )
+
 	set($mid, map())	
-	function(add_shader, $mid, "Layer 3", "vs.txt", "canny.frag")
+	function(add_shader, $mid, $cannyname, "vs.txt", "canny.frag")
 	function(add_shader, $mid, "Layer 4", "vs.txt", "simple.txt")	
 	function(add_shader, $mid, "caption", "vs.txt", "shimmer.txt")
 	
@@ -14,6 +16,18 @@
 
 	set($weak,0.15)
 	set($strong,0.3)
+
+	setvisiblepercent($cannyname, 50, 100 )
+	set($splity, getposy(split) )
+	set($splitw, getwidth(split) )
+	set($splitminx, getposx($cannyname) )	
+	set($splitmaxx, getwidth($cannyname) )
+	add($splitmaxx, $splitminx-($splitw*0.5))
+	add($splitminx, -($splitw*0.5))
+
+	set($splitstart, getposx($cannyname) )	
+	set($splitend, getwidth($cannyname) )
+
 }function(init)
 
 {
@@ -32,16 +46,29 @@
 	touch("isright", proc(set($state, $state_change) >> touchclear()) )
 }function(update_isright, $nameout, $namein, $state_change)
 
-if($state== 0) function(update_isleft, "Layer 3","Layer 4", 1)
-if($state== 1) function(update_isright, "Layer 4","Layer 3", 0)
+//if($state== 0) function(update_isleft, "Layer 3","Layer 4", 1)
+//if($state== 1) function(update_isright, "Layer 4","Layer 3", 0)
 
-ifelse($state== 0, visible(false,"moveleft"), visible(true,"moveleft"))
-ifelse($state== 1, visible(false,"moveright"), visible(true,"moveright"))
+//ifelse($state== 0, visible(false,"moveleft"), visible(true,"moveleft"))
+//ifelse($state== 1, visible(false,"moveright"), visible(true,"moveright"))
+
+set($tx, touch(gettouchx))
+if($tx > $splitmaxx) set($tx, $splitmaxx )
+if($tx < $splitminx) set($tx, $splitminx )
+if(pickup(isleft, split)==true) pos(null, $tx, $splity)
+if(pickup(isright, split)==true) pos(null, $tx, $splity)
+
+set($splitc, getposxf(split,c))
+pos(line, $splitc, getposy(line))
+
+set($percent, (($splitc-$splitstart)/$splitend)*100 )
+//alog($percent)
+setvisiblepercent($cannyname, $percent, 100 )
 
 {
 	function(remove_shader, $mid)
 	map.close($mid)
-	alog(gpu.getshadercount())
+	//alog(gpu.getshadercount())
 }function(deinit)
 
 {
