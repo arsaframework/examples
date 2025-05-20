@@ -3059,3 +3059,312 @@ No -tsa or -tsacert is provided and this jar is not timestamped. Without a times
 ARSA AI Compiling v.3.0
 Total deploy time: 88.953003 second.
 PNG warning: iCCP: known incorrect sRGB profile
+PNG warning: iCCP: known incorrect sRGB profile
+Preparing...
+rd C:/arsa/bin/temp/star_ocean
+cp C:/arsa/ARSA_AppWiz100 -> C:/arsa/bin/temp/star_ocean
+Preparing...[OK]
+SpalshScreen...[Default]
+PNG warning: iCCP: known incorrect sRGB profile
+PNG warning: iCCP: known incorrect sRGB profile
+PNG warning: iCCP: known incorrect sRGB profile
+PNG warning: iCCP: known incorrect sRGB profile
+PNG warning: iCCP: known incorrect sRGB profile
+Assets copying...
+Assets copying...[OK]
+Compiling... 
+[arm64-v8a] Compile++      : arsa <= main.cpp
+[arm64-v8a] SharedLibrary  : libarsa.so
+[arm64-v8a] Install        : libarsa.so => libs/arm64-v8a/libarsa.so
+[armeabi-v7a] Compile++ thumb: arsa <= main.cpp
+[armeabi-v7a] SharedLibrary  : libarsa.so
+[armeabi-v7a] Install        : libarsa.so => libs/armeabi-v7a/libarsa.so
+ARSA AI Compiling v.3.0
+Building... bin/star_ocean.apk
+Buildfile: C:\arsa\bin\temp\star_ocean\android\build.xml
+
+-set-mode-check:
+
+-set-release-mode:
+
+-release-obfuscation-check:
+     [echo] proguard.config is ${proguard.config}
+
+-pre-build:
+
+-check-env:
+ [checkenv] Android SDK Tools Revision 25.2.5
+ [checkenv] Installed at C:\arsa\third_party\android-sdk-25.2.3
+
+-setup:
+     [echo] Project Name: star_ocean
+  [gettype] Project Type: Application
+
+-build-setup:
+[getbuildtools] Using latest Build Tools: 28.0.3
+     [echo] Resolving Build Target for star_ocean...
+[gettarget] Project Target:   Android 13
+[gettarget] API level:        33
+     [echo] ----------
+     [echo] Creating output directories if needed...
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\bin
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\bin\res
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\bin\rsObj
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\bin\rsLibs
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\gen
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\bin\classes
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\bin\dexedLibs
+     [echo] ----------
+     [echo] Resolving Dependencies for star_ocean...
+[dependency] Library dependencies:
+[dependency] 
+[dependency] ------------------
+[dependency] Ordered libraries:
+[dependency] 
+[dependency] ------------------
+     [echo] ----------
+     [echo] Building Libraries with 'release'...
+
+nodeps:
+
+-set-mode-check:
+
+-set-release-mode:
+
+-release-obfuscation-check:
+     [echo] proguard.config is ${proguard.config}
+
+-pre-build:
+
+-check-env:
+ [checkenv] Android SDK Tools Revision 25.2.5
+ [checkenv] Installed at C:\arsa\third_party\android-sdk-25.2.3
+
+-setup:
+     [echo] Project Name: google-play-services_lib
+  [gettype] Project Type: Android Library
+
+-build-setup:
+[getbuildtools] Using latest Build Tools: 28.0.3
+     [echo] Resolving Build Target for google-play-services_lib...
+[gettarget] Project Target:   Android 13
+[gettarget] API level:        33
+     [echo] ----------
+     [echo] Creating output directories if needed...
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\res
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\res
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\rsObj
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\rsLibs
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\gen
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\classes
+    [mkdir] Created dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\dexedLibs
+     [echo] ----------
+     [echo] Resolving Dependencies for google-play-services_lib...
+[dependency] Library dependencies:
+[dependency] No Libraries
+[dependency] 
+[dependency] ------------------
+
+-code-gen:
+[mergemanifest] Merging AndroidManifest files into one.
+[mergemanifest] Manifest merger disabled. Using project manifest only.
+     [echo] Handling aidl files...
+     [aidl] No AIDL files to compile.
+     [echo] ----------
+     [echo] Handling RenderScript files...
+     [echo] ----------
+     [echo] Handling Resources...
+     [aapt] Generating resource IDs...
+     [echo] ----------
+     [echo] Handling BuildConfig class...
+[buildconfig] Generating BuildConfig class.
+
+-pre-compile:
+
+-compile:
+    [javac] Compiling 2 source files to C:\arsa\bin\temp\star_ocean\android\supportv4\bin\classes
+     [echo] Creating library output jar file...
+      [jar] Building jar: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\classes.jar
+
+-post-compile:
+
+-obfuscate:
+
+-dex:
+     [echo] Library project: do not convert bytecode...
+
+-crunch:
+   [crunch] Crunching PNG Files in source dir: C:\arsa\bin\temp\star_ocean\android\supportv4\res
+   [crunch] To destination dir: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\res
+   [crunch] Crunched 0 PNG files to update cache
+
+-package-resources:
+     [echo] Library project: do not package resources...
+
+-package:
+     [echo] Library project: do not package apk...
+
+-post-package:
+
+-release-prompt-for-password:
+
+-release-nosign:
+     [echo] 
+[propertyfile] Creating new property file: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\build.prop
+[propertyfile] Updating property file: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\build.prop
+[propertyfile] Updating property file: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\build.prop
+[propertyfile] Updating property file: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\build.prop
+
+-release-sign:
+
+-post-build:
+
+release:
+
+-code-gen:
+[mergemanifest] Merging AndroidManifest files into one.
+[mergemanifest] Manifest merger disabled. Using project manifest only.
+     [echo] Handling aidl files...
+     [aidl] No AIDL files to compile.
+     [echo] ----------
+     [echo] Handling RenderScript files...
+     [echo] ----------
+     [echo] Handling Resources...
+     [aapt] Generating resource IDs...
+     [echo] ----------
+     [echo] Handling BuildConfig class...
+[buildconfig] Generating BuildConfig class.
+
+-pre-compile:
+
+-compile:
+    [javac] Compiling 14 source files to C:\arsa\bin\temp\star_ocean\android\bin\classes
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+
+-post-compile:
+
+-obfuscate:
+
+-dex:
+      [dex] input: C:\arsa\bin\temp\star_ocean\android\bin\classes
+      [dex] input: C:\arsa\bin\temp\star_ocean\android\supportv4\bin\classes.jar
+      [dex] input: C:\arsa\bin\temp\star_ocean\android\supportv4\libs\android-support-v4.jar
+      [dex] Pre-Dexing C:\arsa\bin\temp\star_ocean\android\supportv4\bin\classes.jar -> classes-ba72d12289e72a3f401ad410b97d8df4.jar
+      [dex] Pre-Dexing C:\arsa\bin\temp\star_ocean\android\supportv4\libs\android-support-v4.jar -> android-support-v4-f0f25c00d699ca87725944e58ec6e310.jar
+      [dex] Converting compiled files and external libraries into C:\arsa\bin\temp\star_ocean\android\bin\classes.dex...
+       [dx] Merged dex #1 (62 defs/117.4KiB)
+       [dx] Merged dex #2 (1153 defs/1127.1KiB)
+       [dx] Merged dex #3 (1 defs/0.5KiB)
+       [dx] Result is 1216 defs/1546.4KiB. Took 0.2s
+
+-crunch:
+   [crunch] Crunching PNG Files in source dir: C:\arsa\bin\temp\star_ocean\android\res
+   [crunch] To destination dir: C:\arsa\bin\temp\star_ocean\android\bin\res
+   [crunch] Processing image to cache: C:\arsa\bin\temp\star_ocean\android\res\drawable-hdpi\ic_launcher.png => C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-hdpi\ic_launcher.png
+   [crunch]   (processed image to cache entry C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-hdpi\ic_launcher.png: 86% size of source)
+   [crunch] Processing image to cache: C:\arsa\bin\temp\star_ocean\android\res\drawable-mdpi\ic_launcher.png => C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-mdpi\ic_launcher.png
+   [crunch]   (processed image to cache entry C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-mdpi\ic_launcher.png: 61% size of source)
+   [crunch] Processing image to cache: C:\arsa\bin\temp\star_ocean\android\res\drawable-xhdpi\ic_launcher.png => C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-xhdpi\ic_launcher.png
+   [crunch]   (processed image to cache entry C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-xhdpi\ic_launcher.png: 85% size of source)
+   [crunch] Processing image to cache: C:\arsa\bin\temp\star_ocean\android\res\drawable-xxhdpi\ic_launcher.png => C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-xxhdpi\ic_launcher.png
+   [crunch]   (processed image to cache entry C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-xxhdpi\ic_launcher.png: 89% size of source)
+   [crunch] Processing image to cache: C:\arsa\bin\temp\star_ocean\android\res\drawable-xxxhdpi\ic_launcher.png => C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-xxxhdpi\ic_launcher.png
+   [crunch]   (processed image to cache entry C:\arsa\bin\temp\star_ocean\android\bin\res\drawable-xxxhdpi\ic_launcher.png: 87% size of source)
+   [crunch] Crunched 5 PNG files to update cache
+
+-package-resources:
+     [aapt] Creating full resource package...
+
+-package:
+[apkbuilder] Current build type is different than previous build: forced apkbuilder run.
+[apkbuilder] Creating star_ocean-release-unsigned.apk for release...
+
+-post-package:
+
+-release-prompt-for-password:
+
+-release-nosign:
+     [echo] No key.store and key.alias properties found in build.properties.
+     [echo] Please sign C:\arsa\bin\temp\star_ocean\android\bin\star_ocean-release-unsigned.apk manually
+     [echo] and run zipalign from the Android SDK tools.
+[propertyfile] Creating new property file: C:\arsa\bin\temp\star_ocean\android\bin\build.prop
+[propertyfile] Updating property file: C:\arsa\bin\temp\star_ocean\android\bin\build.prop
+[propertyfile] Updating property file: C:\arsa\bin\temp\star_ocean\android\bin\build.prop
+[propertyfile] Updating property file: C:\arsa\bin\temp\star_ocean\android\bin\build.prop
+
+-release-sign:
+
+-post-build:
+
+release:
+
+BUILD SUCCESSFUL
+Total time: 17 seconds
+Signing package...
+Verifying alignment of bin/star_ocean.apk (4)...
+      53 AndroidManifest.xml (OK - compressed)
+    2256 assets/eJwzMDA0NDA0MABhMAsMDWF8AwgPxjeEiRpA1UH1wpVAxGFaDFFNhZqL0AckABuXGDw= (OK)
+10004948 res/drawable-hdpi-v4/ic_launcher.png (OK)
+10017720 res/drawable-mdpi-v4/ic_launcher.png (OK)
+10023752 res/drawable-xhdpi-v4/ic_launcher.png (OK)
+10045396 res/drawable-xxhdpi-v4/ic_launcher.png (OK)
+10091184 res/drawable-xxxhdpi-v4/ic_launcher.png (OK)
+10168014 res/xml/fileprovider.xml (OK - compressed)
+10168336 resources.arsc (OK)
+10169941 classes.dex (OK - compressed)
+10690731 lib/arm64-v8a/libarsa.so (OK - compressed)
+22354096 lib/armeabi-v7a/libarsa.so (OK - compressed)
+Verification succesful
+Building... star_ocean.aab
+jar signed.
+
+Warning: 
+The signer's certificate is self-signed.
+No -tsa or -tsacert is provided and this jar is not timestamped. Without a timestamp, users may not be able to validate this jar after the signer certificate's expiration date (2585-11-01) or after any future revocation date.
+ARSA AI Compiling v.3.0
+Total deploy time: 68.276001 second.
+Checking Device...
+cannot connect to daemon at tcp:5037: cannot connect to 127.0.0.1:5037: No connection could be made because the target machine actively refused it. (10061)
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
+
+Press any key to continue . . . 
+Total checking devices time: 5.327000 second.
+Checking Device...
+cannot connect to daemon at tcp:5037: cannot connect to 127.0.0.1:5037: No connection could be made because the target machine actively refused it. (10061)
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
+
+Press any key to continue . . . 
+Total checking devices time: 5.206000 second.
+Checking Device...
+cannot connect to daemon at tcp:5037: cannot connect to 127.0.0.1:5037: No connection could be made because the target machine actively refused it. (10061)
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
+R52X90AY4BT	unauthorized
+
+Press any key to continue . . . 
+Total checking devices time: 5.203000 second.
+Checking Device...
+cannot connect to daemon at tcp:5037: cannot connect to 127.0.0.1:5037: No connection could be made because the target machine actively refused it. (10061)
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
+R52X90AY4BT	device
+
+Press any key to continue . . . 
+Total checking devices time: 5.155000 second.
+Installing APK...C:\arsa\bin\apk\star_ocean.apk
+cannot connect to daemon at tcp:5037: cannot connect to 127.0.0.1:5037: No connection could be made because the target machine actively refused it. (10061)
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+Success
+Press any key to continue . . . 
+Total installing APK time: 9.520000 second.
+Reading encrypted file.
+PNG warning: iCCP: known incorrect sRGB profile

@@ -1,5 +1,7 @@
 {
-	screensize(640,960)
+	setportrait()
+	screensize(640,960,true)
+	setbgcolor(0,0,0)
 	function(cachesnd, "ride")
 	function(cachesnd, "closehhr")
 	function(cachesnd, "openhhr")

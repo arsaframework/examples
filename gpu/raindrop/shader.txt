@@ -1,6 +1,6 @@
 {
 	setportrait()
-	screensize(640,960)
+	screensize(640,960, true)
 	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("Heartfelt.txt")) )
 
 

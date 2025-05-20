@@ -1,5 +1,6 @@
 {
-	screensize(640,960)
+	screensize(640,960, true)
+	setbgcolor(0,91,114)
 	set($name, "combo.mpg" )
 
 

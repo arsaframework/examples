@@ -1,5 +1,6 @@
 {
-	screensize(640,960)
+	setportrait()
+	screensize(640,960,true)
 	set($meter_now, 92)
 	set($meter_max, 328)
 	set($meter_min, 92)

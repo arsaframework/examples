@@ -1,0 +1,25 @@
+touch("down", "meter_acc", add($meter_now,1))
+touch("up", "meter_acc", add($meter_now,-1))
+
+if($meter_index<$meter_index_min) set($meter_index,$meter_index_min) 
+if($meter_index>$meter_index_max) set($meter_index,$meter_index_max) 
+if($meter_now < $meter_min) set($meter_now,$meter_min)
+if($meter_now > $meter_max) set($meter_now,$meter_max)
+text(470,490, "$meter_now", 0,0,0,255)
+
+{
+add($meter_now,$vel)
+add($meter_index,$vel)
+}function(meter_add, $vel)
+
+set($meter_index, ($meter_now-$meter_min)
+set($meter_index, ((($meter_now-$meter_min)/9.25)*5)+5 )
+set($meter_index, floor((($meter_now-$meter_min)*$meter_index_max)/($meter_max-$meter_min)) )
+
+52-308
+92-328
+
+256	140
+60
+
+

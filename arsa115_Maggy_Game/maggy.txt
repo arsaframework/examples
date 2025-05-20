@@ -1,3 +1,4 @@
 touch(press, boss, visible(false, null))
-screensize(1080,1920)
+screensize(1080,1920,true)
+setbgcolor(93,170,239)
 touch(release, reset, visibleall(true, boss)) 

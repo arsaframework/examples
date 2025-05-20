@@ -1,5 +1,5 @@
 {
-	screensize(640,960)
+	screensize(640,960,true)
 	set($lt_name, "145040-dinosaur-sticker.json" )
 	//set($lt_name, "https://lottie.host/c571542b-5691-4e7b-93cc-521330eb09f0/bUnSSopK63.json")
 	set($lt_canvas, "canvas" )
@@ -56,4 +56,4 @@ lottie($lt, seek, $ff)
 
 if(lottie($lt, isready)==true) textlayerfont("frametext", "DisposableDroidBB.ttf", $ff, 0, 151, 184)
 
-touch(release, "home", psd("lottie_home.psd"))
+touch(tap, "home", psd("lottie_home.psd"))

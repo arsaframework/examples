@@ -4,7 +4,7 @@
 	banner("ca-app-pub-5830071361163984/1793511050")
 	bannershow()
 
-	screensize(640,960)
+	screensize(640,960,true)
 	maxsize(0,0,1080,1920)
 	setbgcolor(0,200,200,255)
 	function(reset)
@@ -64,12 +64,12 @@
 }function(reset)
 
 {
-	touch("press","facebook_logo",url("http://www.facebook.com/sarosworld"))
-	touch("press","twitter_logo",url("http://www.twitter.com/_sarosworld"))
-	touch("press","youtube-logo2",url("https://www.youtube.com/user/wing640"))
-	touch("press","web",url("http://www.arsa.ai"))
-	touch("press","email",sharefile("support@sarosworld.com", "Question from Url Advanced App.", "Send from Url Advanced App.", "") )
-	touch("press","DOWNLOAD",url("http://www.arsa.ai"))
-	touch("press","url",url("http://www.arsa.ai"))
+	touch("tap","facebook_logo",url("http://www.facebook.com/sarosworld"))
+	touch("tap","twitter_logo",url("http://www.twitter.com/_sarosworld"))
+	touch("tap","youtube-logo2",url("https://www.youtube.com/user/wing640"))
+	touch("tap","web",url("http://www.arsa.ai"))
+	touch("tap","email",sharefile("support@sarosworld.com", "Question from Url Advanced App.", "Send from Url Advanced App.", "") )
+	touch("tap","DOWNLOAD",url("http://www.arsa.ai"))
+	touch("tap","url",url("http://www.arsa.ai"))
 }function(url)
 function(url)

@@ -122,10 +122,12 @@ textlayer("FPS", getcurrentfps(), 10,10,10,255)
 }function(slidebar, $cursor, $gagename, $bgname)
 
 
+textalign(c)
 set($strong, function(slidebar, "cursor1", "loadingbar1", "bg1") )
 set($weak, function(slidebar, "cursor2", "loadingbar2", "bg2") )
 textlayerfont("frametext1", "DisposableDroidBB.ttf", $strong, 0, 151, 184)
 textlayerfont("frametext2", "DisposableDroidBB.ttf", $weak, 0, 151, 184)
 
 //touch(release, "save", savelayertoimage("Layer 3", "canny.png") )
-touch(release, "save", savescreenshot() )
+//touch(release, "save", savescreenshot() )
+if(touch("release","save")==true) sharescreenshot("", "ARSA GPU CANNY", "Shared a screen shot.")

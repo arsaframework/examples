@@ -1,4 +1,6 @@
-screensize(640,960)
+setportrait()
+screensize(640,960, true)
+setbgcolor(100,100,100)
 
 set($thickess, 3)
 

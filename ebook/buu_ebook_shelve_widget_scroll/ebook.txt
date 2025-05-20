@@ -2,7 +2,7 @@
 #include "widget.lib"
 
 {
-	screensize(640,960)
+	screensize(640,960,true)
 	maxsize(0,0,640, 1920)
 
 	set($list, array())

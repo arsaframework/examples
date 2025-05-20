@@ -1,6 +1,6 @@
 {
 	setportrait()
-	screensize(640,960)
+	screensize(640,960,true)
 	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("bokeh.txt")) )
 
 
@@ -26,7 +26,37 @@ gpu.setconst($name,"iResolution", $sw, $sh, 1)
 set($tx, touch("gettouchx") )
 set($ty, touch("gettouchy") )
 gpu.setconst($name,"iMouse", 320, 480, 1.0, 0.0)
+gpu.setconst($name,"rad", $strong)
 
 
 
 
+{
+	lint($framemax, 1)
+	lint($start, getposx($bgname) )
+	lint($end, getwidth($bgname) )
+	lint($cursorw,  getwidth($cursor) )
+	lint($cursorpos,  $start )
+
+	lint($x, touch(gettouchx) )
+	if( pickup(isright, $cursor)==true ) posx($cursor, $x)
+	if( pickup(isleft, $cursor)==true ) posx($cursor, $x)
+
+	// pack cursor
+	set($x, getposx($cursor) )
+	if($x <= $start) posx($cursor, $start)
+	if($x >= ($start+$end)-$cursorw) posx($cursor, ($start+$end)-$cursorw)
+
+	// set gage
+	set($x, getposx($cursor) )
+	lint($percent, (($x-$start)*100)/($end-$cursorw) ) // calculate percent
+	setvisiblepercent($gagename, $percent, 100)
+
+	lfloat($ff, ($percent*$framemax)/100 )
+	return($ff)
+}function(slidebar, $cursor, $gagename, $bgname)
+
+set($strong, function(slidebar, cursor1, loadingbar1, bg1) )
+mul($strong, 5.)
+textalign(c)
+textlayerfont(frametext1, null, $strong)

@@ -1,5 +1,5 @@
 {
-	screensize(640, 960)
+	screensize(640, 960, true)
 	set($player, "player")
 	set($enemy, "enemy")
 	set($missile, "projectile")

@@ -1,6 +1,7 @@
 {
 	setlandscape()
-	screensize(960,640)
+	screensize(960,640, true)
+	setbgcolor(38,82,91)
 	set($wav, gpu.addshader(vs.txt, wave.frag) )
 	set($name, Layer 1)
 	setmaterialtype($name, $wav)
