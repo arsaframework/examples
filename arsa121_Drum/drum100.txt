@@ -55,5 +55,5 @@ function(playsndall, "floorl")
 function(playsndall, "kickr")
 function(playsndall, "kickl")
 
-touch("release", "back", psd("drum100.psd"))
+touch("release", "back", psd("index.psd"))
 text(80,25,getcurrentfps())

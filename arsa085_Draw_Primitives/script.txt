@@ -1,8 +1,8 @@
 setportrait()
-screensize(640,960, true)
+screensize(640,1351, true)
 setbgcolor(100,100,100)
 
-set($thickess, 3)
+set($thickess, 5)
 
 text(5, 20, "Line - thickness: $thickess")
 draw.line(0,50,640,50, $thickess)
@@ -17,18 +17,35 @@ text(5, 270, "Rect - fill")
 draw.rect(20,300,620,450, 1, true)
 
 text(5, 470, "Triangle - none fill")
-draw.poly(180,620,-100, 3, false)
+draw.poly(180,620,-100,-100, 3, false)
 
-text(350, 470, "Star - fill and none fill")
-draw.poly(450,600,-100, 3, true)
-draw.poly(450,600,100, 3, false)
+text(350, 470, "Star - fill")
+draw.setorder(500)
+draw.poly(450,600,-100,-100, 3, true, 0, 100, "", 255,0,0)
+draw.setorder(200)
+draw.poly(450,600,100,100, 3, true, 0, 100, "", 0,255,0)
 
 text(5, 720, "Hexagon - texture")
-draw.poly(180,850,100, 6, true, 0, 100, "arsa_studio_icon.jpg")
+draw.poly(180,850,100,100, 6, true, 0, 100, "arsa_studio_icon.jpg")
 
 text(350, 720, "Circle - fill")
-draw.circle(450,850,90)
+draw.circle(450,850,90, 90, 255, 255, 0)
+
+text(5, 970, "Ellipse X")
+draw.poly(180,1080,90, 30, 16)
+
+text(350, 970, "Ellipse X - fill")
+draw.circle(450,1080,90, 30, 0, 255, 255)
+
+text(5, 1150, "Ellipse Y")
+draw.poly(180,1250,30, 70, 16)
+
+text(350, 1150, "Ellipse Y - fill")
+draw.circle(450,1250,30, 70, 255, 0, 255)
 
 // show fps
-text(500, 20, "FPS:")
-text(550, 20, getcurrentfps())
+text(500, 15, "FPS:")
+text(550, 15, getcurrentfps())
+
+text(500, 50, "Order:")
+text(570, 50, draw.getorder())

@@ -1,6 +1,6 @@
 {
 	setportrait()	
-	screensize(640,960)	
+	screensize(640,960,true)	
 	int($delay_time, 100)
 	int($missile_prefix, missile)
 	int($miss_time, gettime())
@@ -144,6 +144,7 @@ if( 0 != isdebug() ) function(debug)
 	visible(true, "show_num")
 	visible(false, "hide_num")
 	set($i,0)
+	textalign(d)
 	getlayerall(box, proc(	add($i,1)>>\
 							string($layer,getlayername())>>\
 							!isvisible($layer,continue())>>\
