@@ -1,6 +1,6 @@
 ﻿{
 	setportrait()
-	screensize(640,960, true)
+	screensize(640,1351, true)
 	setbgcolor(189,255,250)
 	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("shimmer_sweep_8dir.txt")) )
 
