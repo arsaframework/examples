@@ -1,0 +1,47 @@
+﻿{
+	setportrait()
+	screensize(640,960, true)
+	setbgcolor(189,255,250)
+	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("shimmer_sweep_8dir.txt")) )
+
+
+	
+	set($name, "text" )
+	setmaterialtype($name, $sid)
+
+	set($name2, "arsa_logo_2019_outline_round_720p" )
+	setmaterialtype($name2, $sid)
+
+	set($name3, "caption" )
+	setmaterialtype($name3, $sid)
+
+	set($t,0.0)
+}function(init)
+
+{
+	gpu.removeshader($sid)
+}function(deinit)
+
+{
+	gpu.setconst($name,"uTextureUnit", $texnum)
+	gpu.setconst($name,"iTime", $delta)
+	gpu.setconst($name,"iResolution", $sw, $sh, 1)
+	gpu.setconst($name,"iMouse", 320, 480, 1.0, 0.0)
+}function(gpuconst, $name, $texnum, $delta, $sw, $sh)
+
+
+
+add($t,getdeltatime())
+set($sw, getscreensizewidth())
+set($sh, getscreensizeheight())
+//set($tx, touch("gettouchx") )
+//set($ty, touch("gettouchy") )
+
+function(gpuconst, $name, 0, $t, $sw, $sh)
+function(gpuconst, $name2, 0, $t, $sw, $sh)
+function(gpuconst, $name3, 0, $t, $sw, $sh)
+
+
+
+
+
