@@ -1,0 +1,87 @@
+{
+    lint($szb, 1.1)
+    lint($szn, 1)
+    lint($hcolor, 100)
+    lint($ncolor, 255)
+    if($active==true) scale($name, $szb,$szb)
+    if($active==true) setalpha($name, $hcolor)
+    if($active==false) scale($name, $szn,$szn)
+    if($active==false) setalpha($name, $ncolor)
+}function(widget::buttons::button_action, $name, $active)
+
+{
+    if(isset(widget_buttons_psd_allowp)==false) set($widget_buttons_psd_allowp,"false")
+    lint($tret, "false")
+    if($widget_buttons_psd_allowp==true) touch("down", $name, proc(function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("press", $name, proc(set($widget_buttons_psd_allowp,"true")>>function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("release", $name, proc(function(widget::buttons::button_action,$name,false)>>set($tret, "true")))
+    if($tret==false) function(widget::buttons::button_action,$name,false)
+
+    lint($tx, touch("gettouchx_diff"))
+    lint($ty, touch("gettouchy_diff"))
+    lint($cd, 10)
+    if($widget_buttons_psd_allowp==true) if($tx<-$cd) set($widget_buttons_psd_allowp,"false")
+    if($widget_buttons_psd_allowp==true) if($tx>$cd) set($widget_buttons_psd_allowp,"false")
+    if($widget_buttons_psd_allowp==true) if($ty<-$cd) set($widget_buttons_psd_allowp,"false")
+    if($widget_buttons_psd_allowp==true) if($ty>$cd) set($widget_buttons_psd_allowp,"false")
+
+    if($widget_buttons_psd_allowp==true) if(touch("release", $name)==true) psd($psd)
+}function(widget::buttons::psd, $name, $psd)
+
+{
+    if(isset(widget_buttons_psd_allowp)==false) set($widget_buttons_psd_allowp,"false")
+    lint($tret, "false")
+    if($widget_buttons_psd_allowp==true) touch("down", $name, proc(function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("press", $name, proc(set($widget_buttons_psd_allowp,"true")>>function(widget::buttons::button_action,$name,true)>>set($tret, "true")))
+    touch("release", $name, proc(function(widget::buttons::button_action,$name,false)>>set($tret, "true")))
+    if($tret==false) function(widget::buttons::button_action,$name,false)
+
+    lint($tx, touch("gettouchx_diff"))
+    lint($ty, touch("gettouchy_diff"))
+    lint($cd, 10)
+    if($widget_buttons_psd_allowp==true) if($tx<-$cd) set($widget_buttons_psd_allowp,"false")
+    if($widget_buttons_psd_allowp==true) if($tx>$cd) set($widget_buttons_psd_allowp,"false")
+    if($widget_buttons_psd_allowp==true) if($ty<-$cd) set($widget_buttons_psd_allowp,"false")
+    if($widget_buttons_psd_allowp==true) if($ty>$cd) set($widget_buttons_psd_allowp,"false")
+
+    if($widget_buttons_psd_allowp==true) if(touch("release", $name)==true) function($callback, $name)
+}function(widget::buttons::callback, $name, $callback)
+
+{
+    lint($ty, touch("gettouchy_diff"))
+    //lint($sp, 50)
+    if($sp == "") set($sp, 50)
+    moveoffset(0, -$ty*$sp)
+}function(widget::scroll::v, $sp)
+
+{
+	touch(tap, $layer0 , proc( visible(false,$oldlayer) >>\ 
+				   visible(true, $layer1) >>\ 
+				   setuserstring($name, oldlayer, $layer1)\
+				   ) \
+		)
+}function(widget::toggle::pair, $name, $layer0, $layer1, $oldlayer )
+
+{
+	lint($toggle_state, getuserstring($layer0, state) )
+	if($toggle_state=="") lint($toggle_state, 0 )
+	if($toggle_state==0) proc( visible(true, $layer1) >>\
+					visible(false, $layer3) >>\
+					visible(false, $layer5) >>\
+					visible(false, $layer7) >>\
+					visible(false, $layer9) >>\
+					visible(false, $layer11) >>\
+					lint($toggle_state, 1 ) >>\
+					setuserstring($layer0, state, $toggle_state) >>\
+					setuserstring($layer0, oldlayer, $layer1) \
+					)
+	
+	lint($toggle_oldlayer, getuserstring($layer0, oldlayer) )
+	function(widget::toggle::pair, $layer0, $layer0, $layer1, $toggle_oldlayer )
+	if($layer2 != "") function(widget::toggle::pair, $layer0, $layer2, $layer3, $toggle_oldlayer )
+	if($layer4 != "") function(widget::toggle::pair, $layer0, $layer4, $layer5, $toggle_oldlayer )
+	if($layer6 != "") function(widget::toggle::pair, $layer0, $layer6, $layer7, $toggle_oldlayer )
+	if($layer8 != "") function(widget::toggle::pair, $layer0, $layer8, $layer9, $toggle_oldlayer )
+	if($layer10 != "") function(widget::toggle::pair, $layer0, $layer10, $layer11, $toggle_oldlayer )
+
+}function(widget::toggle, $layer0, $layer1, $layer2, $layer3, $layer4, $layer5, $layer6, $layer7, $layer8, $layer9, $layer10, $layer11 )
