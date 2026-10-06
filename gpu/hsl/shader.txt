@@ -1,6 +1,8 @@
 {
 	setportrait()
-	screensize(640,960,true)
+	screensize(640,1351,true)
+	setbgcolor(37,31,35)
+	setscreentexturesize(1024,1024)
 	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("hsl.txt")) )
 
 
