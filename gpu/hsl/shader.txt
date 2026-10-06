@@ -67,18 +67,18 @@ set($angle, $strong * 3.6 - 180.0 )
 set($hue,$angle/ 360.0)
 
 textalign(c)
-textlayerfont(hue.frametext1, null, floor($angle))
+textlayer(hue.frametext1, floor($angle))
 
 set($strong, function(slidebar, sat.cursor1, "", sat.bg1) )
 mul($strong, 100.)
 set($angle, $strong * 2.0 - 100.0 )
 set($sat,$angle/ 101.0)
-textlayerfont(sat.frametext1, null, floor($angle))
+textlayer(sat.frametext1, floor($angle))
 
 set($strong, function(slidebar, light.cursor1, "", light.bg1) )
 mul($strong, 100.)
 set($angle, $strong * 2.0 - 100.0 )
 set($light,$angle/ 101.0)
-textlayerfont(light.frametext1, null, floor($angle))
+textlayer(light.frametext1, floor($angle))
 
 touch( tap, RESET, proc( function(slidebar.reset, hue.cursor1) >> function(slidebar.reset, sat.cursor1) >> function(slidebar.reset, light.cursor1) ) )
