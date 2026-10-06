@@ -1,0 +1,95 @@
+precision mediump float;
+//precision highp float;
+uniform int uTextureUsage;
+uniform sampler2D uTextureUnit;
+varying vec2 vTextureCoord;
+varying vec4 vVertexColor;
+
+uniform float     iTime;                 // shader playback time (in seconds)
+uniform vec3      iResolution;  // viewport resolution (in pixels)
+uniform vec4      iMouse;	// mouse pixel coords. xy: current (if MLB down), zw: click
+
+// ============================================================
+//  SHIMMER SWEEP FX — 8 directions (Shadertoy compatible)
+//  OpenGL ES 2.0 / WebGL 1.0
+// ============================================================
+
+#define SPEED    0.25   // ความเร็ว
+#define WIDTH    0.02   // ความกว้างแถบแสง
+#define SOFT     0.07   // ความนุ่มขอบ
+#define BRIGHT   1.20   // ความสว่าง
+
+// ทิศทาง:
+//  0 = → ซ้าย→ขวา
+//  1 = ← ขวา→ซ้าย
+//  2 = ↓ บน→ล่าง
+//  3 = ↑ ล่าง→บน
+//  4 = ↘ TL→BR
+//  5 = ↙ TR→BL
+//  6 = ↗ BL→TR
+//  7 = ↖ BR→TL
+#define DIRECTION 6
+
+// ─────────────────────────────────────────────────────────────
+
+const float DIAG_HALF = 2.3536; // 0.5 / sqrt(2)
+
+//void mainImage(out vec4 fragColor, in vec2 fragCoord) 
+void main()
+{
+
+    //vec2 uv = fragCoord / iResolution.xy;
+
+    vec2 p = vTextureCoord;
+	vec2 uv = p*vec2(iResolution.x/iResolution.y,1.0);
+
+    // ── เลือกแกนการวิ่ง ──────────────────────────────────────
+    float axis;
+
+#if DIRECTION == 0
+    axis = uv.x;
+
+#elif DIRECTION == 1
+    axis = 1.0 - uv.x;
+
+#elif DIRECTION == 2
+    axis = 1.0 - uv.y;
+
+#elif DIRECTION == 3
+    axis = uv.y;
+
+#else
+    // diagonal: project UV onto direction vector → remap to [0,1]
+    #if DIRECTION == 4
+        vec2 d = normalize(vec2( 1.0,  1.0));   // ↘ TL→BR
+    #elif DIRECTION == 5
+        vec2 d = normalize(vec2(-1.0,  1.0));   // ↙ TR→BL
+    #elif DIRECTION == 6
+        vec2 d = normalize(vec2( 1.0, -1.0));   // ↗ BL→TR
+    #else
+        vec2 d = normalize(vec2(-1.0, -1.0));   // ↖ BR→TL
+    #endif
+
+    axis = (dot(uv - 0.5, d) + DIAG_HALF) / (2.0 * DIAG_HALF);
+#endif
+
+    // ── แถบแสง ───────────────────────────────────────────────
+    float sweep = mod(iTime * SPEED, 1.0 + WIDTH) - WIDTH;
+
+    float beam = smoothstep(sweep - SOFT,  sweep,          axis)
+               - smoothstep(sweep + WIDTH, sweep + WIDTH + SOFT, axis);
+
+    // ── สี ───────────────────────────────────────────────────
+    vec3 base  = vec3(0.06, 0.06, 0.10);
+    vec3 light = vec3(1.00, 0.97, 0.85);
+
+	vec4 color = texture2D(uTextureUnit, p);
+    vec3 col = color.rgb+(base + light * beam * BRIGHT);
+
+    
+
+    //fragColor = vec4(col, 1.0);
+    //gl_FragColor = vec4(color, 1.0);
+    //gl_FragColor = color;
+    gl_FragColor = vec4(col, color.a);
+}

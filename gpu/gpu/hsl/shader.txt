@@ -1,0 +1,84 @@
+{
+	setportrait()
+	screensize(640,960,true)
+	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("hsl.txt")) )
+
+
+	set($name, "Layer 1" )
+	setmaterialtype($name, $sid)
+
+
+	set($Hue, 0.)          // -180 .. +180
+	set($Saturation, 0.)   // -100 .. +100
+	set($Lightness, 0.)    // -100 .. +100
+
+	set($hue, $Hue / 360.0)
+	set($sat, $Saturation / 101.0)
+	set($light, $Lightness / 101.0)
+
+}function(init)
+
+{
+	gpu.removeshader($sid)
+}function(deinit)
+
+gpu.setconst($name,"uTextureUnit", 0)
+
+gpu.setconst($name,"Hue", $hue)
+gpu.setconst($name,"Saturation", $sat)
+gpu.setconst($name,"Lightness", $light)
+
+
+
+
+{
+	lint($framemax, 1)
+	lint($start, getposx($bgname) )
+	lint($end, getwidth($bgname) )
+	lint($cursorw,  getwidth($cursor) )
+	lint($cursorpos,  $start )
+
+	lint($x, touch(gettouchx) )
+	if( pickup(isright, $cursor)==true ) posx($cursor, $x)
+	if( pickup(isleft, $cursor)==true ) posx($cursor, $x)
+
+	// pack cursor
+	set($x, getposx($cursor) )
+	if($x <= $start) posx($cursor, $start)
+	if($x >= ($start+$end)-$cursorw) posx($cursor, ($start+$end)-$cursorw)
+
+	// set gage
+	set($x, getposx($cursor) )
+	lint($percent, (($x-$start)*100)/($end-$cursorw) ) // calculate percent
+	setvisiblepercent($gagename, $percent, 100)
+
+	lfloat($ff, ($percent*$framemax)/100 )
+	return($ff)
+}function(slidebar, $cursor, $gagename, $bgname)
+
+{
+	lint($x, getorix($cursor) )
+	posx($cursor, $x)
+}function(slidebar.reset, $cursor)
+
+set($strong, function(slidebar, hue.cursor1, "", hue.bg1) )
+mul($strong, 100.)
+set($angle, $strong * 3.6 - 180.0 )
+set($hue,$angle/ 360.0)
+
+textalign(c)
+textlayerfont(hue.frametext1, null, floor($angle))
+
+set($strong, function(slidebar, sat.cursor1, "", sat.bg1) )
+mul($strong, 100.)
+set($angle, $strong * 2.0 - 100.0 )
+set($sat,$angle/ 101.0)
+textlayerfont(sat.frametext1, null, floor($angle))
+
+set($strong, function(slidebar, light.cursor1, "", light.bg1) )
+mul($strong, 100.)
+set($angle, $strong * 2.0 - 100.0 )
+set($light,$angle/ 101.0)
+textlayerfont(light.frametext1, null, floor($angle))
+
+touch( tap, RESET, proc( function(slidebar.reset, hue.cursor1) >> function(slidebar.reset, sat.cursor1) >> function(slidebar.reset, light.cursor1) ) )

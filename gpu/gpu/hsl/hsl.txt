@@ -1,0 +1,128 @@
+precision mediump float;
+
+uniform sampler2D uTextureUnit;
+
+uniform float Hue;          // -0.5 .. +0.5  (= -180 .. +180)
+uniform float Saturation;   // -1.0 .. +1.0  (= -100 .. +100)
+uniform float Lightness;    // -1.0 .. +1.0  (= -100 .. +100)
+
+varying vec2 vTextureCoord;
+
+void main()
+{
+    vec4 tex = texture2D(uTextureUnit, vTextureCoord);
+    vec3 c = tex.rgb;
+
+    // --------------------------------------------------
+    // RGB -> HSL
+    // --------------------------------------------------
+
+    float maxc = max(c.r, max(c.g, c.b));
+    float minc = min(c.r, min(c.g, c.b));
+
+    float l = (maxc + minc) * 0.5;
+    float d = maxc - minc;
+
+    // Saturation denominator
+    float s = d / max(1.0 - abs(2.0 * l - 1.0), 0.00001);
+
+    // Hue
+    float h = 0.0;
+
+    float invD = 1.0 / max(d, 0.00001);
+
+    float hr = (c.g - c.b) * invD;
+    float hg = (c.b - c.r) * invD + 2.0;
+    float hb = (c.r - c.g) * invD + 4.0;
+
+    // branchless channel selection
+    float isR = step(c.g, c.r) * step(c.b, c.r);
+    float isG = (1.0 - isR) * step(c.r, c.g) * step(c.b, c.g);
+    float isB = 1.0 - isR - isG;
+
+    h = hr * isR + hg * isG + hb * isB;
+    h /= 6.0;
+
+    // Normalize hue
+    h += step(h, 0.0);
+
+    // --------------------------------------------------
+    // Photoshop-style adjustment
+    // --------------------------------------------------
+
+    h += Hue;
+
+    // wrap 0..1
+    h -= floor(h);
+
+    // Saturation
+    s *= 1.0 + Saturation;
+    s = clamp(s, 0.0, 1.0);
+
+    // Lightness
+    l += Lightness;
+    l = clamp(l, 0.0, 1.0);
+
+    // --------------------------------------------------
+    // HSL -> RGB
+    // --------------------------------------------------
+
+    float q = l * (1.0 + s)
+            - max(l - 0.5, 0.0) * s;
+
+    float p = 2.0 * l - q;
+
+    float tr = h + 1.0 / 3.0;
+    float tg = h;
+    float tb = h - 1.0 / 3.0;
+
+    tr -= floor(tr);
+    tg -= floor(tg);
+    tb -= floor(tb);
+
+    float rr =
+        p +
+        (q - p) *
+        clamp(
+            min(tr * 6.0,
+                min(4.0 - 6.0 * tr, 1.0)),
+            0.0,
+            1.0
+        );
+
+    float gg =
+        p +
+        (q - p) *
+        clamp(
+            min(tg * 6.0,
+                min(4.0 - 6.0 * tg, 1.0)),
+            0.0,
+            1.0
+        );
+
+    float bb =
+        p +
+        (q - p) *
+        clamp(
+            min(tb * 6.0,
+                min(4.0 - 6.0 * tb, 1.0)),
+            0.0,
+            1.0
+        );
+
+    // Grayscale
+    float gray = l;
+
+    float achromatic = step(d, 0.00001);
+
+    vec3 result = mix(
+        vec3(rr, gg, bb),
+        vec3(gray),
+        achromatic
+    );
+
+    gl_FragColor = vec4(
+        clamp(result, 0.0, 1.0),
+        tex.a
+    );
+}

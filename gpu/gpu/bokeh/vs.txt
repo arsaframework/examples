@@ -1,0 +1,12 @@
+attribute vec3 inVertexPosition;
+attribute vec4 inVertexColor;
+attribute vec2 inTexCoord0;
+varying vec2 vTextureCoord;
+varying vec4 vVertexColor;
+void main()
+{
+	gl_Position = vec4(inVertexPosition.xyz, 1.0);
+	gl_PointSize = 1.0;
+	vTextureCoord = inTexCoord0;
+	vVertexColor = inVertexColor.bgra;
+}
