@@ -4,7 +4,7 @@
 	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("hsl.txt")) )
 
 
-	set($name, "Layer 1" )
+	set($name, "Layer1" )
 	setmaterialtype($name, $sid)
 
 
