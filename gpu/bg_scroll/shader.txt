@@ -1,0 +1,34 @@
+{
+	setportrait()
+	screensize(640,1351, true)
+	set( $sid, gpu.addshader(ftostring("vs.txt"), ftostring("bg_scroll.txt")) )
+
+
+	set($name, "Layer 1" )
+	setmaterialtype($name, $sid)
+
+	set($t,0.0)
+}function(init)
+
+{
+	gpu.removeshader($sid)
+}function(deinit)
+
+gpu.setconst($name,"uTextureUnit", 0)
+
+add($t,getdeltatime())
+set($t, clamp($t, 0., 10.) )
+gpu.setconst($name,"iTime", $t)
+
+set($sw, getscreensizewidth())
+set($sh, getscreensizeheight())
+gpu.setconst($name,"iResolution", $sw, $sh, 1)
+
+set($tx, touch("gettouchx") )
+set($ty, touch("gettouchy") )
+gpu.setconst($name,"iMouse", 320, 480, 1.0, 0.0)
+
+set($size, 0.01)
+gpu.setconst($name,"mysize", $size)
+
+
