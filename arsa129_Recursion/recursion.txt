@@ -1,0 +1,25 @@
+// this recursion code for arsa runtime 2.9 only
+
+{  
+	if($n <= 1) return(1)  
+	lint($next, $n - 1)  
+	set($sub_result, function(factorial, $next))  
+	return(($next+1) * $sub_result)     
+}function(factorial, $n)  
+  
+
+{
+	if($n <= 1) return($n)
+	lint($fb1, function(fibonacci,$n - 1) )
+	lint($fb2, function(fibonacci,$n - 2) )
+	return ( $fb1 + $fb2 )
+}function(fibonacci, $n) 
+
+{
+	screensize(640,1351,true)
+	set($fac, function(factorial, 10))
+	set($fb, function(fibonacci, 10))
+}function(init)  
+
+textlayer(fb, $fb)
+textlayer(fa, $fac)
