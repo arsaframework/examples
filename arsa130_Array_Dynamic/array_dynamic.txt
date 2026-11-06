@@ -1,0 +1,15 @@
+{
+	array(DynamicArray);
+
+	array.push_back(DynamicArray, 10)
+	array.push_back(DynamicArray, 20)
+	array.push_back(DynamicArray, 30)
+
+	array.insert(DynamicArray, 99, 1 )
+	array.erase(DynamicArray, 2)
+
+	// 10 99 30
+	for ($i = 0; $i < array.size(DynamicArray); $i++) alog(array.get(DynamicArray,$i))
+
+	array.close(DynamicArray);	
+}function(init)

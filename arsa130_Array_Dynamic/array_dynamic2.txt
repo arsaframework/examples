@@ -1,0 +1,47 @@
+{
+	lstring($str, [)
+
+	for ($i = 0; $i < array.size($array_name); $i++) proc( \
+		set($str, string.cat($str, array.get($array_name,$i))) >> \
+		if ($i + 1 < array.size($array_name)) set($str, string.cat($str, ",") )\
+		)
+
+	set($str, string.cat($str, ]) )
+	alog($str)
+	alog( string.printf(Size: %zu | Capacity: %zu, array.size($array_name), array.allocatedsize($array_name) ) )
+	alog("")
+	
+}function( array_print, $array_name )
+	
+
+{
+	array.allocate(DynamicArray, 4);
+
+	array.push_back(DynamicArray, 10)
+	array.push_back(DynamicArray, 20)
+	array.push_back(DynamicArray, 30)
+	array.push_back(DynamicArray, 40)
+	function( array_print, DynamicArray )
+
+	array.push_back(DynamicArray, 50);
+	function( array_print, DynamicArray )
+
+
+	lint($size, array.size(DynamicArray) )	
+	alog( string.printf("Pop: %d", array.get(DynamicArray, $size-1)) )
+
+	array.erase(DynamicArray, $size-1)
+	function( array_print, DynamicArray )
+
+	array.close(DynamicArray)
+
+	// [10,20,30,40]
+	// Size: 4 | Capacity: 4
+
+	// [10,20,30,40,50]
+	// Size: 5 | Capacity: 13
+
+	// Pop: 50
+	// [10,20,30,40]
+	// Size: 4 | Capacity: 13
+}function(init)
