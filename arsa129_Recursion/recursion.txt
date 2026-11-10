@@ -17,9 +17,19 @@
 
 {
 	screensize(640,1351,true)
+	set($fac_start, getrealtime() )
 	set($fac, function(factorial, 10))
+	set($fac_end, getrealtime() )
+
+	set($fb_start, getrealtime() )
 	set($fb, function(fibonacci, 10))
+	set($fb_end, getrealtime() )
+
+	set($fac_used_time, $fac_end-$fac_start)
+	set($fb_used_time, $fb_end-$fb_start)
 }function(init)  
 
 textlayer(fb, $fb)
 textlayer(fa, $fac)
+text(70, 440, string.printf(Fibonacci calculation time: %.3f seccond.,$fb_used_time/1000.0 ), 0,0,0,255)
+text(70, 540, string.printf(Factorial calculation time %.3f seccond.,$fac_used_time/1000.0 ), 0,0,0,255)
