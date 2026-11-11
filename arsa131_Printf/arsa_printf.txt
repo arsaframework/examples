@@ -1,0 +1,205 @@
+{
+	lstring( $str, string.printf( $fmt, $value0, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9 ) )
+	lstring( $result, FALSE: )
+	if($str == $ans) set($result, PASS: )
+	alog( $result format: $fmt result: $str expected: $ans values: $value0 $value1 $value2 $value3 $value4 $value5 $value6 $value7 $value8 $value9 )
+}function(RunTest, $ans, $fmt, $value0, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9)
+
+{
+	alog( )
+	alog( ======test002====== )
+	function(RunTest, "-000042", "%+08.3d", "-42");
+	function(RunTest, "0x000000ff", "%#010x", "255");
+	function(RunTest, "010", "%#o", "8");
+	function(RunTest, "       Hello", "%*.*s", "12", "5", "HelloWorld");
+	function(RunTest, "Hello       ", "%-*.*s", "12", "5", "HelloWorld");
+	function(RunTest, "     +3.1416", "%+*.*f", "12", "4", "3.1415926535");
+	function(RunTest, "-000000001", "%010.0f", "-0.6");
+	function(RunTest, "+9223372036854775807", "%+lld", "9223372036854775807");
+	function(RunTest, "18446744073709551615", "%zu", "18446744073709551615");
+	function(RunTest, "A", "%c", "A");
+	function(RunTest, "ABC", "%.3s", "ABCDEFG");
+	function(RunTest, "0XFF", "%#X", "255");
+	function(RunTest, "00123     ", "%*.*d", "-10", "5", "123");
+	function(RunTest, "2", "%.0f", "1.5");
+	function(RunTest, "0x1p+0", "%a", "1.0");
+	function(RunTest, "A", "%Lc", "A");
+	function(RunTest, "test", "%ls", "test");
+	function(RunTest, "-9223372036854775808", "%jd", "-9223372036854775808");
+	function(RunTest, "+1.2346e+03", "%+010.4e", "1234.56789");
+	function(RunTest, "%42%", "%%%d%%", "42");
+	function(RunTest, "hello", "%*s", "0", "hello");
+	function(RunTest, "", "%.0s", "hello");
+	function(RunTest, "+32767", "%+hd", "32767");
+	function(RunTest, "-128", "%hhd", "-128");
+	function(RunTest, "        3.1415926536", "%20.10Lf", "3.141592653589793");
+	function(RunTest, "5", "%*d", "abc", "5");
+	function(RunTest, "10 (null) 0.000000", "%d %s %f", "10");
+	function(RunTest, "", "", "");
+	function(RunTest, "Hello World", "Hello World", "");
+	function(RunTest, "-0001.235", "%+0#10.3f", "-1.23456");
+}function(test002)
+
+{
+	alog( )
+	alog( ======test001====== )
+	alog( 1. Integer formatting )
+	function(RunTest, "12345", "%d", 12345);
+	function(RunTest, "+12345", "%+d", 12345);
+	function(RunTest, " 12345", "% d", 12345);
+	function(RunTest, "00012345", "%08d", 12345);
+	function(RunTest, "12345  ", "%-8d", 12345);
+	function(RunTest, "+0012345", "%+08d", 12345);
+	function(RunTest, "-0000123", "%08d", -123);
+	function(RunTest, "   00123", "%8.5d", 123);
+	function(RunTest, "00123   ", "%-8.5d", 123);
+	function(RunTest, "", "%.0d", 0);
+	function(RunTest, "0", "%#.0o", 0);
+	function(RunTest, "0x0000ff", "%#08x", 255);
+	function(RunTest, "0X0000FF", "%#08X", 255);
+	function(RunTest, "0100", "%#o", 64);
+	function(RunTest, "0xbeef", "%#x", 48879);
+	function(RunTest, "0XBEEF", "%#X", 48879);
+	function(RunTest, "     -987654", "%+12d", -987654);
+	function(RunTest, "0xbeef      ", "%-#12x", 48879);
+	function(RunTest, "    00012345", "%12.8u", 12345);
+	function(RunTest, "0000000042", "%.10u", 42);
+
+	alog( 2. Floating-point formatting )
+	function(RunTest, "3.141593", "%f", 3.1415926535);
+	function(RunTest, "3.14", "%.2f", 3.1415926535);
+	function(RunTest, "+3.14", "%+.2f", 3.14);
+	function(RunTest, " 3.14", "%  .2f", 3.14);
+	function(RunTest, "0000012.50", "%010.2f", 12.5);
+	function(RunTest, "12.50     ", "%-10.2f", 12.5);
+	function(RunTest, "12.", "%#.0f", 12.0);
+	function(RunTest, "13", "%.0f", 12.8);
+	function(RunTest, "12", "%.0f", 12.3);
+	function(RunTest, "1.23e+04", "%.2e", 12345.0);
+	function(RunTest, "1.234E-03", "%.3E", 0.001234);
+	function(RunTest, "123456", "%g", 123456.0);
+	function(RunTest, "1.23e+05", "%.3g", 123456.0);
+	function(RunTest, "12.34", "%.5g", 12.34000);
+	function(RunTest, "12.000", "%#.5g", 12.0);
+	function(RunTest, "1.23e-05", "%g", 0.0000123);
+	function(RunTest, "1e+03", "%.3g", 999.9);
+	function(RunTest, "-000012.30", "%+010.2f", -12.3);
+	function(RunTest, "12.00      ", "%-#12.4g", 12.0);
+	function(RunTest, "1.00e+01", "%.2e", 9.999);
+
+	alog( 3. Dynamic width and precision )
+	function(RunTest, "     123", "%*d", 8, 123);
+	function(RunTest, "123     ", "%*d", -8, 123);
+	function(RunTest, "      3.14", "%*.*f", 10, 2, 3.14159);
+	function(RunTest, "3.142     ", "%*.*f", -10, 3, 3.14159);
+	function(RunTest, "3", "%.*f", 0, 3.14159);
+	function(RunTest, "3.1416", "%.*f", 4, 3.14159);
+	function(RunTest, "0000012.50", "%0*.*f", 10, 2, 12.5);
+	function(RunTest, "     00123", "%*.*d", 10, 5, 123);
+	function(RunTest, "      ARSA", "%*s", 10, "ARSA");
+	function(RunTest, "ARSA      ", "%-*s", 10, "ARSA");
+	function(RunTest, "       ARS", "%*.*s", 10, 3, "ARSA LANGUAGE");
+	function(RunTest, "ARSA ", "%.*s", 5, "ARSA LANGUAGE");
+
+	alog( 4. String and character )
+	function(RunTest, "ARSA ENIGMA", "%s", "ARSA ENIGMA");
+	function(RunTest, "                ARSA", "%20s", "ARSA");
+	function(RunTest, "ARSA                ", "%-20s", "ARSA");
+	function(RunTest, "ARSA", "%.4s", "ARSA ENIGMA");
+	function(RunTest, "      ARSA", "%10.4s", "ARSA ENIGMA");
+	function(RunTest, "ARSA      ", "%-10.4s", "ARSA ENIGMA");
+	function(RunTest, "A", "%c", "A");
+	function(RunTest, "    X", "%5c", "X");
+	function(RunTest, "X    ", "%-5c", "X");
+	function(RunTest, "ARSA:2026:3.140000", "%s:%d:%f", "ARSA", 2026, 3.14);
+
+	alog( 5. Hexadecimal floating-point )
+	function(RunTest, "0x1.0000000000000p+0", "%a", 1.0);
+	function(RunTest, "0X1.0000000000000P+0", "%A", 1.0);
+	function(RunTest, "0x1.8000000000000p+0", "%a", 1.5);
+	function(RunTest, "0X1.8000000000000P+0", "%A", 1.5);
+	function(RunTest, "0x1.0000000000000p+1", "%a", 2.0);
+	function(RunTest, "0x1.0000000000000p+2", "%a", 4.0);
+	function(RunTest, "0x1.0000000000000p-1", "%a", 0.5);
+	function(RunTest, "0x1.80p+0", "%.2a", 1.5);
+	function(RunTest, "0x1.p+0", "%#.0a", 1.0);
+	function(RunTest, "0x1.8000000000000p+0", "%020a", 1.5);
+
+	alog( 6. Length modifiers )
+	function(RunTest, "127", "%hhd", 127);
+	function(RunTest, "-126", "%hhd", 130);
+	function(RunTest, "255", "%hhu", 255);
+	function(RunTest, "0", "%hhu", 256);
+	function(RunTest, "32767", "%hd", 32767);
+	function(RunTest, "-32768", "%hd", 32768);
+	function(RunTest, "65535", "%hu", 65535);
+	function(RunTest, "0", "%hu", 65536);
+	function(RunTest, "2147483647", "%ld", 2147483647L);
+	function(RunTest, "9223372036854775807", "%lld", 9223372036854775807LL);
+	function(RunTest, "18446744073709551615", "%llu", 18446744073709551615ULL);
+	function(RunTest, "123456789", "%jd", 123456789);
+	function(RunTest, "123456789", "%zu", 123456789);
+	function(RunTest, "-123456789", "%td", -123456789);
+
+	alog( 7. Mixed formatting )
+	function(RunTest, "[100] [3.140000] [ARSA]", "[%d] [%f] [%s]", 100, 3.14, "ARSA");
+	function(RunTest, "+0000123 | 0000045.60 | ARSA      ", "%+08d | %010.2f | %-10s", 123, 45.6, "ARSA");
+	function(RunTest, "Name: ARSA, Age: 46, Score: 99.95", "Name: %s, Age: %d, Score: %.2f", "ARSA", 46, 99.95);
+	function(RunTest, "0xa + 0x14 = 0x1e", "%#x + %#x = %#x", 10, 20, 30);
+	function(RunTest, "% 2026 % ARSA %", "%% %d %% %s %%", 2026, "ARSA");
+	function(RunTest, "    +123.456 / 1.234e-03  ", "%+12.3f / %-12.3e", 123.456, 0.001234);
+	function(RunTest, "[   00123][456       ]", "[%10.5d][%-10.5d]", 123, 456);
+	function(RunTest, "0X00FFFF / 0x00beef", "%#08X / %#08x", 65535, 48879);
+	function(RunTest, "[    3.14] [      ARSA]", "[%*.*f] [%*.*s]", 8, 2, 3.14, 10, 4, "ARSA LANGUAGE");
+	function(RunTest, "ARSA 2026.11.0011", "ARSA %d.%02d.%04d", 2026, 11, 11);
+
+	alog( 8. Floating-point edge cases )
+	function(RunTest, "10.0", "%.1f", 9.99);
+	function(RunTest, "10.00", "%.2f", 9.999);
+	function(RunTest, "1.0e+02", "%.1e", 99.99);
+	function(RunTest, "1e+03", "%.3g", 999.9);
+	function(RunTest, "0.0001", "%.3g", 0.00009999);
+	function(RunTest, "1e-05", "%.3g", 0.000009999);
+	function(RunTest, "-0.00", "%+.2f", -0.0);
+	function(RunTest, "-0.00", "%+.2f", -0.001);
+	function(RunTest, "-000012.30", "%010.2f", -12.3);
+	function(RunTest, "100.00", "%#.5g", 100.0);
+	function(RunTest, "0.00010000", "%#.5g", 0.0001);
+	function(RunTest, "1.00e+308", "%.2e", 1e308);
+	function(RunTest, "0.00e+00", "%.2e", 1e-324);
+
+	alog( 9. Invalid input - expected rejection )
+	function(RunTest, "<REJECT>", "%d", "123abc");
+	function(RunTest, "<REJECT>", "%d", "abc123");
+	function(RunTest, "<REJECT>", "%f", "12.5xyz");
+	function(RunTest, "<REJECT>", "%f", "1e");
+	function(RunTest, "<REJECT>", "%f", "1e+");
+	function(RunTest, "<REJECT>", "%u", -123);
+	function(RunTest, "<REJECT>", "%u", 18446744073709551616);
+	function(RunTest, "<REJECT>", "%lld", 9223372036854775808);
+	function(RunTest, "<REJECT>", "%*d", "abc", 123);
+	function(RunTest, "<REJECT>", "%*.*f", 10, "abc", 3.14);
+	function(RunTest, "<REJECT>", "%d");
+	function(RunTest, "<REJECT>", "%s");
+	function(RunTest, "<REJECT>", "%q", 123);
+	function(RunTest, "<REJECT>", "%");
+	function(RunTest, "<REJECT>", "%n");
+	function(RunTest, "<REJECT>", "%ls", "ARSA");
+	function(RunTest, "<REJECT>", "%hf", 3.14);
+	function(RunTest, "<REJECT>", "%llf", 3.14);
+
+	alog( 10. Performance and buffer stress )
+	function(RunTest, "<WIDTH_10000>", "%010000d", 123);
+	function(RunTest, "<PRECISION_1000>", "%.1000f", 3.1415926535);
+	function(RunTest, "<WIDTH_10000>", "%10000s", "ARSA");
+	function(RunTest, "<WIDTH_10000>", "%-10000s", "ARSA");
+	function(RunTest, "12345678910", "%d%d%d%d%d%d%d%d%d%d", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+	function(RunTest, "%%", "%%%%");
+	function(RunTest, "ARSAARSAARSAARSAARSA", "%s%s%s%s%s", "ARSA", "ARSA", "ARSA", "ARSA", "ARSA");
+}function(test001)
+
+{
+	
+	function(test001)
+	function(test002)
+}function(init)
