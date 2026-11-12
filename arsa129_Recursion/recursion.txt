@@ -1,35 +1,52 @@
 // this recursion code for arsa runtime 2.9 only
-
 {  
 	if($n <= 1) return(1)  
 	lint($next, $n - 1)  
-	set($sub_result, function(factorial, $next))  
+	set($sub_result, function(factorial, $next))
 	return(($next+1) * $sub_result)     
 }function(factorial, $n)  
   
 
+// recursion with cache 
 {
 	if($n <= 1) return($n)
+	lint($cache, getuserstring(fb, fb_$n) )
+	if($cache != "") return($cache)
+
 	lint($fb1, function(fibonacci,$n - 1) )
 	lint($fb2, function(fibonacci,$n - 2) )
-	return ( $fb1 + $fb2 )
+	lint($value, $fb1 + $fb2 )
+	setuserstring(fb, fb_$n, $value)
+	return ( $value )
 }function(fibonacci, $n) 
 
 {
-	screensize(640,1351,true)
+	setlandscape()
+	screensize(1351,640,true)
+
+	set($fb_num, 50 )
+	set($fac_num, 20 )
+
 	set($fac_start, getrealtime() )
-	set($fac, function(factorial, 10))
+	set($fac, function(factorial, $fac_num))
 	set($fac_end, getrealtime() )
 
 	set($fb_start, getrealtime() )
-	set($fb, function(fibonacci, 10))
+	set($fb, function(fibonacci, $fb_num))
 	set($fb_end, getrealtime() )
 
 	set($fac_used_time, $fac_end-$fac_start)
 	set($fb_used_time, $fb_end-$fb_start)
+
 }function(init)  
 
-textlayer(fb, $fb)
-textlayer(fa, $fac)
-text(70, 440, string.printf(Fibonacci calculation time: %.3f seccond.,$fb_used_time/1000.0 ), 0,0,0,255)
-text(70, 540, string.printf(Factorial calculation time %.3f seccond.,$fac_used_time/1000.0 ), 0,0,0,255)
+textalign(r)
+textlayer(fb_caption, Fibonacci $fb_num : )
+textlayer(fa_caption, Factorial $fac_num : )
+
+textalign(l)
+textlayer(fb_value, string.number(string.printf("%.f",$fb))) // n = 50 ans = 12,586,269,025
+textlayer(fa_value, string.number(string.printf("%.f",$fac))) // n = 20 ans = 2,432,902,008,176,640,000
+
+text(405, 285, string.printf(Fibonacci with cache calculation time: %.3f seccond.,$fb_used_time/1000.0 ), 0,0,0,255)
+text(405, 385, string.printf(Factorial calculation time %.3f seccond.,$fac_used_time/1000.0 ), 0,0,0,255)

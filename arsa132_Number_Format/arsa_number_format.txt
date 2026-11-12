@@ -1,0 +1,20 @@
+﻿{
+	alog(Easy Example: Format a number using the default decimal and thousands separators.)
+	alog(string.number(1234.56))
+	alog(string.number(9876543.21, 2))
+	alog(string.number(1234.0, 0))
+
+	alog(" ")
+	alog(Medium Example: Specify the number of decimal digits to control the precision of the formatted output.)
+	alog(string.number(1234.5678, 2))
+	alog(string.number(98765.4321, 3))
+	alog(string.number(123.456, 0))
+	alog(string.number(-1234.567, 2))
+
+	alog(" ")
+	alog(Hard Example: Customize the decimal separator and thousands separator to support different number formatting conventions.)
+	alog(string.number(1234567.89, 2, ".", ","))
+	alog(string.number(1234567.89, 2, ",", "."))
+	alog(string.number(1234567.89, 2, ".", " "))
+	alog(string.number(-9876543.215, 3, ",", "_"))
+}function(init)
